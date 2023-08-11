@@ -14,6 +14,15 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+
+  socket.on("chat message", (msgData) => {
+    console.log(msgData);
+    io.emit("chat message", msgData); //send to everyone
+  });
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
 const port = process.env.PORT || 3000;
