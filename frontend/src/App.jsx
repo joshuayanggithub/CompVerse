@@ -1,11 +1,15 @@
 import Chat from "./components/Chat";
+import Online from "./components/Online";
 import RoomsPage from "./components/RoomsPage";
 
 function App() {
   return (
-    <div className="flex flex-col w-full h-full justify-center p-3">
+    <div className="flex w-full h-full p-3 justify-between">
       <RoomsPage />
-      <Chat />
+      <div className="flex flex-col h-full w-1/4 justify-center">
+        <Online numberUsers={4} />
+        <Chat />
+      </div>
     </div>
   );
 }

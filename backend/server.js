@@ -2,7 +2,6 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const app = require("./app");
 const http = require("http");
-
 const server = http.createServer(app);
 
 const { Server } = require("socket.io"); //mounted on http server
@@ -13,7 +12,8 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log(`User has connected`);
+  console.log(`Users Online: ${io.engine.clientsCount}`);
 
   socket.on("chat message", (msgData) => {
     console.log(msgData);
