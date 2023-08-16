@@ -33,9 +33,10 @@ export default function CreateRoomModal({ setModalOpen }) {
         className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
         defaultValue={"competition"}
         ref={competitionRef}
+        required
       >
         <option value="competition" disabled>
-          Competition
+          Choose Competition
         </option>
         <option value="sciencebowl">ScienceBowl</option>
         <option value="knowledgebowl">KnowledgeBowl</option>
@@ -47,9 +48,10 @@ export default function CreateRoomModal({ setModalOpen }) {
         className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
         defaultValue={"gamelength"}
         ref={gameLengthRef}
+        required
       >
         <option value="gamelength" disabled>
-          Game Length
+          Choose Game Length
         </option>
         <option value="5">5 Problems</option>
         <option value="10">10 Problems</option>
@@ -62,7 +64,9 @@ export default function CreateRoomModal({ setModalOpen }) {
         className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
         ref={gameNameRef}
       ></input>
-      <ButtonWrapper onClick={createRoom}>Create Game</ButtonWrapper>
+      <ButtonWrapper onClick={createRoom} width={"w-1/3"}>
+        Create Game{" "}
+      </ButtonWrapper>
     </div>
   );
 }

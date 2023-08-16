@@ -1,8 +1,10 @@
-export default function ButtonWrapper({ children, onClick }) {
-  <button
-    className="w-10 h-full rounded-md bg-blue-200 flex items-center justify-center"
-    onClick={onClick}
-  >
-    {children}
-  </button>;
+export default function ButtonWrapper({ children, onClick, width }) {
+  return (
+    <button
+      className={`${width} h-10 rounded-md bg-blue-200 flex items-center justify-center p-2 `}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 }
