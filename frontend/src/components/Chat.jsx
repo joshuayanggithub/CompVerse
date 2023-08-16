@@ -1,5 +1,5 @@
 import { socket } from "../socket";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { FiSend } from "react-icons/fi";
 
@@ -25,12 +25,18 @@ export default function Chat() {
     userInput.current.value = "";
   }
 
-  socket.on("chat message", function (msgData) {
-    console.log(
-      `recieved message ${msgData.message} from ${msgData.userId} at ${msgData.date}`
-    );
-    setUserMessages([...userMessages, msgData]); //something is going on behind the scenes
-  });
+  useEffect(() => {
+    socket.on("chat message", function (msgData) {
+      console.log(
+        `recieved message ${msgData.message} from ${msgData.userId} at ${msgData.date}`
+      );
+      setUserMessages((userMessages) => [...userMessages, msgData]); //something is going on behind the scenes
+    });
+
+    return () => {
+      socket.off("chat message");
+    };
+  }, []);
 
   return (
     <div className="h-[90%] w-full outline outline-gray-300 outline-2 rounded-lg flex flex-col justify-between">
