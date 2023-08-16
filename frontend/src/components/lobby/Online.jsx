@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { socket } from "../../socket";
+import HeadCount from "../ui/HeadCount";
 
 export default function Online() {
   const [playersOnline, setPlayersOnline] = useState(0);
@@ -16,14 +17,12 @@ export default function Online() {
   });
 
   return (
-    <div className="flex justify-between items-center h-[10%]">
+    <div className="flex justify-between items-center h-[10%] w-full">
       <div className="flex items-center justify-center gap-1">
         <div className="w-[5px] h-[5px] rounded-lg bg-green-500"></div>
         <div>{`Users Online: ${playersOnline}`}</div>
       </div>
-      <div className="flex w-10 h-10 justify-between items-center">
-        <img src="/anonymous.avif" className="h-[80%]" />
-      </div>
+      <HeadCount online={playersOnline} />
     </div>
   );
 }
