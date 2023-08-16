@@ -1,8 +1,9 @@
 import { useRef } from "react";
-import { socket } from "../socket";
+import { socket } from "../../socket";
 import { GrFormClose } from "react-icons/gr";
+import ButtonWrapper from "../ui/ButtonWrapper";
 
-export function CreateRoomModal({ modalOpen, setModalOpen }) {
+export default function CreateRoomModal({ setModalOpen }) {
   const competitionRef = useRef();
   const gameLengthRef = useRef();
   const gameNameRef = useRef();
@@ -61,12 +62,7 @@ export function CreateRoomModal({ modalOpen, setModalOpen }) {
         className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
         ref={gameNameRef}
       ></input>
-      <button
-        className="w-[20%] h-10 rounded-md bg-blue-200 flex items-center justify-center"
-        onClick={createRoom}
-      >
-        Create Game
-      </button>
+      <ButtonWrapper onClick={createRoom}>Create Game</ButtonWrapper>
     </div>
   );
 }

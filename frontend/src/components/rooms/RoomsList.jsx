@@ -1,16 +1,16 @@
 import { useState } from "react";
-import CreateRoom from "./CreateRoom";
-import { CreateRoomModal } from "./CreateRoomModal";
 import Rooms from "./Rooms";
+import CreateRoomButton from "./CreateRoomButton";
+import CreateRoomModal from "./CreateRoomModal";
 
-export default function RoomsPage() {
+export default function RoomsList() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="flex flex-col gap-5 h-full w-3/4 p-10 relative">
       <Rooms modalOpen={modalOpen} />
       {!modalOpen && (
-        <CreateRoom modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        <CreateRoomButton modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
       {modalOpen && (
         <CreateRoomModal modalOpen={modalOpen} setModalOpen={setModalOpen} />

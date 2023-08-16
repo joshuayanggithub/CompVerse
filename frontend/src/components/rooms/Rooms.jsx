@@ -1,5 +1,5 @@
 import Room from "./Room";
-import { socket } from "../socket";
+import { socket } from "../../socket";
 import { useEffect, useState } from "react";
 
 export default function Rooms({ modalOpen }) {

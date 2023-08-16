@@ -2,18 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import Game from "./components/Game.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import GamePage from "./pages/GamePage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: "/game",
-    element: <Game />,
+    path: "/game/:gameid",
+    element: <GamePage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

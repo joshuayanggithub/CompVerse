@@ -1,17 +1,7 @@
-import Chat from "./components/Chat";
-import Online from "./components/Online";
-import RoomsPage from "./components/RoomsPage";
+import LobbyPage from "./pages/LobbyPage";
 
 function App() {
-  return (
-    <div className="flex w-full h-full p-3 justify-between">
-      <RoomsPage />
-      <div className="flex flex-col h-full w-1/4 justify-center">
-        <Online />
-        <Chat />
-      </div>
-    </div>
-  );
+  return <LobbyPage />;
 }
 
 export default App;

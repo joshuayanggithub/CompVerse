@@ -1,4 +1,4 @@
-import { socket } from "../socket";
+import { socket } from "../../socket";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { FiSend } from "react-icons/fi";
@@ -6,8 +6,6 @@ import { FiSend } from "react-icons/fi";
 export default function Chat() {
   const userInput = useRef();
   const [userMessages, setUserMessages] = useState([]);
-
-  console.log("re-render");
 
   function sendMessageEnter(event) {
     if (event.key === "Enter") {
@@ -27,9 +25,9 @@ export default function Chat() {
 
   useEffect(() => {
     socket.on("chat message", function (msgData) {
-      console.log(
-        `recieved message ${msgData.message} from ${msgData.userId} at ${msgData.date}`
-      );
+      // console.log(
+      //   `recieved message ${msgData.message} from ${msgData.userId} at ${msgData.date}`
+      // );
       setUserMessages((userMessages) => [...userMessages, msgData]); //something is going on behind the scenes
     });
 
