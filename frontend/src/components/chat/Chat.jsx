@@ -43,12 +43,12 @@ export default function Chat() {
           <Message data={message} key={index} />
         ))}
       </div>
-      <div className="flex justify-between bg-gray-100 h-10 pl-3">
+      <div className="flex justify-between bg-gray-100 h-10">
         <input
           ref={userInput}
           type="text"
           placeholder="Message..."
-          className="bg-inherit h-full"
+          className="bg-inherit h-full w-full pl-2 focus:border-blue-500 border-3 z-10"
           onKeyDown={sendMessageEnter}
         ></input>
         <button
