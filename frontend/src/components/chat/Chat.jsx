@@ -48,7 +48,7 @@ export default function Chat() {
           ref={userInput}
           type="text"
           placeholder="Message..."
-          className="bg-inherit h-full w-full pl-2 focus:border-blue-500 border-3 z-10"
+          className="bg-inherit h-full w-full pl-2 rounded-lg rounded-r-none focus:outline-blue-500 border-3 z-10"
           onKeyDown={sendMessageEnter}
         ></input>
         <button

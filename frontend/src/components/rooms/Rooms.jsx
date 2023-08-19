@@ -26,7 +26,7 @@ export default function Rooms({ modalOpen }) {
   } else {
     return (
       <div
-        className={`grid grid-cols-2 w-full gap-5 h-[90%] ${
+        className={`grid grid-cols-2 content-start w-full gap-5 h-[90%] ${
           modalOpen && "blur-[1px]"
         }`}
       >

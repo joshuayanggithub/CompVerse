@@ -1,11 +1,14 @@
-export default function Problem({ problemNumber }) {
+import Timer from "./Timer";
+
+export default function Problem({ problemNumber, problemQuestion }) {
   return (
     <div className="w-full h-5/6">
-      <h1>{`Problem ${problemNumber}`}</h1>
+      <div className="flex justify-between">
+        <h1 className="text-xl font-bold">{`Problem ${problemNumber}`}</h1>
+        <Timer />
+      </div>
       <p>
-        Lorem Ispm asdfjasld fasld falksdj flaksd fla;ksd fjasldfj alsdf
-        ajsdfl;kajsd;lkf asd jas;lkd jf asdlkf jasd fj asdlkjfkjla sendf
-        ajsdkljoiqwejroa;jvkclavm asojdkfj qw fa sd jfaosdkj joQWJKA d
+        <i>{problemQuestion}</i>
       </p>
     </div>
   );
