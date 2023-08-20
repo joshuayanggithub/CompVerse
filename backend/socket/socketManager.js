@@ -2,6 +2,7 @@ const socketio = require("socket.io");
 
 const registerOnlineHandler = require("./onlineHandler");
 const registerChatHandler = require("./chatHandler");
+// const registerChatHandler = require("./chatHandler");
 
 exports.initSocketServer = function (server) {
   const io = new socketio.Server(server, {
@@ -11,8 +12,8 @@ exports.initSocketServer = function (server) {
   });
 
   const onConnection = (socket) => {
-    registerOnlineHandler(io, socket);
-    registerChatHandler(io, socket);
+    registerOnlineHandler(socket, io);
+    registerChatHandler(socket, io);
   };
 
   io.on("connection", onConnection);

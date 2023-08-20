@@ -1,6 +1,6 @@
 export default function HeadCount({ online }) {
   let headCount = Math.min(10, online);
-  let baseStyle = "w-10 h-10 absolute";
+  let baseStyle = "w-8 h-8 absolute";
   const styleVariants = [
     //DYNAMIC STYLING IS IMPOSSIBLE IN TAILWIND
     `${baseStyle} right-[1rem]`,
@@ -22,6 +22,12 @@ export default function HeadCount({ online }) {
           <img src="/anonymous.avif" className={styleVariants[i]} key={i} />
         );
       })}
+      {online - headCount != 0 && (
+        <div className="font-lg absolute -right-0">
+          <span>+</span>
+          <span>{online - headCount}</span>
+        </div>
+      )}
     </div>
   );
 }

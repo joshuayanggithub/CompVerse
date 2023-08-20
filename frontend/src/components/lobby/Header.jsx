@@ -9,7 +9,8 @@ export default function Header() {
       <div className="font-normal">Join Us!</div>
       <div className="font-normal">Leaderboards</div>
       <div className="font-light	 italic text-gray-500">
-        "Competition is always a good thing. It forces us to do our best."
+        &ldquo;Competition is always a good thing. It forces us to do our
+        best.&rdquo;
       </div>
     </div>
   );

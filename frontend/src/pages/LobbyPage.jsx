@@ -15,7 +15,7 @@ export default function LobbyPage() {
         </div>
       </div>
       <div className="flex flex-col h-full w-1/4 justify-center ">
-        <div className="h-[5%]">
+        <div className="h-[5%] w-full">
           <OnlineStatus />
         </div>
         <div className="h-[95%]">

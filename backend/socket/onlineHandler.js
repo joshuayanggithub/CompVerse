@@ -1,4 +1,4 @@
-module.exports = (io, socket) => {
+module.exports = (socket, io) => {
   console.log(`User has connected`);
   io.emit("player:countChanged", io.engine.clientsCount);
 
