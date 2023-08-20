@@ -8,7 +8,7 @@ export default function RoomsList() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-col h-[90%] p-10 w-full relative justify-between outline outline-2 outline-gray-300 rounded-lg ">
+    <div className="flex flex-col h-full p-10 w-full relative justify-between outline outline-1 outline-gray-400 rounded-lg ">
       <Rooms modalOpen={modalOpen} />
       {!modalOpen && (
         <div className="flex gap-2">

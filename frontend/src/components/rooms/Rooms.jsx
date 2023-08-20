@@ -18,8 +18,8 @@ export default function Rooms({ modalOpen }) {
   if (rooms.length == 0) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <h1 className="text-xl text-gray-500">
-          <i>No Games In Progress! Maybe Invite A Friend Or Two!</i>
+        <h1 className="text-xl text-gray-500 font-light">
+          <i>No Games In Progress! Create a Room and invite A Friend Or Two!</i>
         </h1>
       </div>
     );

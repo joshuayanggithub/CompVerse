@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { socket } from "../../socket";
 import HeadCount from "../ui/HeadCount";
 
-export default function Online() {
+export default function OnlineStatus() {
   const [playersOnline, setPlayersOnline] = useState(0);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Online() {
   });
 
   return (
-    <div className="flex justify-between items-center h-[10%] w-full">
+    <div className="flex justify-between items-center h-full w-full">
       <div className="flex items-center justify-center gap-1">
         <div className="w-[5px] h-[5px] rounded-lg bg-green-500"></div>
         <div>{`Users Online: ${playersOnline}`}</div>

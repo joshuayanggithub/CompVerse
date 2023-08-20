@@ -37,22 +37,22 @@ export default function Chat() {
   }, []);
 
   return (
-    <div className="h-[90%] w-full outline outline-gray-300 outline-2 rounded-lg flex flex-col justify-between">
+    <div className="h-full w-full outline outline-gray-400 outline-1 rounded-lg flex flex-col justify-between">
       <div className="flex-col justify-start p-3">
         {userMessages.map((message, index) => (
           <Message data={message} key={index} />
         ))}
       </div>
-      <div className="flex justify-between bg-gray-100 h-10">
+      <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm z-10 outline-2 outline-transparent focus-within:outline-blue-400 ">
         <input
           ref={userInput}
           type="text"
           placeholder="Message..."
-          className="bg-inherit h-full w-full pl-2 rounded-lg rounded-r-none focus:outline-blue-500 border-3 z-10"
+          className="bg-inherit h-full w-full pl-2 rounded-lg focus:outline-none z-10"
           onKeyDown={sendMessageEnter}
         ></input>
         <button
-          className="rounded-sm bg-blue-300 w-10 flex items-center justify-center"
+          className="rounded-br-lg bg-turquoise w-10 flex items-center justify-center"
           onClick={sendMessage}
         >
           <FiSend size={25} color="#ffffff" />
