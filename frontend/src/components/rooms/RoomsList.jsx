@@ -4,7 +4,7 @@ import CreateRoomButton from "./CreateRoomButton";
 import CreateRoomModal from "./CreateRoomModal";
 import UsernameSelect from "../chat/usernameSelect";
 
-export default function RoomsList() {
+export default function RoomsList({ username }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ export default function RoomsList() {
       {!modalOpen && (
         <div className="flex gap-2">
           <CreateRoomButton modalOpen={modalOpen} setModalOpen={setModalOpen} />
-          <UsernameSelect />
+          <UsernameSelect username={username} />
         </div>
       )}
       {modalOpen && (

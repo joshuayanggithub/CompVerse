@@ -1,3 +1,6 @@
+import StatusMessage from "./StatusMessage";
+import UserMessage from "./UserMessage";
+
 export default function Message({ data }) {
   let date = toDateString();
 
@@ -14,15 +17,12 @@ export default function Message({ data }) {
   }
 
   return (
-    <div className="flex w-full justify-between items-center font-lg font-light leading-7">
-      <p className="w-full ">
-        <span className="font-semibold break-all">{`${data.userId.substring(
-          0,
-          5
-        )}: `}</span>
-        <span className="break-all">{`${data.message} `}</span>
-        <span className="text-gray-400 inline-block">{` ${date}`}</span>
-      </p>
-    </div>
+    <>
+      {data.type == "user" ? (
+        <UserMessage data={data} date={date} />
+      ) : (
+        <StatusMessage data={data} date={date} />
+      )}
+    </>
   );
 }

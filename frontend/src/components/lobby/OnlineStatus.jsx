@@ -7,7 +7,6 @@ export default function OnlineStatus() {
 
   useEffect(() => {
     socket.on("player:countChanged", (online) => {
-      console.log(online);
       setPlayersOnline(online);
     });
 

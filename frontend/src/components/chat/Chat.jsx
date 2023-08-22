@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { FiSend } from "react-icons/fi";
 
-export default function Chat() {
+export default function Chat({ username }) {
   const userInput = useRef();
-  const [userMessages, setUserMessages] = useState([]);
+  const [Messages, setMessages] = useState([]);
 
   function sendMessageEnter(event) {
     if (event.key === "Enter") {
@@ -16,30 +16,33 @@ export default function Chat() {
   function sendMessage() {
     let data = {
       message: userInput.current.value,
-      userId: socket.id,
+      sessionID: socket.auth.sessionID,
       date: new Date(),
+      type: "user",
     };
-    socket.emit("chat message", data);
+    socket.emit("chat:message", data);
     userInput.current.value = "";
   }
 
   useEffect(() => {
-    socket.on("chat message", function (msgData) {
-      // console.log(
-      //   `recieved message ${msgData.message} from ${msgData.userId} at ${msgData.date}`
-      // );
-      setUserMessages((userMessages) => [...userMessages, msgData]); //something is going on behind the scenes
+    socket.on("chat:message", function (msgData) {
+      setMessages((Messages) => [...Messages, msgData]); //something is going on behind the scenes
+    });
+
+    socket.on("chat:status", function (statusData) {
+      setMessages((Messages) => [...Messages, statusData]);
     });
 
     return () => {
-      socket.off("chat message");
+      socket.off("chat:message");
+      socket.off("chat:status");
     };
   }, []);
 
   return (
     <div className="h-full w-full outline outline-gray-400 outline-1 rounded-lg flex flex-col justify-between">
       <div className="flex-col justify-start p-3">
-        {userMessages.map((message, index) => (
+        {Messages.map((message, index) => (
           <Message data={message} key={index} />
         ))}
       </div>

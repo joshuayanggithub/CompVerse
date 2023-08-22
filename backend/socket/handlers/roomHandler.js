@@ -4,5 +4,5 @@ module.exports = (socket, io) => {
   };
 
   socket.on("game:create", createGame);
-  socket.on("game:join", joinGame);
+  // socket.on("game:join", joinGame);
 };

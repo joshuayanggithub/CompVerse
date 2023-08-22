@@ -15,7 +15,7 @@ export default function Game() {
       userId: socket.id,
       date: new Date(),
     };
-    socket.emit("chat message", data);
+    socket.emit("chat:message", data);
   }
 
   return (
