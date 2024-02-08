@@ -1,10 +1,18 @@
-const { sessionStore } = require("./sessionHandler");
 module.exports = (socket, io) => {
-  const onMessage = (msgData) => {
-    msgData.username = sessionStore.findSession(msgData.sessionID).username;
-    msgData.sessionID = null;
-    io.emit("chat:message", msgData); //send to everyone
-  };
+  socket.on("chat:message", (messageData) => {
+    io.emit("chat:message", messageData); //send to everyone
+  });
 
-  socket.on("chat:message", onMessage);
+  socket.broadcast.emit("chat:status", {
+    message: `${socket.username} has connected`,
+    date: new Date(),
+  });
+
+  //on disconnect set session to inactive and broadcast status message
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("chat:status", {
+      message: `${socket.username} has disconnected`,
+      date: new Date(),
+    });
+  });
 };

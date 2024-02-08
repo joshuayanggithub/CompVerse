@@ -18,6 +18,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "eslint": "^8.52.0",
     "nodemon": "^3.0.1"
   }
 }

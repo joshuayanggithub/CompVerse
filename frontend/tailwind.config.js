@@ -5,10 +5,12 @@ export default {
     extend: {
       colors: {
         turquoise: "#91CDE7",
+        status: "#43b7e8",
       },
     },
     fontFamily: {
       jost: ["Jost", "sans-serif"],
+      jockey: ["Jockey One", "sans-serif"],
     },
   },
   plugins: [],

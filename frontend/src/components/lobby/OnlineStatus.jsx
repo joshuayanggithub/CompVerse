@@ -13,7 +13,7 @@ export default function OnlineStatus() {
     return () => {
       socket.off("player:countChanged");
     };
-  });
+  }, []);
 
   return (
     <div className="flex justify-between items-center h-full w-full">

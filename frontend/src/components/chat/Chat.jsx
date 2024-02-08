@@ -1,22 +1,17 @@
 import { socket } from "../../socket";
 import { useEffect, useRef, useState } from "react";
-import Message from "./Message";
+import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
 
 export default function Chat({ username }) {
   const userInput = useRef();
   const [Messages, setMessages] = useState([]);
 
-  function sendMessageEnter(event) {
-    if (event.key === "Enter") {
-      sendMessage();
-    }
-  }
-
   function sendMessage() {
     let data = {
       message: userInput.current.value,
-      sessionID: socket.auth.sessionID,
+      userID: socket.auth.userID,
+      username,
       date: new Date(),
       type: "user",
     };
@@ -52,7 +47,11 @@ export default function Chat({ username }) {
           type="text"
           placeholder="Message..."
           className="bg-inherit h-full w-full pl-2 rounded-lg focus:outline-none z-10"
-          onKeyDown={sendMessageEnter}
+          onKeyDown={(event) => {
+            if (event.key == "Enter") {
+              sendMessage();
+            }
+          }}
         ></input>
         <button
           className="rounded-br-lg bg-turquoise w-10 flex items-center justify-center"

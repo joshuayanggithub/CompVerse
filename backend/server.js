@@ -1,7 +1,7 @@
 const http = require("http");
 const app = require("./app");
 const server = http.createServer(app);
-const socket = require("./socket/socketManager");
+const socket = require("./socket/socketInit");
 const dotenv = require("dotenv");
 
 //configure environment variables

@@ -32,8 +32,8 @@ export default function CreateRoomModal({ setModalOpen }) {
     if (sanitizeData()) return;
     const roomData = {
       competition: competitionRef.current.value,
-      gameLength: gameLengthRef.current.value,
-      gameName: gameNameRef.current.value,
+      matchLength: gameLengthRef.current.value,
+      roomName: gameNameRef.current.value,
     };
     console.log(roomData);
     socket.emit("game:create", roomData);

@@ -6,9 +6,9 @@ export default function Message({ data }) {
 
   function toDateString() {
     let d = new Date(data.date);
-
     let hours = d.getHours();
     let minutes = d.getMinutes();
+    //formatting date object
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;

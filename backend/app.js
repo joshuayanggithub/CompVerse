@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public"))); //set static folder to public
 
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.send("App started");
 });
 
 module.exports = app;

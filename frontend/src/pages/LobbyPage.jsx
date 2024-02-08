@@ -10,20 +10,17 @@ export default function LobbyPage() {
   const [username, setUsername] = useState();
 
   useEffect(() => {
-    socket.on("session", ({ sessionID, userID, username }) => {
-      // attach the session ID to the next reconnection attempts, session null will be dealt with server-side
-      socket.auth = { sessionID };
-      // store it in the localStorage
-      localStorage.setItem("sessionID", sessionID);
-      // save the ID of the user
-      socket.userID = userID;
-      socket.username = username;
-      // console.log(username);
+    socket.on("connect", () => {
+      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    });
+
+    socket.on("user:newid", ({ userID, username }) => {
       setUsername(username);
     });
 
     return () => {
-      socket.off("session");
+      socket.off("chat:message");
+      socket.off("user:newid");
     };
   }, []);
 
@@ -34,7 +31,7 @@ export default function LobbyPage() {
           <Header />
         </div>
         <div className="h-[95%]">
-          <RoomsList username={username} />
+          <RoomsList username={username} setUsername={setUsername} />
         </div>
       </div>
       <div className="flex flex-col h-full w-1/4 justify-center ">

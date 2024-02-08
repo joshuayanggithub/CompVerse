@@ -1,4 +1,4 @@
-class Room {
+module.exports = class Room {
   constructor(roomName, competition, matchLength) {
     this.roomName = this.roomName;
     this.competition = this.competition;
@@ -7,7 +7,6 @@ class Room {
     this.problemData = [];
     this.gameStarted = false;
     this.players = [];
-    this.socket = socket;
   }
 
   joinRoom(player) {
@@ -25,4 +24,4 @@ class Room {
   }
 
   sendPublicInfo() {}
-}
+};

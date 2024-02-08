@@ -3,9 +3,10 @@ const socketio = require("socket.io");
 const registerChatHandler = require("./handlers/chatHandler");
 const registerRoomHandler = require("./handlers/roomHandler");
 const {
-  registerSessionHandler,
-  initializeSession,
-} = require("./handlers/sessionHandler");
+  // registerSessionHandler,
+  authorizeUser,
+  registerPlayerHandler,
+} = require("./handlers/playerHandler");
 
 //allow socket.io to mount to http server
 exports.initSocketServer = function (server) {
@@ -15,13 +16,13 @@ exports.initSocketServer = function (server) {
     },
   });
 
-  //register middleware for session handling prior to connection
-  io.use(initializeSession);
+  //A middleware function is a function that gets executed for every incoming connection.
+  io.use(authorizeUser);
 
   //connection handler bundled
   const onConnection = (socket) => {
     //register all event handlers
-    registerSessionHandler(socket, io);
+    registerPlayerHandler(socket, io);
     registerChatHandler(socket, io);
     registerRoomHandler(socket, io);
   };

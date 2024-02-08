@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { socket } from "../../socket";
 
-export default function UsernameSelect({ username }) {
-  const [name, setName] = useState();
-
-  useEffect(() => {
-    setName(username);
-  }, [username]);
-
+export default function UsernameSelect({ username, setUsername }) {
   function switchName(e) {
     let newName = e.value;
+    console.log(e.value);
     let data = {
       username: newName,
-      sessionID: socket.auth.sessionID,
+      userID: socket.auth.userID,
     };
-    socket.emit("player:usernameChange", data);
-    setName(newName);
+    // socket.emit("player:usernameChange", data);
+    console.log(newName);
+    socket.username = newName;
+    console.log(socket.username);
+    setUsername(newName);
   }
 
   return (
@@ -26,8 +24,9 @@ export default function UsernameSelect({ username }) {
         type="text"
         placeholder="Username: "
         className="w-full h-full rounded-lg bg-inherit focus:outline-none"
-        value={name}
-        onChange={(e) => switchName(e)}
+        value={username}
+        readOnly={true}
+        // onChange={(e) => switchName(e)}
       ></input>
     </div>
   );
