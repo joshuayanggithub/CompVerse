@@ -10,7 +10,6 @@ export default function Chat({ username }) {
   function sendMessage() {
     let data = {
       message: userInput.current.value,
-      userID: socket.auth.userID,
       username,
       date: new Date(),
       type: "user",
@@ -32,7 +31,7 @@ export default function Chat({ username }) {
       socket.off("chat:message");
       socket.off("chat:status");
     };
-  }, []);
+  });
 
   return (
     <div className="h-full w-full outline outline-gray-400 outline-1 rounded-lg flex flex-col justify-between">

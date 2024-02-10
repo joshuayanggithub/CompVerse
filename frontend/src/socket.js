@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 const URL = import.meta.env.PROD ? undefined : "http://localhost:4000"; //4000 is my node.js server with the attatched socket.io server
 
 const userID = localStorage.getItem("userID"); //null if not found
+console.log(userID);
 
 export const socket = io(URL, {
   auth: { userID },

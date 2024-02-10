@@ -3,17 +3,9 @@ import { FiUser } from "react-icons/fi";
 import { socket } from "../../socket";
 
 export default function UsernameSelect({ username, setUsername }) {
-  function switchName(e) {
+  async function switchName(e) {
     let newName = e.value;
-    console.log(e.value);
-    let data = {
-      username: newName,
-      userID: socket.auth.userID,
-    };
     // socket.emit("player:usernameChange", data);
-    console.log(newName);
-    socket.username = newName;
-    console.log(socket.username);
     setUsername(newName);
   }
 
@@ -25,8 +17,7 @@ export default function UsernameSelect({ username, setUsername }) {
         placeholder="Username: "
         className="w-full h-full rounded-lg bg-inherit focus:outline-none"
         value={username}
-        readOnly={true}
-        // onChange={(e) => switchName(e)}
+        onChange={(e) => switchName(e)}
       ></input>
     </div>
   );

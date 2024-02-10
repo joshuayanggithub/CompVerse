@@ -7,22 +7,27 @@ import RoomsList from "../components/rooms/RoomsList";
 import { socket } from "../socket";
 
 export default function LobbyPage() {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    socket.on("connect", () => {});
+
+    socket.on("player:ID", (user) => {
+      localStorage.setItem("userID", user.userID);
+      setUsername(user[0].username);
     });
 
-    socket.on("user:newid", ({ userID, username }) => {
-      setUsername(username);
+    socket.on("player:data", (user) => {
+      setUsername(user[0].username);
     });
 
     return () => {
       socket.off("chat:message");
       socket.off("user:newid");
+      socket.off("player:ID");
+      socket.off("player:data");
     };
-  }, []);
+  });
 
   return (
     <div className="flex w-full h-full p-5 box-border gap-3">

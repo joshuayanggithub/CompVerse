@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("../../models/usersModel");
 const { v4: uuidv4 } = require("uuid");
 const usernameGenerator = require("unique-username-generator");
 
@@ -12,18 +13,28 @@ exports.registerPlayerHandler = (socket, io) => {
   });
 };
 
+const createNewUser = async (socket) => {
+  const userID = uuidv4();
+  const randUsername = usernameGenerator.generateUsername();
+  await User.create({ userID, username: randUsername });
+  socket.emit("player:ID", { userID, username: randUsername });
+};
+
 //register session before connection
-exports.authorizeUser = (socket, next) => {
+exports.authorizeUser = async (socket, next) => {
   //we can attach any object we want to this auth object, as is done on the client side. Otherwise this would simply be a null value.
   const userID = socket.handshake.auth.userID;
-  console.log(userID);
-  if (!userID) {
-    //this means localStorage does not have that userID
-    const userID = uuidv4();
-    const randUsername = usernameGenerator.generateUsername();
-    userData = { userID, username: randUsername };
-    socket.username = randUsername;
-    socket.emit("user:newid", userData);
+  try {
+    const user = await User.find({ userID });
+    if (user.length == 0) {
+      await createNewUser(socket);
+    } else {
+      //already have this user
+      socket.emit("player:data", user);
+    }
+  } catch (error) {
+    // console.error(error);
+    await createNewUser(socket);
   }
   next();
 };
