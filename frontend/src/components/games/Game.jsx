@@ -1,7 +1,7 @@
 import Chat from "../chat/Chat";
 import GameProblem from "./GameProblem";
 import GameUserList from "./GameUserList";
-import { socket } from "../../socket";
+import { socket } from "../../connection/socket";
 import { useState } from "react";
 import GameStartScreen from "./GameStartScreen";
 
@@ -21,18 +21,12 @@ export default function Game() {
   return (
     <div className="flex flex-col w-full h-full p-5 box-border gap-3">
       <div className="flex w-full h-5/6 justify-center ">
-        {gameStarted ? (
-          <GameProblem />
-        ) : (
-          <GameStartScreen playersJoined={playersJoined} />
-        )}
+        {gameStarted ? <GameProblem /> : <GameStartScreen playersJoined={playersJoined} />}
         <div className="flex flex-col h-full w-1/4 justify-center ">
           <Chat />
         </div>
       </div>
-      <div className="flex w-full h-1/6 justify-center ">
-        {gameStarted && <GameUserList />}
-      </div>
+      <div className="flex w-full h-1/6 justify-center ">{gameStarted && <GameUserList />}</div>
     </div>
   );
 }

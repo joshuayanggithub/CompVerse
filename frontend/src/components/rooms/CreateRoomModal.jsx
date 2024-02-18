@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { socket } from "../../socket";
+import { socket } from "../../connection/socket";
 import { GrFormClose } from "react-icons/gr";
 import ButtonWrapper from "../ui/ButtonWrapper";
 import { AiOutlinePlusCircle } from "react-icons/ai";
@@ -36,7 +36,7 @@ export default function CreateRoomModal({ setModalOpen }) {
       roomName: gameNameRef.current.value,
     };
     console.log(roomData);
-    socket.emit("game:create", roomData);
+    socket.emit("room:create", roomData);
     setModalOpen(false);
   }
   function closeRoom() {

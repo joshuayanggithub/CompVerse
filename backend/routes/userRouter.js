@@ -1,8 +1,14 @@
 const express = require("express");
-const usersController = require("../controllers/usersController");
+const userController = require("../controllers/userController");
 
-const router = new express.Router({ mergeParams: true });
+const router = new express.Router(); //use current route
 
-router.route("/:userID").patch(usersController.updateUsername);
+router.route("").post(userController.createUser).get(userController.getAllUsers);
+
+router.route("/username").get(userController.checkUsername);
+
+router.route("/user-stats").get(userController.getUserStats);
+
+router.route("/:userID").get(userController.getUser).patch(userController.updateUsername);
 
 module.exports = router;

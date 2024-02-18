@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         turquoise: "#91CDE7",
+        darkturquoise: "#74A4B8",
         status: "#43b7e8",
       },
       keyframes: {

@@ -1,5 +1,5 @@
 import Room from "./Room";
-import { socket } from "../../socket";
+import { socket } from "../../connection/socket";
 import { useEffect, useState } from "react";
 
 export default function Rooms({ modalOpen }) {
@@ -25,19 +25,9 @@ export default function Rooms({ modalOpen }) {
     );
   } else {
     return (
-      <div
-        className={`grid grid-cols-2 content-start w-full gap-5 h-[90%] ${
-          modalOpen && "blur-[1px]"
-        }`}
-      >
+      <div className={`grid grid-cols-2 content-start w-full gap-5 h-[90%] ${modalOpen && "blur-[1px]"}`}>
         {rooms.map((room, index) => {
-          return (
-            <Room
-              roomName={room.gameName}
-              roomGame={room.competition}
-              key={index}
-            />
-          );
+          return <Room roomName={room.gameName} roomGame={room.competition} key={index} />;
         })}
       </div>
     );

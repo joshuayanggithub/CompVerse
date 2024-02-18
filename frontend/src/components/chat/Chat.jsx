@@ -1,10 +1,12 @@
-import { socket } from "../../socket";
-import { useEffect, useRef, useState } from "react";
+import { socket } from "../../connection/socket";
+import { useContext, useEffect, useRef, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
 
-export default function Chat({ username }) {
+export default function Chat() {
   const userInput = useRef();
+  const { username } = useContext(UserContext);
   const [Messages, setMessages] = useState([]);
 
   function sendMessage() {
@@ -37,7 +39,7 @@ export default function Chat({ username }) {
     <div className="h-full w-full outline outline-gray-400 outline-1 rounded-lg flex flex-col justify-between">
       <div className="flex-col justify-start p-3">
         {Messages.map((message, index) => (
-          <Message data={message} key={index} />
+          <Message data={message} key={index} username={username} />
         ))}
       </div>
       <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm z-10 outline-2 outline-transparent focus-within:outline-blue-400 ">
@@ -52,10 +54,7 @@ export default function Chat({ username }) {
             }
           }}
         ></input>
-        <button
-          className="rounded-br-lg bg-turquoise w-10 flex items-center justify-center"
-          onClick={sendMessage}
-        >
+        <button className="rounded-br-lg bg-turquoise w-10 flex items-center justify-center" onClick={sendMessage}>
           <FiSend size={25} color="#ffffff" />
         </button>
       </div>

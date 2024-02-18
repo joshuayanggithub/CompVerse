@@ -4,14 +4,14 @@ module.exports = (socket, io) => {
   });
 
   socket.broadcast.emit("chat:status", {
-    message: `${socket.username} has connected`,
+    message: `${socket.handshake.auth.username} has connected`,
     date: new Date(),
   });
 
   //on disconnect set session to inactive and broadcast status message
   socket.on("disconnect", () => {
     socket.broadcast.emit("chat:status", {
-      message: `${socket.username} has disconnected`,
+      message: `${socket.handshake.auth.username} has disconnected`,
       date: new Date(),
     });
   });
