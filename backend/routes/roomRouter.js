@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const questionController = require("../controllers/roomController");
+const roomController = require("../controllers/roomController");
 
 const router = new express.Router();
 
-router.route("/room").post(questionController.createRoom);
+router.route("").post(roomController.createRoom).get(roomController.getAllRooms);
+
+router.route("/:roomID").get(roomController.getRoom);
 
 module.exports = router;

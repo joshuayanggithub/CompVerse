@@ -32,8 +32,9 @@ export default function CreateRoomModal({ setModalOpen }) {
     if (sanitizeData()) return;
     const roomData = {
       competition: competitionRef.current.value,
-      matchLength: gameLengthRef.current.value,
+      gameLength: Number(gameLengthRef.current.value),
       roomName: gameNameRef.current.value,
+      userID: localStorage.getItem("userID"),
     };
     console.log(roomData);
     socket.emit("room:create", roomData);
@@ -77,7 +78,7 @@ export default function CreateRoomModal({ setModalOpen }) {
         <option value="5">5 Problems</option>
         <option value="10">10 Problems</option>
         <option value="20">20 Problems</option>
-        <option value="freeplay">Free Play</option>
+        {/* <option value="freeplay">Free Play</option> */}
       </select>
       <input
         type="text"

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/userRouter");
+const roomRouter = require("./routes/roomRouter");
 const questionRouter = require("./routes/questionRouter");
 
 const app = express();
@@ -13,5 +14,6 @@ app.use(express.static(path.join(__dirname, "public"))); //set static folder to 
 
 app.use("/api/user", userRouter);
 app.use("/api/question", questionRouter);
+app.use("/api/room", roomRouter);
 
 module.exports = app;

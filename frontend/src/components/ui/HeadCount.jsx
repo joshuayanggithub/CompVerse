@@ -1,29 +1,27 @@
-export default function HeadCount({ online }) {
-  let headCount = Math.min(10, online);
-  let baseStyle = "w-8 h-8 absolute";
+export default function HeadCount({ online, maxHeadCount, size, style }) {
+  let headCount = Math.min(maxHeadCount, online);
+  let baseStyle = `w-${size} h-${size} absolute`;
   const styleVariants = [
     //DYNAMIC STYLING IS IMPOSSIBLE IN TAILWIND
-    `${baseStyle} right-[1rem]`,
-    `${baseStyle} right-[2rem]`,
-    `${baseStyle} right-[3rem]`,
-    `${baseStyle} right-[4rem]`,
-    `${baseStyle} right-[5rem]`,
-    `${baseStyle} right-[6rem]`,
-    `${baseStyle} right-[7rem]`,
-    `${baseStyle} right-[8rem]`,
-    `${baseStyle} right-[9rem]`,
-    `${baseStyle} right-[10rem]`,
+    `${baseStyle} right-[1rem] ${style}`,
+    `${baseStyle} right-[2rem] ${style}`,
+    `${baseStyle} right-[3rem] ${style}`,
+    `${baseStyle} right-[4rem] ${style}`,
+    `${baseStyle} right-[5rem] ${style}`,
+    `${baseStyle} right-[6rem] ${style}`,
+    `${baseStyle} right-[7rem] ${style}`,
+    `${baseStyle} right-[8rem] ${style} `,
+    `${baseStyle} right-[9rem] ${style}`,
+    `${baseStyle} right-[10rem] ${style}`,
   ];
 
   return (
-    <div className="relative w-[50%] flex items-center">
+    <div className={`relative w-[50%] flex items-center`}>
       {[...Array(headCount)].map((e, i) => {
-        return (
-          <img src="/anonymous.avif" className={styleVariants[i]} key={i} />
-        );
+        return <img src="/anonymous.avif" className={styleVariants[i]} key={i} />;
       })}
-      {online - headCount != 0 && (
-        <div className="font-lg absolute -right-0">
+      {online - headCount != 0 && ( //THIS IS IMPORTANT - NUMBER OF ADDITIONAL PLAYERS THAT YOU CANNOT DISPLAY IMAGE WITH
+        <div className={`font-lg absolute -right-0`}>
           <span>+</span>
           <span>{online - headCount}</span>
         </div>

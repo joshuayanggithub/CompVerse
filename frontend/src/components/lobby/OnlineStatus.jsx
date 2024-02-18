@@ -21,7 +21,7 @@ export default function OnlineStatus() {
         <div className="w-[5px] h-[5px] rounded-lg bg-green-500"></div>
         <div>{`Users Online: ${playersOnline}`}</div>
       </div>
-      <HeadCount online={playersOnline} />
+      <HeadCount online={playersOnline} maxHeadCount={10} size={8} />
     </div>
   );
 }

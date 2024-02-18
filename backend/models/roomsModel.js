@@ -5,6 +5,8 @@ const roomSchema = new Schema({
   roomName: { type: String, required: true },
   // roomSettings: { type: Schema.Types.ObjectId, ref: "User" },
   users: { type: Array },
+  gameLength: { type: Number, required: true },
+  competition: { type: String, required: true },
   started: { type: Boolean, default: false },
   ongoing: { type: Boolean, default: true },
   scoreBoard: { type: Array },

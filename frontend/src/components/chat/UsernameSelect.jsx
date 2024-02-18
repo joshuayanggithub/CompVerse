@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { FiUser } from "react-icons/fi";
 import LoadingSpinner from "../ui/LoadingSpinner";

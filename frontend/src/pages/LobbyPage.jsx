@@ -7,6 +7,7 @@ import RoomsList from "../components/rooms/RoomsList";
 
 import { socket } from "../connection/socket";
 import { authorizeUser } from "../connection/auth";
+import StatsSummary from "../components/lobby/StatsSummary";
 
 export default function LobbyPage() {
   const [username, setUsername] = useState("");
@@ -45,19 +46,22 @@ export default function LobbyPage() {
   return (
     <UserContext.Provider value={{ username, setUsername }}>
       <div className="flex w-full h-full p-5 box-border gap-3">
-        <div className="flex flex-col h-full w-3/4 justify-center ">
+        <div className="flex flex-col h-full w-3/4 ">
           <div className="h-[5%]">
             <Header />
+          </div>
+          <div className="h-[3%]">
+            <StatsSummary />
           </div>
           <div className="h-[95%]">
             <RoomsList />
           </div>
         </div>
-        <div className="flex flex-col h-full w-1/4 justify-center ">
-          <div className="h-[5%] w-full">
+        <div className="flex flex-col h-full w-1/4 justify-end ">
+          <div className="h-[3%] w-full">
             <OnlineStatus />
           </div>
-          <div className="h-[95%]">
+          <div className="h-[92%]">
             <Chat />
           </div>
         </div>
