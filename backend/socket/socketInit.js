@@ -4,7 +4,7 @@ const registerChatHandler = require("./handlers/chatHandler");
 const registerRoomHandler = require("./handlers/roomHandler");
 const {
   // registerSessionHandler,
-  authorizeUser,
+  // authorizeUser,
   registerUserHandler,
 } = require("./handlers/userHandler");
 
@@ -17,12 +17,11 @@ exports.initSocketServer = function (server) {
   });
 
   //1. A middleware function is a function that gets executed for every incoming connection.
-  io.use(authorizeUser); //MIDDLEWRE IS EXTREMELY IMPORTANT
+  // io.use(authorizeUser); //MIDDLEWRE IS EXTREMELY IMPORTANT
 
   //2. connection handler bundled
   const onConnection = (socket) => {
     //register all event handlers
-    console.log(socket.handshake.auth);
     registerUserHandler(socket, io);
     registerChatHandler(socket, io);
     registerRoomHandler(socket, io);

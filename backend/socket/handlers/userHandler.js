@@ -15,33 +15,33 @@ exports.registerUserHandler = (socket, io) => {
   });
 };
 
-async function createNewUser() {
-  try {
-    const response = await fetch(`${process.env.API_URL_DEV}api/user`, {
-      method: "POST",
-      body: JSON.stringify(),
-    });
-    return response.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function createNewUser() {
+//   try {
+//     const response = await fetch(`${process.env.API_URL_DEV}api/user`, {
+//       method: "POST",
+//       body: JSON.stringify(),
+//     });
+//     return response.json();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
-//register session before connection
-exports.authorizeUser = async (socket, next) => {
-  //we can attach any object we want to this auth object, as is done on the client side. Otherwise this would simply be a null value.
-  const userID = socket.handshake.auth.userID;
-  try {
-    const user = await User.findOne({ userID });
-    if (user) {
-      socket.emit("player:recieveData", user);
-    } else {
-      const user = await createNewUser(); //remember userID is in buffer format! use userIDString instead!
-      socket.emit("player:recieveData", user.data.user);
-    }
-  } catch (error) {
-    const user = await createNewUser(); //remember userID is in buffer format! use userIDString instead!
-    socket.emit("player:recieveData", user.data.user);
-  }
-  next();
-};
+// //register session before connection
+// exports.authorizeUser = async (socket, next) => {
+//   //we can attach any object we want to this auth object, as is done on the client side. Otherwise this would simply be a null value.
+//   const userID = socket.handshake.auth.userID;
+//   try {
+//     const user = await User.findOne({ userID });
+//     if (user) {
+//       socket.emit("player:recieveData", user);
+//     } else {
+//       const user = await createNewUser(); //remember userID is in buffer format! use userIDString instead!
+//       socket.emit("player:recieveData", user.data.user);
+//     }
+//   } catch (error) {
+//     const user = await createNewUser(); //remember userID is in buffer format! use userIDString instead!
+//     socket.emit("player:recieveData", user.data.user);
+//   }
+//   next();
+// };
