@@ -27,7 +27,7 @@ export default function StatsSummary() {
   });
 
   return (
-    <div className="w-full h-full font-jost text-gray-400 italic">
+    <div className="w-full h-full font-jost text-sm text-gray-500 italic font-light">
       <p>{`${currentDateString} - ${problems} Problems Solved All Time - ${games} Games Played All Time`}</p>
     </div>
   );

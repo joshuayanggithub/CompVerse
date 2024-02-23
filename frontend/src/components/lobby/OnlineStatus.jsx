@@ -19,9 +19,9 @@ export default function OnlineStatus() {
     <div className="flex justify-between items-center h-full w-full">
       <div className="flex items-center justify-center gap-1">
         <div className="w-[5px] h-[5px] rounded-lg bg-green-500"></div>
-        <div>{`Users Online: ${playersOnline}`}</div>
+        <h3 className="italic text-gray-600 text-sm font-light">{`${playersOnline} User${playersOnline == 1 ? "" : "s"} Online`}</h3>
       </div>
-      <HeadCount online={playersOnline} maxHeadCount={10} size={8} />
+      {/* <HeadCount online={playersOnline} maxHeadCount={10} size={7} style={""} /> */}
     </div>
   );
 }

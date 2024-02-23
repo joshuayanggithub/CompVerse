@@ -6,6 +6,7 @@ export default {
       colors: {
         turquoise: "#91CDE7",
         darkturquoise: "#74A4B8",
+        trophygold: "#ECAE53",
         status: "#43b7e8",
       },
       keyframes: {

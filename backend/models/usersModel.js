@@ -17,6 +17,7 @@ const userSchema = new Schema(
     problemsSolved: { type: Number, default: 0 },
     gamesWon: { type: Number, default: 0 },
     matchesPlayer: { type: Number, default: 0 },
+    online: { type: Boolean, default: false },
     rating: { type: Map, of: Number }, //map of different competitions
   },
   {

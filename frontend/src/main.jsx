@@ -8,12 +8,12 @@ import GamePage from "./pages/GamePage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import HowToPage from "./pages/HowToPage.jsx";
 import LeaderBoardsPage from "./pages/LeaderboardsPage.jsx";
-import LobbyPage from "./pages/LobbyPage.jsx";
+import PlayPage from "./pages/PlayPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LobbyPage />,
+    element: <PlayPage />,
     errorElement: <ErrorPage />,
   },
   {

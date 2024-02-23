@@ -1,3 +1,3 @@
-export default function Timer() {
-  return <div className="text-xl">00:34</div>;
+export default function Timer({ startingTime }) {
+  return <div className="text-xl">{startingTime}</div>;
 }

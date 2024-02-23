@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import Chat from "../components/chat/Chat";
 import Header from "../components/lobby/Header";
 import { UserContext } from "../contexts/UserContext";
-import OnlineStatus from "../components/lobby/OnlineStatus";
-import RoomsList from "../components/rooms/RoomsList";
+import Lobby from "../components/rooms/Lobby";
 
 import { socket } from "../connection/socket";
 import { authorizeUser } from "../connection/auth";
-import StatsSummary from "../components/lobby/StatsSummary";
+import ChatAndUsers from "../components/lobby/ChatAndUsers";
 
 export default function LobbyPage() {
   const [username, setUsername] = useState("");
@@ -45,24 +43,18 @@ export default function LobbyPage() {
 
   return (
     <UserContext.Provider value={{ username, setUsername }}>
-      <div className="flex w-full h-full p-5 box-border gap-3">
-        <div className="flex flex-col h-full w-3/4 ">
-          <div className="h-[5%]">
+      <div className="flex flex-col w-full h-full box-border py-5">
+        <div className="h-[10%] w-full">
+          <div className="h-full">
             <Header />
           </div>
-          <div className="h-[3%]">
-            <StatsSummary />
-          </div>
-          <div className="h-[95%]">
-            <RoomsList />
-          </div>
         </div>
-        <div className="flex flex-col h-full w-1/4 justify-end ">
-          <div className="h-[3%] w-full">
-            <OnlineStatus />
+        <div className="flex h-[90%] w-full justify-evenly items-center">
+          <div className="h-full w-[73%]">
+            <Lobby />
           </div>
-          <div className="h-[92%]">
-            <Chat />
+          <div className="h-full w-[23%]">
+            <ChatAndUsers />
           </div>
         </div>
       </div>

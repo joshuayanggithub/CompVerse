@@ -6,6 +6,10 @@
 @tailwind utilities;
 
 @layer base {
+  .font-outline-1 {
+    -webkit-text-stroke: 1px black;
+  }
+
   html {
     font-family: Jost, sans-serif;
   }

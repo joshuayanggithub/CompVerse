@@ -27,7 +27,7 @@ exports.registerUserHandler = (socket, io) => {
 //   }
 // }
 
-// //register session before connection
+//register session before connection
 // exports.authorizeUser = async (socket, next) => {
 //   //we can attach any object we want to this auth object, as is done on the client side. Otherwise this would simply be a null value.
 //   const userID = socket.handshake.auth.userID;

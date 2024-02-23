@@ -1,11 +1,8 @@
-import Chat from "../chat/Chat";
-import GameProblem from "./GameProblem";
-import GameUserList from "./GameUserList";
 import { socket } from "../../connection/socket";
 import { useState } from "react";
 import GameStartScreen from "./GameStartScreen";
 
-export default function Game() {
+export default function Game({ room }) {
   const [gameStarted, setGameStarted] = useState(false);
   const [playersJoined, setPlayersJoined] = useState([]);
 
@@ -18,15 +15,18 @@ export default function Game() {
     socket.emit("chat:message", data);
   }
 
+  function startGame() {
+    socket.emit("game:start");
+  }
+
+  function leaveGame() {
+    socket.emit("game:leave");
+  }
+
   return (
-    <div className="flex flex-col w-full h-full p-5 box-border gap-3">
-      <div className="flex w-full h-5/6 justify-center ">
-        {gameStarted ? <GameProblem /> : <GameStartScreen playersJoined={playersJoined} />}
-        <div className="flex flex-col h-full w-1/4 justify-center ">
-          <Chat />
-        </div>
-      </div>
-      <div className="flex w-full h-1/6 justify-center ">{gameStarted && <GameUserList />}</div>
+    <div className="flex flex-col h-full px-7 pb-7 pt-3 w-full relative  outline outline-1 outline-gray-400 rounded-lg ">
+      <div className="italic font-md text-gray-600 font-light ">{`Room ${""} / ${""}`}</div>
+      {!gameStarted && <GameStartScreen startGame={startGame} leaveGame={leaveGame} />}
     </div>
   );
 }

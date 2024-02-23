@@ -1,9 +1,11 @@
 import Room from "./Room";
 import { socket } from "../../connection/socket";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Rooms({ createRoom, joinRoom, setJoinRoom }) {
   const [rooms, setRooms] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -26,23 +28,14 @@ export default function Rooms({ createRoom, joinRoom, setJoinRoom }) {
     fetchAllRooms();
 
     socket.on("room:created", function (room) {
-      // try {
-      //   const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}api/room`, {
-      //     signal,
-      //     method: "GET",
-      //     headers: { "Content-Type": "application/json" }, //LITERALLY 30 MINUTES OF DEBUGGING
-      //   });
-      //   const result = await response.json();
-      //   setRooms((rooms) => [...rooms, result.data.room]);
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      // console.log(room);
       setRooms((rooms) => [...rooms, room]);
+      navigate(`/game/${room._id}`);
     });
 
+    // socket.on("room:joined", function (room) {});
+
     return () => {
-      socket.off("room:create");
+      // socket.off("room:create");
       socket.off("room:created");
       controller.abort();
     };
@@ -52,27 +45,38 @@ export default function Rooms({ createRoom, joinRoom, setJoinRoom }) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <h1 className="text-xl text-gray-500 font-light">
-          <i>No Games In Progress! Create a Room and invite A Friend Or Two!</i>
+          <i>Create a Room and invite A Friend Or Two!</i>
         </h1>
       </div>
     );
   } else {
     return (
-      <div className={`grid grid-cols-3 content-start w-full gap-5 h-[90%] ${createRoom && "blur-[1px]"}`}>
-        {rooms.map((room, index) => {
-          return (
-            <Room
-              roomName={room.roomName}
-              roomGame={room.competition}
-              joined={room.users.length}
-              started={room.started}
-              key={index}
-              joinRoom={joinRoom}
-              setJoinRoom={setJoinRoom}
-            />
-          );
-        })}
-      </div>
+      <>
+        <div className="flex w-full justify-between pb-3">
+          <div className="flex items-center gap-1 ">
+            <div className="w-[5px] h-[5px] rounded-lg bg-blue-300"></div>
+            <h3 className="italic text-gray-600 text-sm font-light">{`${rooms.length} Game Rooms In Progress...`}</h3>
+          </div>
+          <div className="flex items-center gap-1">
+            <h3 className="italic text-gray-600 text-sm font-light">Join or Create Room to Get Started!</h3>
+          </div>
+        </div>
+        <div className={`grid grid-cols-3 content-start w-full gap-10 h-[90%] ${createRoom && "blur-[1px]"}`}>
+          {rooms.map((room, index) => {
+            return (
+              <Room
+                roomName={room.roomName}
+                roomGame={room.competition}
+                joined={room.users.length}
+                started={room.started}
+                key={index}
+                joinRoom={joinRoom}
+                setJoinRoom={setJoinRoom}
+              />
+            );
+          })}
+        </div>
+      </>
     );
   }
 }

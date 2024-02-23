@@ -27,7 +27,6 @@ exports.updateUsername = async (req, res, next) => {
 
 exports.checkUsername = async (req, res, next) => {
   const user = await User.findOne({ username: req.query.username });
-  console.log(user);
   let exists = user != null;
   res.status(200).json({
     status: "success",
@@ -39,7 +38,7 @@ exports.checkUsername = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
-    let user = await User.findOne({ userID: req.params.userID });
+    let user = await User.findOne({ ...req.params, ...req.query });
     res.status(200).json({
       status: "success",
       data: {

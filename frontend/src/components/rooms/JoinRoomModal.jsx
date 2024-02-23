@@ -1,16 +1,32 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "../../connection/socket";
 import { GrFormClose } from "react-icons/gr";
 import ButtonWrapper from "../ui/ButtonWrapper";
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import ErrorWrapper from "../ui/ErrorWrapper";
+import { useNavigate } from "react-router-dom";
 
 export default function JoinRoomModal({ setModalOpen }) {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    socket.on("room:joined", function (room) {
+      // socket.join("")
+      socket.join(`${room._id}`);
+      navigate(`/room/${room._id}`);
+    });
+
+    return () => {
+      socket.off("room:joined");
+    };
+  }, []);
 
   function closeModal() {
     setModalOpen(false);
-    socket.emit("room:join");
+  }
+
+  function joinRoom() {
+    // socket.emit("room:join");
   }
 
   return (
@@ -19,7 +35,7 @@ export default function JoinRoomModal({ setModalOpen }) {
         <GrFormClose size={30} className="absolute top-2 left-2" />
       </button>
       {error != "" && <ErrorWrapper>{error}</ErrorWrapper>}
-      <ButtonWrapper onClick={closeModal} width={"w-1/3"}>
+      <ButtonWrapper onClick={joinRoom} width={"w-1/3"}>
         Join Room
       </ButtonWrapper>
     </div>
