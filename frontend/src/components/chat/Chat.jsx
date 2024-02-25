@@ -3,7 +3,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import MinimizeArrow from "../ui/MinimizeArrow";
 
 export default function Chat() {
@@ -39,7 +38,7 @@ export default function Chat() {
   });
 
   return (
-    <div className="h-full w-full flex flex-col justify-between ">
+    <div className={`${minimized ? "h-10" : "h-5/6"} w-full flex flex-col justify-between mt-[1px] outline outline-gray-400 outline-1 rounded-b-md rounded-t-none`}>
       {/* Chat Header */}
       <div className="flex items-center justify-between px-3 pt-3">
         <div className="flex items-center justify-center gap-1">
@@ -49,31 +48,29 @@ export default function Chat() {
         <MinimizeArrow minimized={minimized} setMinimized={setMinimized} />
       </div>
       {/* Chat Components */}
-      {!minimized && (
-        <div className="h-full flex flex-col justify-between">
-          <div className="flex-col justify-start px-5 overflow-scroll">
-            {Messages.map((message, index) => (
-              <Message data={message} key={index} username={username} />
-            ))}
-          </div>
-          <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm z-10 outline-2 outline-transparent focus-within:outline-blue-400 ">
-            <input
-              ref={userInput}
-              type="text"
-              placeholder="Message..."
-              className="bg-inherit h-full w-full pl-2 rounded-lg focus:outline-none z-10"
-              onKeyDown={(event) => {
-                if (event.key == "Enter") {
-                  sendMessage();
-                }
-              }}
-            ></input>
-            <button className="rounded-br-lg bg-turquoise w-10 flex items-center justify-center" onClick={sendMessage}>
-              <FiSend size={25} color="#ffffff" />
-            </button>
-          </div>
+      <div className={`${minimized && "hidden"} h-full flex flex-col justify-between overflow-hidden`}>
+        <div className="flex-col justify-start px-5 overflow-scroll h-[90%]">
+          {Messages.map((message, index) => (
+            <Message data={message} key={index} username={username} />
+          ))}
         </div>
-      )}
+        <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm z-10 outline-2 outline-transparent focus-within:outline-blue-400 ">
+          <input
+            ref={userInput}
+            type="text"
+            placeholder="Message..."
+            className="bg-inherit h-full w-full pl-2 rounded-lg focus:outline-none z-10"
+            onKeyDown={(event) => {
+              if (event.key == "Enter") {
+                sendMessage();
+              }
+            }}
+          ></input>
+          <button className="rounded-br-lg bg-turquoise w-10 flex items-center justify-center" onClick={sendMessage}>
+            <FiSend size={25} color="#ffffff" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

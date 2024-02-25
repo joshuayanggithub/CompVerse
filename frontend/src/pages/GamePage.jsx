@@ -1,5 +1,5 @@
 import Game from "../components/games/Game";
-import ChatAndUsers from "../components/lobby/ChatAndUsers";
+import ChatAndUserList from "../components/lobby/ChatAndUserList";
 import Header from "../components/lobby/Header";
 
 export default function GamePage() {
@@ -15,7 +15,7 @@ export default function GamePage() {
           <Game />
         </div>
         <div className="h-full w-[23%]">
-          <ChatAndUsers />
+          <ChatAndUserList />
         </div>
       </div>
     </div>

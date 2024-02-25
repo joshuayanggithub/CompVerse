@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { socket } from "../../connection/socket";
-import HeadCount from "../ui/HeadCount";
+// import HeadCount from "../ui/HeadCount";
 
 export default function OnlineStatus() {
   const [playersOnline, setPlayersOnline] = useState(0);

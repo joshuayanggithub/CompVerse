@@ -5,7 +5,7 @@ import Lobby from "../components/rooms/Lobby";
 
 import { socket } from "../connection/socket";
 import { authorizeUser } from "../connection/auth";
-import ChatAndUsers from "../components/lobby/ChatAndUsers";
+import ChatAndUserList from "../components/lobby/ChatAndUserList";
 
 export default function LobbyPage() {
   const [username, setUsername] = useState("");
@@ -54,7 +54,7 @@ export default function LobbyPage() {
             <Lobby />
           </div>
           <div className="h-full w-[23%]">
-            <ChatAndUsers />
+            <ChatAndUserList />
           </div>
         </div>
       </div>

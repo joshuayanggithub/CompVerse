@@ -30,17 +30,21 @@ export default function UserList() {
     return () => {
       controller.abort();
     };
-  });
+  }, []);
 
   return (
-    <>
+    <div
+      className={`w-full ${minimized ? "h-10" : "h-1/6"} outline outline-gray-400 outline-1 rounded-t-md rounded-b-none  px-3 py-3 overflow-hidden`}
+    >
       <div className="flex items-center">
         <OnlineStatus />
         <MinimizeArrow minimized={minimized} setMinimized={setMinimized} />
       </div>
-      {users.map((user, index) => {
-        return <User username={user.username} score={0} key={index} />;
-      })}
-    </>
+      <div className={`overflow-scroll ${minimized && "hidden"}`}>
+        {users.map((user, index) => {
+          return <User username={user.username} score={0} key={index} />;
+        })}
+      </div>
+    </div>
   );
 }
