@@ -1,15 +1,12 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-const Question = require("../models/questionsModel");
+const { Question } = require("../models/questionsModel");
 
 dotenv.config({ path: "./config.env" });
 
 let DB_Connection_String = process.env.DATABASE_STRING;
-DB_Connection_String = DB_Connection_String.replace(
-  "<PASSWORD>",
-  process.env.DATABASE_PASSWORD
-);
+DB_Connection_String = DB_Connection_String.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);
 DB_Connection_String = DB_Connection_String.replace("<DATABASE_NAME>", "db");
 
 try {

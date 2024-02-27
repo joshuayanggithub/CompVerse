@@ -1,18 +1,20 @@
 import { socket } from "../../connection/socket";
 import { useState } from "react";
 import GameStartScreen from "./GameStartScreen";
+import { useLoaderData, useNavigate, Link } from "react-router-dom";
+import GameProblem from "./GameProblem";
+import GameTimer from "./GameTimer";
 
 export default function Game({ room }) {
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
   const [playersJoined, setPlayersJoined] = useState([]);
+  const result = useLoaderData();
+  const navigate = useNavigate();
 
-  function sendPlayerStatus({ status }) {
-    let data = {
-      message: status,
-      userId: socket.id,
-      date: new Date(),
-    };
-    socket.emit("chat:message", data);
+  console.log(result);
+
+  if (result.room == undefined) {
+    navigate("/");
   }
 
   function startGame() {
@@ -25,8 +27,8 @@ export default function Game({ room }) {
 
   return (
     <div className="flex flex-col h-full px-7 pb-7 pt-3 w-full relative  outline outline-1 outline-gray-400 rounded-lg ">
-      <div className="italic font-md text-gray-600 font-light ">{`Room ${""} / ${""}`}</div>
-      {!gameStarted && <GameStartScreen startGame={startGame} leaveGame={leaveGame} />}
+      {!gameStarted && <GameStartScreen startGame={startGame} leaveGame={leaveGame} room={result.room} />}
+      {gameStarted && <GameProblem />}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { socket } from "../../connection/socket";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function Rooms({ createRoom, joinRoom, setJoinRoom }) {
+export default function Rooms({ createRoom }) {
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
@@ -45,7 +45,7 @@ export default function Rooms({ createRoom, joinRoom, setJoinRoom }) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <h1 className="text-xl text-gray-500 font-light">
-          <i>Create a Room and invite A Friend Or Two!</i>
+          <i>Create a Room or Invite A Friend Or Two!</i>
         </h1>
       </div>
     );
@@ -61,19 +61,9 @@ export default function Rooms({ createRoom, joinRoom, setJoinRoom }) {
             <h3 className="italic text-gray-600 text-sm font-light">Join or Create Room to Get Started!</h3>
           </div>
         </div>
-        <div className={`grid grid-cols-3 content-start w-full gap-10 h-[90%] ${createRoom && "blur-[1px]"}`}>
+        <div className={`grid grid-cols-3 content-start w-full gap-10 h-[80%] overflow-scroll p-1 ${createRoom && "blur-[1px]"}`}>
           {rooms.map((room, index) => {
-            return (
-              <Room
-                roomName={room.roomName}
-                roomGame={room.competition}
-                joined={room.users.length}
-                started={room.started}
-                key={index}
-                joinRoom={joinRoom}
-                setJoinRoom={setJoinRoom}
-              />
-            );
+            return <Room room={room} key={index} />;
           })}
         </div>
       </>

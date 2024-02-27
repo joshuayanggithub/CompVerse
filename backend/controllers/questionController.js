@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
-const Question = require("../models/questionsModel");
+const { Question } = require("../models/questionsModel");
 
 exports.randomQuestion = async (req, res, next) => {
-  console.log(req.query);
   try {
     const randQuestion = await Question.find({
       competition: req.query.competition,

@@ -5,7 +5,7 @@ import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
 import MinimizeArrow from "../ui/MinimizeArrow";
 
-export default function Chat() {
+export default function Chat({ height }) {
   const userInput = useRef();
   const { username } = useContext(UserContext);
   const [Messages, setMessages] = useState([]);
@@ -27,18 +27,23 @@ export default function Chat() {
       setMessages((Messages) => [...Messages, msgData]); //something is going on behind the scenes
     });
 
+    socket.on("connect", function () {
+      setMessages((Messages) => [...Messages, { message: "You have connected!", date: new Date() }]);
+    });
+
     socket.on("chat:status", function (statusData) {
       setMessages((Messages) => [...Messages, statusData]);
     });
 
     return () => {
       socket.off("chat:message");
+      socket.off("connect");
       socket.off("chat:status");
     };
   });
 
   return (
-    <div className={`${minimized ? "h-10" : "h-5/6"} w-full flex flex-col justify-between mt-[1px] outline outline-gray-400 outline-1 rounded-b-md rounded-t-none`}>
+    <div className={`${minimized ? "h-10" : height} w-full flex flex-col justify-between mt-[1px] outline outline-gray-400 outline-1 rounded-b-md rounded-t-none z-0`}>
       {/* Chat Header */}
       <div className="flex items-center justify-between px-3 pt-3">
         <div className="flex items-center justify-center gap-1">
@@ -54,7 +59,7 @@ export default function Chat() {
             <Message data={message} key={index} username={username} />
           ))}
         </div>
-        <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm z-10 outline-2 outline-transparent focus-within:outline-blue-400 ">
+        <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm outline-2 outline-transparent focus-within:outline-blue-400 z-50 ">
           <input
             ref={userInput}
             type="text"

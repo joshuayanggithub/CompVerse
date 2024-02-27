@@ -1,17 +1,23 @@
 const mongoose = require("mongoose");
-const User = require("../../models/usersModel");
+const { User } = require("../../models/usersModel");
 const { v4: uuidv4 } = require("uuid");
 const usernameGenerator = require("unique-username-generator");
 const dotenv = require("dotenv");
 
 dotenv.config({ path: "./config.env" });
 
-exports.registerUserHandler = (socket, io) => {
+exports.registerUserHandler = async (socket, io) => {
   //broadcast status messages to chat to everybody EXCEPT SENDER
-  socket.emit("user:countChanged", socket.adapter.sids.size);
+  const user = await User.findOne({ userID: socket.handshake.auth.userID });
+  user.online = true;
+  await user.save();
+  io.emit("user:countChanged", socket.adapter.sids.size);
   //on disconnect set session to inactive and broadcast status message
-  socket.on("disconnect", () => {
-    socket.broadcast.emit("user:countChanged", socket.adapter.sids.size);
+  socket.on("disconnect", async () => {
+    const user = await User.findOne({ userID: socket.handshake.auth.userID });
+    user.online = false;
+    await user.save();
+    io.emit("user:countChanged", socket.adapter.sids.size);
   });
 };
 

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Room = require("../models/roomsModel");
-const User = require("../models/usersModel");
+const { Room } = require("../models/roomsModel");
+const { User } = require("../models/usersModel");
 
 exports.createRoom = async (req, res, next) => {
   const userID = req.query.userID; //actual user MUST HAVE CREATED ROOM
@@ -47,7 +47,7 @@ exports.getAllRooms = async (req, res, next) => {
 
 exports.getRoom = async (req, res, next) => {
   try {
-    const room = await Room.find({ _id: req.params.roomID });
+    const room = await Room.findOne({ _id: req.params.roomID });
     res.status(200).json({
       status: "success",
       data: {

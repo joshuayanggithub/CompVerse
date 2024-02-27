@@ -9,11 +9,17 @@ import HomePage from "./pages/HomePage.jsx";
 import HowToPage from "./pages/HowToPage.jsx";
 import LeaderBoardsPage from "./pages/LeaderboardsPage.jsx";
 import PlayPage from "./pages/PlayPage.jsx";
+import AboutUsPage from "./pages/AboutUsPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <PlayPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/aboutus",
+    element: <AboutUsPage />,
     errorElement: <ErrorPage />,
   },
   {
@@ -32,8 +38,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/game/:gameid",
+    path: "/game/:gameID",
     element: <GamePage />,
+    loader: async ({ params }) => {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}api/room/${params.gameID}`);
+      const responseJSON = await response.json();
+      return responseJSON.data;
+    },
     errorElement: <ErrorPage />,
   },
 ]);

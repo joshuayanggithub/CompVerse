@@ -33,4 +33,4 @@ userSchema.virtual("userIDString").get(function () {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+module.exports = { User, userSchema };

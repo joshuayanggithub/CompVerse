@@ -34,7 +34,7 @@ export default function CreateRoomModal({ setModalOpen }) {
       competition: competitionRef.current.value,
       gameLength: Number(gameLengthRef.current.value),
       roomName: gameNameRef.current.value,
-      userID: localStorage.getItem("userID"),
+      userID: socket.auth.userID,
     };
     console.log(roomData);
     socket.emit("room:create", roomData);
@@ -49,14 +49,7 @@ export default function CreateRoomModal({ setModalOpen }) {
       <button onClick={closeRoom}>
         <GrFormClose size={30} className="absolute top-2 left-2" />
       </button>
-      <select
-        name="game"
-        id="game"
-        className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
-        defaultValue={"notchosen"}
-        ref={competitionRef}
-        required
-      >
+      <select name="game" id="game" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" defaultValue={"notchosen"} ref={competitionRef} required>
         <option value="notchosen" disabled>
           Choose Competition
         </option>
@@ -64,14 +57,7 @@ export default function CreateRoomModal({ setModalOpen }) {
         <option value="Knowledge Bowl">Knowledge Bowl</option>
         <option value="Math">Math</option>
       </select>
-      <select
-        name="problems"
-        id="problems"
-        className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
-        defaultValue={"notchosen"}
-        ref={gameLengthRef}
-        required
-      >
+      <select name="problems" id="problems" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" defaultValue={"notchosen"} ref={gameLengthRef} required>
         <option value="notchosen" disabled>
           Choose Game Length
         </option>
@@ -80,12 +66,7 @@ export default function CreateRoomModal({ setModalOpen }) {
         <option value="20">20 Problems</option>
         {/* <option value="freeplay">Free Play</option> */}
       </select>
-      <input
-        type="text"
-        placeholder="Room Name"
-        className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
-        ref={gameNameRef}
-      ></input>
+      <input type="text" placeholder="Room Name" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" ref={gameNameRef}></input>
       {error != "" && <ErrorWrapper>{error}</ErrorWrapper>}
       <ButtonWrapper onClick={createRoom} width={"w-1/3"}>
         Create Game

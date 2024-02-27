@@ -22,10 +22,11 @@ exports.initSocketServer = function (server) {
   //2. connection handler bundled
   const onConnection = (socket) => {
     //register all event handlers
-    // console.log(socket.id);
+    console.log(socket.id);
     registerUserHandler(socket, io);
     registerChatHandler(socket, io);
     registerRoomHandler(socket, io);
   };
+
   io.on("connection", onConnection);
 };

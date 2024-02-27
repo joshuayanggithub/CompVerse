@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("../models/usersModel");
+const { User } = require("../models/usersModel");
 const { v4: uuidv4 } = require("uuid");
 const usernameGenerator = require("unique-username-generator");
 
@@ -57,7 +57,7 @@ exports.getUser = async (req, res, next) => {
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-    let users = await User.find({});
+    let users = await User.find(req.query);
     res.status(200).json({
       status: "success",
       data: {
@@ -104,7 +104,6 @@ exports.getUserStats = async (req, res, next) => {
         },
       },
     ]);
-    console.log(stats);
     res.status(200).json({
       status: "success",
       data: {

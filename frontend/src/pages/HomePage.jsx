@@ -13,13 +13,9 @@ export default function HomePage() {
             <h1 className="font-jockey text-8xl">Multiplayer, </h1>
             <h1 className="font-jockey text-8xl">Educational,</h1>
             <h1 className="font-jockey text-8xl"> and FUN</h1>
-            <p className="text-base font-jost">
-              Compete in head-to-head matches
-            </p>
+            <p className="text-base font-jost">Compete in head-to-head matches</p>
             <Link to="/">
-              <button className="bg-turquoise text-black text-5xl w-[70%] h-20 rounded-full font-jockey animate-jumpshaking">
-                Play Now
-              </button>
+              <button className="bg-turquoise text-black text-5xl w-[70%] h-20 rounded-full font-jockey animate-jumpshaking">Play Now</button>
             </Link>
           </div>
           <img className="h-[80%]" src="/competitions.png" />

@@ -5,7 +5,7 @@ export default function ChatAndUserList() {
   return (
     <div className="h-full w-full">
       <UserList />
-      <Chat />
+      <Chat height={"h-5/6"} />
     </div>
   );
 }
