@@ -19,6 +19,8 @@ exports.initSocketServer = function (server) {
   const onConnection = (socket) => {
     //register all event handlers
     console.log("New socket.io Connection: ", socket.id, socket.handshake.auth.username, socket.handshake.auth.userID, new Date());
+    socket.join("lobby");
+    console.log(io.sockets.adapter.rooms);
     registerUserHandler(socket, io);
     registerChatHandler(socket, io);
     registerRoomHandler(socket, io);

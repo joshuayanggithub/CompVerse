@@ -14,64 +14,75 @@ module.exports = async (socket, io) => {
       let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };
       users.set(userID, userData);
       const room = await Room.create({ competition, gameLength, roomName, users, roomLeader: userID, questions: [] });
+      //2.b User attribute reflects room
+      userCreator.room = room._id;
+      userCreator.save();
       //3. Update Socket Connection / Events
+      socket.leave("lobby");
       socket.join(room._id.toString());
       socket.emit("room:created", room.toJSON()); //mongoose document -> plain JS object conversion
       console.log(io.sockets.adapter.rooms);
       io.to(room._id.toString()).emit("room:countChanged", io.sockets.adapter.rooms.get(room._id.toString().size));
-      console.log(competition);
 
       //EXTRA: POPULATE QUESTIONS
       const randQuestions = await Question.aggregate([{ $match: { competition: `${competition}` } }, { $sample: { size: 10 } }]);
-      console.log(randQuestions);
       room.questions = randQuestions;
       room.save();
+    } catch (error) {
+      console.log(error);
+      socket.emit("error", error.toString());
+    }
+  };
+
+  const joinRoom = async (_id) => {
+    const userID = socket.handshake.auth.userID;
+    try {
+      //1. Find User and Add him to Room
+      // console.log(_id);
+      const roomJoining = await Room.findOne({ _id: _id });
+      const userJoining = await User.findOne({ userID: userID });
+      // console.log(roomJoining, userJoining);
+      roomJoining.users.set(userID, { username: userJoining.username, score: 0, buzzed: false, join: new Date() });
+      userJoining.room = roomJoining._id;
+      await roomJoining.save();
+      await userJoining.save();
+      //2. transport user to room
+      socket.emit("room:transport", roomJoining);
+      socket.join(roomJoining._id.toString());
+      //3. Update Socket
+      socket.emit("room:joined");
+      io.emit("room:countChanged", io.sockets.adapter.rooms.get(roomJoining._id.toString()).size);
     } catch (error) {
       console.log(error);
       socket.emit("error", error);
     }
   };
 
-  const joinRoom = async ({ room, userID }) => {
+  const leaveRoom = async () => {
+    const userID = socket.handshake.auth.userID;
     try {
-      // socket.join(`${room._id}`);
-      const roomJoining = await Room.findOne({ _id: room._id });
-      const userJoining = await User.findOne({ userID: userID });
-      roomJoining.users.push(userJoining);
-      await roomJoining.save();
-      socket.emit("room:transport", roomJoining);
-      socket.join(roomJoining._id.toString());
-      const numberPeople = io.sockets.adapter.rooms.get(roomJoining._id.toString()).size;
-      console.log(io.sockets.adapter.rooms);
-      console.log(socket.id);
-      setTimeout(() => {
-        io.emit("room:countChanged", numberPeople);
-        console.log(numberPeople);
-      }, 10000);
+      //1. Find UserLeaving
+      const userLeaving = await User.findOne({ userID: userID });
+      if (!userLeaving.room) return; //user is not in ANY room
+      //2. Delete User from Room's Map
+      const roomLeaving = await Room.findOne({ _id: userLeaving.room });
+      roomLeaving.users.delete(userLeaving.userID);
+      await roomLeaving.save();
+      socket.leave(userLeaving.room._id.toString());
+      //3. Delete Room from User Attribute
+      io.to(userLeaving.room._id.toString()).emit("room:countChanged", io.sockets.adapter.rooms.get(userLeaving.room._id.toString().size));
+      userLeaving.room = undefined;
+      await userLeaving.save();
     } catch (error) {
       socket.emit("error", error);
     }
   };
 
-  const leaveRoom = async ({ room, userID }) => {
-    try {
-      socket.leave(room._id.toString());
-      const roomLeaving = await Room.findOne({ _id: room._id });
-      roomLeaving.users.forEach(async (user, index) => {
-        if (roomLeaving.users.userIDString == userID) {
-          roomLeaving.users.splice(index, 1);
-          await roomLeaving.save();
-          return;
-        }
-      });
-      io.to(roomLeaving._id.toString()).emit("room:countChanged", io.sockets.adapter.rooms.get(roomLeaving._id.toString()));
-    } catch (error) {
-      socket.emit("error", error);
-    }
-  };
+  const autoLeaveRoom = async () => {};
 
   const startRoom = async () => {};
 
+  socket.on("disconnect", leaveRoom);
   socket.on("room:create", createRoom);
   socket.on("room:join", joinRoom);
   socket.on("room:leave", leaveRoom);

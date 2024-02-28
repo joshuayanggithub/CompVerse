@@ -1,9 +1,11 @@
 module.exports = (socket, io) => {
   socket.on("chat:message", (messageData) => {
-    io.emit("chat:message", messageData); //send to everyone
+    // console.log(socket.rooms);
+    io.to(messageData.room).emit("chat:message", messageData); //send to everyone
   });
 
   socket.broadcast.emit("chat:status", {
+    //everyone except the guy
     message: `${socket.handshake.auth.username} has connected`,
     date: new Date(),
   });

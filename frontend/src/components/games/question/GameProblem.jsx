@@ -25,7 +25,6 @@ export default function GameProblem() {
   return (
     <div className="h-full w-full flex flex-col items-center">
       <div className="flex w-full justify-between">
-        <div className="italic font-md text-gray-600 font-light ">{`Room ${2} / ${2} / ${0} out of ${2}`}</div>
         <GameTimer className="" startingTime={30} />
       </div>
 
@@ -45,7 +44,7 @@ export default function GameProblem() {
           )}
           {buzzedIn && !submitted && (
             <div className="flex w-full gap-2">
-              <input type="text" placeholder="Enter Answer" className="h-10 w-1/4 outline outline-2 outline-gray-300 rounded-lg p-5" ref={answerRef}></input>
+              <input type="text" placeholder="Enter Answer" className="h-10 w-1/4 outline outline-1 outline-gray-400 rounded-lg p-5" ref={answerRef}></input>
               <ButtonWrapper color={"bg-status"} onClick={submitAnswer}>
                 Submit Answer
               </ButtonWrapper>

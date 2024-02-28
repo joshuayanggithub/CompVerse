@@ -51,9 +51,7 @@ export default function UsernameSelect() {
       <FiUser size={20} />
       <input type="text" placeholder="Username: " className="w-full h-full rounded-lg bg-inherit focus:outline-none" value={changingUsername} onChange={(e) => changeUsername(e.target.value)}></input>
       {isValidating && <LoadingSpinner />}
-      <p className="absolute left-0 -top-6 transform text-red-400 font-jost ">
-        <em>{errorMessage}</em>
-      </p>
+      <p className="absolute left-0 -top-6 transform text-red-400 font-jost overflow-visible w-full italic">{errorMessage}</p>
     </div>
   );
 }

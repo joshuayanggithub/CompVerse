@@ -4,7 +4,7 @@ import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
 import MinimizeArrow from "../ui/MinimizeArrow";
 
-export default function Chat({ height }) {
+export default function Chat({ height, socketRoom }) {
   const userInput = useRef();
   const [Messages, setMessages] = useState([]);
   const [minimized, setMinimized] = useState(false);
@@ -16,6 +16,7 @@ export default function Chat({ height }) {
       username: socket.auth.username,
       date: new Date(),
       type: "user",
+      room: socketRoom,
     };
     socket.emit("chat:message", data);
     userInput.current.value = "";

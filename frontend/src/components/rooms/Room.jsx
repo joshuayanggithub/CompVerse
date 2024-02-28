@@ -9,7 +9,7 @@ export default function Room({ room }) {
   const navigate = useNavigate();
 
   const joinRoom = () => {
-    socket.emit("room:join", { room: room, userID: socket.auth.userID });
+    socket.emit("room:join", { _id: room._id });
   };
 
   useEffect(() => {

@@ -18,6 +18,7 @@ const userSchema = new Schema(
     gamesWon: { type: Number, default: 0 },
     matchesPlayer: { type: Number, default: 0 },
     online: { type: Boolean, default: false },
+    room: { type: Schema.Types.ObjectId },
     rating: { type: Map, of: Number }, //map of different competitions
   },
   {

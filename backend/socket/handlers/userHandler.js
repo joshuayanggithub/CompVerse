@@ -3,6 +3,7 @@ const { User } = require("../../models/usersModel");
 const { v4: uuidv4 } = require("uuid");
 const usernameGenerator = require("unique-username-generator");
 const dotenv = require("dotenv");
+const { Room } = require("../../models/roomsModel");
 
 dotenv.config({ path: "./config.env" });
 
@@ -33,7 +34,7 @@ exports.registerUserHandler = async (socket, io) => {
       io.emit("user:refresh");
     } catch (error) {
       console.log(error);
-      data.error = error;
+      data.error = error.toString();
       socket.emit("user:update", data);
     }
   };
