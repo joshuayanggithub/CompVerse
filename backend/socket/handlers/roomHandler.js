@@ -37,6 +37,7 @@ module.exports = async (socket, io) => {
   const joinRoom = async (_id) => {
     const userID = socket.handshake.auth.userID;
     try {
+      socket.leave("lobby");
       //1. Find User and Add him to Room
       // console.log(_id);
       const roomJoining = await Room.findOne({ _id: _id });
@@ -67,6 +68,9 @@ module.exports = async (socket, io) => {
       //2. Delete User from Room's Map
       const roomLeaving = await Room.findOne({ _id: userLeaving.room });
       roomLeaving.users.delete(userLeaving.userID);
+      if (roomLeaving.users.size == 0) {
+        roomLeaving.ongoing = false; //DELETE ROOM IF NO MORE USERS
+      }
       await roomLeaving.save();
       socket.leave(userLeaving.room._id.toString());
       //3. Delete Room from User Attribute
@@ -77,8 +81,6 @@ module.exports = async (socket, io) => {
       socket.emit("error", error);
     }
   };
-
-  const autoLeaveRoom = async () => {};
 
   const startRoom = async () => {};
 
