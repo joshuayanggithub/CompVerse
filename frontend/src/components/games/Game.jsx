@@ -1,9 +1,9 @@
 import { socket } from "../../connection/socket";
 import { useState } from "react";
-import GameStartScreen from "./GameStartScreen";
+import GameStartScreen from "./start/GameStartScreen";
 import { useLoaderData, useNavigate, Link } from "react-router-dom";
-import GameProblem from "./GameProblem";
-import GameTimer from "./GameTimer";
+import GameProblem from "./question/GameProblem";
+import GameTimer from "./question/GameTimer";
 
 export default function Game({ room }) {
   const [gameStarted, setGameStarted] = useState(true);

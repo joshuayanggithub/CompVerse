@@ -1,5 +1,5 @@
 import Chat from "../chat/Chat";
-import GameUserList from "./GameUserLIst";
+import GameUserList from "./users/GameUserList";
 
 export default function ChatAndGameUserList() {
   return (

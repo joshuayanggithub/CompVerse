@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Question from "./Question";
-import ButtonWrapper from "../ui/ButtonWrapper";
+import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import GameTimer from "./GameTimer";
 

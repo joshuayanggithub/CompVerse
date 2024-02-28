@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import OnlineStatus from "../lobby/OnlineStatus";
-import MinimizeArrow from "../ui/MinimizeArrow";
-import User from "../lobby/User";
-import GameOnlineStatus from "../lobby/GameOnlineStatus";
+import MinimizeArrow from "../../ui/MinimizeArrow";
+import User from "../../users/User";
+import GameOnlineStatus from "./GameOnlineStatus";
 
 export default function GameUserList() {
   const [minimized, setMinimized] = useState(false);

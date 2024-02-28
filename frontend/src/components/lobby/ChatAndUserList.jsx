@@ -1,11 +1,11 @@
 import Chat from "../chat/Chat";
-import UserList from "./UserList";
+import UserList from "../users/UserList";
 
 export default function ChatAndUserList() {
   return (
     <div className="h-full w-full">
-      <UserList />
-      <Chat height={"h-5/6"} />
+      <UserList height={"h-1/3"} />
+      <Chat height={"h-2/3"} />
     </div>
   );
 }

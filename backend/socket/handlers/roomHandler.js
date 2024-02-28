@@ -8,6 +8,7 @@ module.exports = async (socket, io) => {
     try {
       //1. Find User Who Created
       const userCreator = await User.findOne({ userID: userID });
+      //1.b Double Check User is Not in  New Room Seems to be Automatic
       //2. Create Room in db
       let users = new Map();
       let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };

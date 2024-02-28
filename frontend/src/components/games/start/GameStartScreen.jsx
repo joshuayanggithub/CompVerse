@@ -1,4 +1,4 @@
-import ButtonWrapper from "../ui/ButtonWrapper";
+import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 
 export default function GameStartScreen({ startGame, leaveGame }) {
   return (

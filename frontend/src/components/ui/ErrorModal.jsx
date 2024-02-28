@@ -1,4 +1,4 @@
-import ButtonWrapper from "./ButtonWrapper";
+import ButtonWrapper from "./wrappers/ButtonWrapper";
 
 export default function ErrorModal({ error, setError }) {
   return (

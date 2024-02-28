@@ -1,6 +1,6 @@
 import ChatAndGameUserList from "../components/games/ChatAndGameUserList";
 import Game from "../components/games/Game";
-import Header from "../components/lobby/Header";
+import Header from "../components/page/Header";
 
 export default function GamePage() {
   return (

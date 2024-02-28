@@ -21,7 +21,7 @@ export default function Rooms({ createRoom }) {
         const result = await response.json();
         setRooms(result.data.rooms);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 

@@ -1,4 +1,4 @@
-import Header from "../components/lobby/Header";
+import Header from "../components/page/Header";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {

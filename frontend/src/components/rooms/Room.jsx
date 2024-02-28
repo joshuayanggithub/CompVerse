@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ButtonWrapper from "../ui/ButtonWrapper";
+import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
 import RoomHeadCount from "../ui/RoomHeadCount";
 import { socket } from "../../connection/socket";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function Room({ room }) {
         <div className="text-black text-lg overflow-scroll">{"Room " + room.roomName}</div>
         <div className="text-gray-400 text-md font-light">{room.competition}</div>
         <div className="relative h-1/3 w-full">
-          <RoomHeadCount online={room.users.length} maxHeadCount={3} size={7} style={"-translate-x-1/2 "} />
+          <RoomHeadCount online={Object.keys(room.users).length} maxHeadCount={3} size={7} style={"-translate-x-1/2 "} />
         </div>
       </div>
       <div className="h-full w-1/2 flex justify-around items-center flex-col">

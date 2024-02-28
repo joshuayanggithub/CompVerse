@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { socket } from "../../connection/socket";
 import { GrFormClose } from "react-icons/gr";
-import ButtonWrapper from "../ui/ButtonWrapper";
+import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import ErrorWrapper from "../ui/ErrorWrapper";
+import ErrorWrapper from "../ui/wrappers/ErrorWrapper";
 
 export default function CreateRoomModal({ setModalOpen }) {
   const competitionRef = useRef();

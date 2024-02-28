@@ -13,10 +13,14 @@ export default function StatsSummary() {
     const signal = controller.signal;
 
     const fetchStats = async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}api/user/user-stats`, { signal, method: "GET", body: JSON.stringify() });
-      const results = await response.json();
-      setProblems(results.data.stats[0].problemsSolved);
-      setGames(results.data.stats[0].gamesPlayed);
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}api/user/user-stats`, { signal, method: "GET", body: JSON.stringify() });
+        const results = await response.json();
+        setProblems(results.data.stats[0].problemsSolved);
+        setGames(results.data.stats[0].gamesPlayed);
+      } catch (error) {
+        // console.error(error);
+      }
     };
 
     fetchStats();

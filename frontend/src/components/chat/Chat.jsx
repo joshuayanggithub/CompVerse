@@ -1,20 +1,19 @@
 import { socket } from "../../connection/socket";
-import { useContext, useEffect, useRef, useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { useEffect, useRef, useState } from "react";
 import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
 import MinimizeArrow from "../ui/MinimizeArrow";
 
 export default function Chat({ height }) {
   const userInput = useRef();
-  const { username } = useContext(UserContext);
   const [Messages, setMessages] = useState([]);
   const [minimized, setMinimized] = useState(false);
+  const messagesEndRef = useRef(null);
 
   function sendMessage() {
     let data = {
       message: userInput.current.value,
-      username,
+      username: socket.auth.username,
       date: new Date(),
       type: "user",
     };
@@ -42,6 +41,14 @@ export default function Chat({ height }) {
     };
   });
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [Messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className={`${minimized ? "h-10" : height} w-full flex flex-col justify-between mt-[1px] outline outline-gray-400 outline-1 rounded-b-md rounded-t-none z-0`}>
       {/* Chat Header */}
@@ -56,8 +63,9 @@ export default function Chat({ height }) {
       <div className={`${minimized && "hidden"} h-full flex flex-col justify-between overflow-hidden`}>
         <div className="flex-col justify-start px-5 overflow-scroll h-[90%]">
           {Messages.map((message, index) => (
-            <Message data={message} key={index} username={username} />
+            <Message data={message} key={index} username={socket.auth.username} />
           ))}
+          <div ref={messagesEndRef}></div>
         </div>
         <div className="flex justify-between bg-gray-100 h-10  outline rounded-b-lg rounded-t-sm outline-2 outline-transparent focus-within:outline-blue-400 z-50 ">
           <input

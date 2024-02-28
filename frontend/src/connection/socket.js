@@ -7,6 +7,6 @@ const userID = localStorage.getItem("userID"); //null if not found
 
 export const socket = io(URL, {
   auth: { userID },
-  autoConnect: false, //IMPORTANT TO PREVENT CONNECTION BY DEFAULT
+  // autoConnect: true, //IMPORTANT TO PREVENT CONNECTION BY DEFAULT
   //multiplex: false for testing different users
 });
