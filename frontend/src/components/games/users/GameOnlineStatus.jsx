@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { socket } from "../../../connection/socket";
+import { socket } from "../../../global/socket";
 // import HeadCount from "../ui/HeadCount";
 
 export default function GameOnlineStatus() {

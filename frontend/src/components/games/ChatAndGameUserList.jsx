@@ -1,4 +1,4 @@
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 import Chat from "../chat/Chat";
 import GameUserList from "./users/GameUserList";
 

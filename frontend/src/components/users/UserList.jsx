@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import OnlineStatus from "./OnlineStatus";
 import MinimizeArrow from "../ui/MinimizeArrow";
 import User from "./User";
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 
 export default function UserList({ height }) {
   const [minimized, setMinimized] = useState(false);

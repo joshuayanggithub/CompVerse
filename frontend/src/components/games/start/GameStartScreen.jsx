@@ -1,4 +1,4 @@
-import { socket } from "../../../connection/socket";
+import { socket } from "../../../global/socket";
 import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 import { useNavigate } from "react-router-dom";
 

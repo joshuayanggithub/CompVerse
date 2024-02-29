@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import LoadingSpinner from "../ui/LoadingSpinner";
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 
 export default function UsernameSelect() {
   const [username, setUsername] = useState("");

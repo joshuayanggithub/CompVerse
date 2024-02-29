@@ -1,4 +1,4 @@
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 
 export default function User({ username, score, userID }) {
   return (

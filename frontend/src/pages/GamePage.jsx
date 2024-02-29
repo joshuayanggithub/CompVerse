@@ -3,7 +3,7 @@ import ChatAndGameUserList from "../components/games/ChatAndGameUserList";
 import Game from "../components/games/Game";
 import Header from "../components/page/Header";
 import { useLoaderData, useNavigate, Link } from "react-router-dom";
-import { socket } from "../connection/socket";
+import { socket } from "../global/socket";
 
 export default function GamePage() {
   const roomData = useLoaderData().room;

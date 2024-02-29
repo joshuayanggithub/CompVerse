@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MinimizeArrow from "../../ui/MinimizeArrow";
 import User from "../../users/User";
 import GameOnlineStatus from "./GameOnlineStatus";
-import { socket } from "../../../connection/socket";
+import { socket } from "../../../global/socket";
 
 export default function GameUserList({ height, _id }) {
   const [minimized, setMinimized] = useState(false);

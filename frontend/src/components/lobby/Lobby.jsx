@@ -5,7 +5,7 @@ import CreateRoomModal from "../rooms/CreateRoomModal";
 import UsernameSelect from "../users/UsernameSelect";
 import { SlSettings } from "react-icons/sl";
 import ErrorModal from "../ui/ErrorModal";
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 
 export default function Lobby({ username, setUsername }) {
   const [createRoom, setCreateRoom] = useState(false);

@@ -10,6 +10,7 @@ module.exports = async (socket, io) => {
       const userCreator = await User.findOne({ userID: userID });
       //1.b Double Check User is Not in  New Room Seems to be Automatic
       //2. Create Room in db
+      console.log(userID);
       let users = new Map();
       let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };
       users.set(userID, userData);
@@ -70,6 +71,11 @@ module.exports = async (socket, io) => {
       roomLeaving.users.delete(userLeaving.userID);
       if (roomLeaving.users.size == 0) {
         roomLeaving.ongoing = false; //DELETE ROOM IF NO MORE USERS
+        if (roomLeaving.questionStartTime.length != roomLeaving.questions.length) {
+          //this means game was not completed
+          roomLeaving.deleteOne();
+          return;
+        }
       }
       await roomLeaving.save();
       socket.leave(userLeaving.room._id.toString());

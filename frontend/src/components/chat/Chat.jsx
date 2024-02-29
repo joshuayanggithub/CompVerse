@@ -1,8 +1,9 @@
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 import { useEffect, useRef, useState } from "react";
 import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
 import MinimizeArrow from "../ui/MinimizeArrow";
+import removeObscenity from "../../global/chatfilter";
 
 export default function Chat({ height, socketRoom }) {
   const userInput = useRef();
@@ -11,8 +12,12 @@ export default function Chat({ height, socketRoom }) {
   const messagesEndRef = useRef(null);
 
   function sendMessage() {
+    if (userInput.current.value == "" || userInput.current.value == undefined || userInput.current.value == null) {
+      return;
+    }
+    const filteredmessage = removeObscenity(userInput.current.value);
     let data = {
-      message: userInput.current.value,
+      message: filteredmessage,
       username: socket.auth.username,
       date: new Date(),
       type: "user",

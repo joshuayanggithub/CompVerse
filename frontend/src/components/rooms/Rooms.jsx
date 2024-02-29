@@ -1,5 +1,5 @@
 import Room from "./Room";
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 

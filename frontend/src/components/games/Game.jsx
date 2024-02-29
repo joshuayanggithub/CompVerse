@@ -1,4 +1,4 @@
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 import { useState } from "react";
 import GameStartScreen from "./start/GameStartScreen";
 import GameProblem from "./question/GameProblem";

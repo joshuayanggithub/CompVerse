@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
 import RoomHeadCount from "../ui/RoomHeadCount";
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 import { useNavigate } from "react-router-dom";
 
 export default function Room({ room }) {

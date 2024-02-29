@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { socket } from "../../connection/socket";
+import { socket } from "../../global/socket";
 import { GrFormClose } from "react-icons/gr";
 import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
 import { AiOutlinePlusCircle } from "react-icons/ai";
