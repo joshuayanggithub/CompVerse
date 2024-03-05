@@ -1,12 +1,21 @@
 import { socket } from "../../global/socket";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GameStartScreen from "./start/GameStartScreen";
 import GameProblem from "./question/GameProblem";
 import GameHeader from "./GameHeader";
 
 export default function Game({ roomData }) {
   const [gameStarted, setGameStarted] = useState(false);
-  const [playersJoined, setPlayersJoined] = useState([]);
+
+  useEffect(() => {
+    socket.on("room:started", function () {
+      setGameStarted(true);
+    });
+
+    return () => {
+      socket.off("room:started");
+    };
+  });
 
   return (
     <div className="flex flex-col h-full px-7 pb-7 pt-3 w-full relative  outline outline-1 outline-gray-400 rounded-lg ">

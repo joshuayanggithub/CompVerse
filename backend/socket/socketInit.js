@@ -2,6 +2,7 @@ const socketio = require("socket.io");
 
 const registerChatHandler = require("./handlers/chatHandler");
 const registerRoomHandler = require("./handlers/roomHandler");
+const registerGameHandler = require("./handlers/gameHandler");
 const { authorizeUser, registerUserHandler } = require("./handlers/userHandler");
 
 exports.initSocketServer = function (server) {
@@ -24,6 +25,7 @@ exports.initSocketServer = function (server) {
     registerUserHandler(socket, io);
     registerChatHandler(socket, io);
     registerRoomHandler(socket, io);
+    registerGameHandler(socket, io);
   };
 
   io.on("connection", onConnection);

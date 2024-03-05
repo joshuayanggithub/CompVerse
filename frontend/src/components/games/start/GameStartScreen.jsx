@@ -11,7 +11,7 @@ export default function GameStartScreen() {
   }
 
   function startGame() {
-    socket.emit("room:start");
+    socket.emit("room:start", socket.auth.userID);
   }
 
   return (

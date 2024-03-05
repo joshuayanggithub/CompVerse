@@ -15,6 +15,8 @@ module.exports = async (socket, io) => {
       let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };
       users.set(userID, userData);
       const room = await Room.create({ competition, gameLength, roomName, users, roomLeader: userID, questions: [] });
+      room.roomLeader = userID;
+      await room.save();
       //2.b User attribute reflects room
       userCreator.room = room._id;
       userCreator.save();
@@ -68,10 +70,13 @@ module.exports = async (socket, io) => {
       if (!userLeaving.room) return; //user is not in ANY room
       //2. Delete User from Room's Map
       const roomLeaving = await Room.findOne({ _id: userLeaving.room });
+      // if (roomLeaving.roomLeader == userID) {
+      //   roomLeaving.roomLeader = roomLeaving.users.
+      // }
       roomLeaving.users.delete(userLeaving.userID);
       if (roomLeaving.users.size == 0) {
         roomLeaving.ongoing = false; //DELETE ROOM IF NO MORE USERS
-        if (roomLeaving.questionStartTime.length != roomLeaving.questions.length) {
+        if (roomLeaving.questionsStartTime.length != roomLeaving.questions.length) {
           //this means game was not completed
           roomLeaving.deleteOne();
           return;
@@ -88,7 +93,23 @@ module.exports = async (socket, io) => {
     }
   };
 
-  const startRoom = async () => {};
+  const startRoom = async ({ _id }) => {
+    const userID = socket.handshake.auth.userID;
+    try {
+      //1. Find UserLeaving
+      const userStarting = await User.findOne({ userID: userID });
+      if (!userStarting.room) return; //user is not in ANY room
+      //2. Find the room
+      const roomStarting = await Room.findOne({ _id: userStarting.room });
+      roomStarting.started = true;
+      roomStarting.questionsStartTime.push(new Date()); //start officially now
+      await roomStarting.save();
+      io.to(userStarting.room.toString()).emit("room:started");
+      io.to(userStarting.room.toString()).emit("game:question", roomStarting.questions[0].question);
+    } catch (error) {
+      socket.emit("error", error);
+    }
+  };
 
   socket.on("disconnect", leaveRoom);
   socket.on("room:create", createRoom);

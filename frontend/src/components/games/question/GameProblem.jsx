@@ -1,26 +1,49 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Question from "./Question";
 import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import GameTimer from "./GameTimer";
+import { socket } from "../../../global/socket";
 
 export default function GameProblem() {
   const [buzzedIn, setBuzzedIn] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [answerStatus, setAnswerStatus] = useState("");
+  const [questionText, setQuestionText] = useState("");
   const answerRef = useRef();
 
   function submitAnswer() {
-    setIsCorrect(false);
-    setSubmitted(true);
-
-    if (isCorrect) {
-      setAnswerStatus(`${answerRef.current.value} is correct!`);
-    } else {
-      setAnswerStatus(`${answerRef.current.value} is wrong!`);
-    }
+    console.log(answerRef.current.value);
+    socket.emit("game:answer", answerRef.current.value);
   }
+
+  function buzzIn() {
+    socket.emit("game:buzz");
+    setBuzzedIn(true);
+  }
+
+  useEffect(() => {
+    socket.on("game:question", function (question) {
+      console.log(question);
+      setQuestionText(question);
+    });
+
+    socket.on("game:", function () {
+      setIsCorrect(false);
+      setSubmitted(true);
+
+      if (isCorrect) {
+        setAnswerStatus(`${answerRef.current.value} is correct!`);
+      } else {
+        setAnswerStatus(`${answerRef.current.value} is wrong!`);
+      }
+    });
+
+    return () => {
+      socket.off("game:question");
+    };
+  });
 
   return (
     <div className="h-full w-full flex flex-col items-center">
@@ -29,15 +52,10 @@ export default function GameProblem() {
       </div>
 
       <div className="flex flex-col h-3/4 w-[90%] justify-center">
-        <Question
-          questionNumber={1}
-          questionText={
-            "Horem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-          }
-        />
+        <Question questionNumber={1} questionText={questionText} />
         <div className="w-full">
           {!buzzedIn && (
-            <ButtonWrapper color="bg-red-500" width="w-30" onClick={() => setBuzzedIn(true)} className="flex gap-1 items-center justify-center">
+            <ButtonWrapper color="bg-red-500" width="w-30" onClick={buzzIn} className="flex gap-1 items-center justify-center">
               Buzz In
               <HiOutlineSpeakerphone size={20} />
             </ButtonWrapper>

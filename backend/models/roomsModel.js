@@ -23,7 +23,7 @@ const roomSchema = new Schema({
   roomLeader: { type: Schema.Types.UUID, required: true },
   gameLength: { type: Number, required: true },
   questions: { type: [questionSchema], required: false }, //separate request should fill in questions
-  questionStartTime: { type: [Date], required: false }, //
+  questionsStartTime: { type: [Date], required: false }, //
   competition: { type: String, required: true },
   started: { type: Boolean, default: false },
   ongoing: { type: Boolean, default: true },
