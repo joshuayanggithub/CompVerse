@@ -11,6 +11,8 @@ export default function GameProblem() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [answerStatus, setAnswerStatus] = useState("");
   const [questionText, setQuestionText] = useState("");
+  const [questionNumber, setQuestionNumber] = useState(1);
+
   const answerRef = useRef();
 
   function submitAnswer() {
@@ -26,7 +28,7 @@ export default function GameProblem() {
   useEffect(() => {
     socket.on("game:question", function (question) {
       console.log(question);
-      setQuestionText(question);
+      setQuestionText(question); //replace \n with
     });
 
     socket.on("game:", function () {
