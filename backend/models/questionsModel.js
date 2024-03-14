@@ -6,27 +6,32 @@ const questionSchema = new Schema({
   year: Date, //possibly only one year
   questionAuthor: String, //maybe optional
   competition: {
+    //mathcounts, science bowl, QuizBowl
     type: String,
     required: [true, "Must have a competition type!"],
   },
   questionSource: {
+    //e.g. Set 1
     type: String,
     required: [true, "Must have a source; Don't plagiarize!"],
   },
   questionCategory: {
+    //math, history
     type: String,
-    required: [true, "Must have a category!"],
   },
   questionType: {
+    //short answer or multiple choice
     type: String,
     required: [true, "Must have a quesiton type"],
   },
   question: {
+    //question string itself
     type: String,
     required: [true, "Must have a question type!"],
   },
-  answer: {
-    type: String,
+  answers: {
+    //aray of possible answers
+    type: [String],
     required: [true, "Must have an answer!"],
   },
   answerDescription: [String],

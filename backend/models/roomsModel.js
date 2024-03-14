@@ -29,6 +29,8 @@ const roomSchema = new Schema({
   ongoing: { type: Boolean, default: true },
 });
 
+// roomSchema.virtual("")
+
 const Room = mongoose.model("Room", roomSchema);
 
 module.exports = { Room, roomUserSchema, roomSchema };

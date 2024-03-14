@@ -34,7 +34,7 @@ const importData = async () => {
     formattedQuestion["questionCategory"] = question.category;
     formattedQuestion["questionType"] = question.bonus_format;
     formattedQuestion["question"] = question.bonus_question;
-    formattedQuestion["answer"] = question.bonus_answer;
+    formattedQuestion["answers"] = [question.bonus_answer];
 
     let formattedQuestion2 = {};
 
@@ -43,11 +43,12 @@ const importData = async () => {
     formattedQuestion2["questionCategory"] = question.category;
     formattedQuestion2["questionType"] = question.tossup_format;
     formattedQuestion2["question"] = question.tossup_question;
-    formattedQuestion2["answer"] = question.tossup_answer;
+    formattedQuestion2["answers"] = [question.tossup_answer];
 
     formattedSciBowlQuestions.push(formattedQuestion);
     formattedSciBowlQuestions.push(formattedQuestion2);
   }
+
   // console.log(formattedSciBowlQuestions);
   try {
     let response = await Question.insertMany(formattedSciBowlQuestions);

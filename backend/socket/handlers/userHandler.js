@@ -14,7 +14,7 @@ exports.registerUserHandler = async (socket, io) => {
   await user.save();
   io.emit("user:countChanged", socket.adapter.sids.size);
 
-  //on disconnect set session to inactive and broadcast status message
+  //on disconnect, set session to inactive and broadcast status message
   socket.on("disconnect", async () => {
     const user = await User.findOne({ userID: socket.handshake.auth.userID });
     user.online = false;

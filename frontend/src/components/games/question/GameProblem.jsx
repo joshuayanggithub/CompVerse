@@ -11,6 +11,7 @@ export default function GameProblem() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [answerStatus, setAnswerStatus] = useState("");
   const [questionText, setQuestionText] = useState("");
+  const [error, setError] = useState("");
   const [questionNumber, setQuestionNumber] = useState(1);
 
   const answerRef = useRef();
@@ -26,10 +27,11 @@ export default function GameProblem() {
   }
 
   useEffect(() => {
-    socket.on("game:question", function (question) {
-      console.log(question);
+    socket.on("game:newQuestion", function (question) {
       setQuestionText(question); //replace \n with
     });
+
+    socket.on("game:buzzed", function (userID) {});
 
     socket.on("game:", function () {
       setIsCorrect(false);
