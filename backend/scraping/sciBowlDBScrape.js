@@ -31,7 +31,7 @@ const importData = async () => {
 
     formattedQuestion["competition"] = "Science Bowl";
     formattedQuestion["questionSource"] = question.source;
-    formattedQuestion["questionCategory"] = question.category;
+    formattedQuestion["questionCategory"] = [question.category];
     formattedQuestion["questionType"] = question.bonus_format;
     formattedQuestion["question"] = question.bonus_question;
     formattedQuestion["answers"] = [question.bonus_answer];
@@ -40,7 +40,7 @@ const importData = async () => {
 
     formattedQuestion2["competition"] = "Science Bowl";
     formattedQuestion2["questionSource"] = question.source;
-    formattedQuestion2["questionCategory"] = question.category;
+    formattedQuestion2["questionCategory"] = [question.category];
     formattedQuestion2["questionType"] = question.tossup_format;
     formattedQuestion2["question"] = question.tossup_question;
     formattedQuestion2["answers"] = [question.tossup_answer];
@@ -76,6 +76,7 @@ if (process.argv[2] === "--import") {
 } else if (process.argv[2] === "--delete") {
   deleteData();
 }
+//node scraping/sciBowlDBScrape.js --import
 
 /*
 "bonus_answer": "Newton", ->  answer

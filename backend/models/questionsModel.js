@@ -17,18 +17,19 @@ const questionSchema = new Schema({
   },
   questionCategory: {
     //math, history
-    type: String,
+    type: [String],
   },
   questionType: {
     //short answer or multiple choice
     type: String,
-    required: [true, "Must have a quesiton type"],
+    required: false,
   },
   question: {
     //question string itself
     type: String,
-    required: [true, "Must have a question type!"],
+    required: [true, "Must be a quesiton!"],
   },
+  difficulty: { type: Number }, //might not be number in certain cases
   answers: {
     //aray of possible answers
     type: [String],

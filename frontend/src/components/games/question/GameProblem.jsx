@@ -31,7 +31,9 @@ export default function GameProblem() {
       setQuestionText(question); //replace \n with
     });
 
-    socket.on("game:buzzed", function (userID) {});
+    socket.on("game:buzzed", function (userID) {
+      
+    });
 
     socket.on("game:", function () {
       setIsCorrect(false);

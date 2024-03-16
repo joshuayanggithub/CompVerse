@@ -16,44 +16,39 @@ try {
 }
 
 const importData = async () => {
-  const res = await fetch("https://qbreader.org/api/query?questionType=tossup&maxReturnLength=10000");
+  const res = await fetch("https://qbreader.org/api/query");
   const quizBowlQuestions = await res.json();
   const tossups = quizBowlQuestions["tossups"]["questionArray"];
   // const bonuses = quizBowlQuestions["bonuses"]["questionArray"];
+
   // console.log(tossups, bonuses);
 
-  let formattedQuestions = [];
+  let formattedSciBowlQuestions = [];
 
   // console.log(Object.values(sciBowlQuestions["questions"]));
 
   for (const k in Object.keys(tossups)) {
-    let question = tossups[k];
+    let question = sciBowlQuestions["questions"][k];
     // console.log(question);
     let formattedQuestion = {};
 
     formattedQuestion["competition"] = "Quiz Bowl";
     formattedQuestion["questionSource"] = question.setName;
     formattedQuestion["questionCategory"] = [question.category, question.subcategory];
-    formattedQuestion["questionType"] = question.type;
+    formattedQuestion["questionType"] = question.bonus_format;
     formattedQuestion["question"] = question.question;
-    formattedQuestion["difficulty"] = question.difficulty;
+    formattedQuestion["answers"] = [question.answer];
 
-    if (question.answer.includes("[")) {
-      formattedQuestion["answers"] = [question.answer.substring(0, question.answer.indexOf("[") - 1), question.answer.substring(question.answer.indexOf("[") + 1, question.answer.length - 1)];
-    } else {
-      formattedQuestion["answers"] = [question.answer];
-    }
-
-    formattedQuestions.push(formattedQuestion);
+    formattedSciBowlQuestions.push(formattedQuestion);
   }
 
-  console.log(formattedQuestions);
-  try {
-    let response = await Question.insertMany(formattedQuestions);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
+  // // console.log(formattedSciBowlQuestions);
+  // try {
+  //   let response = await Question.insertMany(formattedSciBowlQuestions);
+  //   console.log(response);
+  // } catch (error) {
+  //   console.log(error);
+  // }
   process.exit();
 };
 
@@ -74,8 +69,6 @@ if (process.argv[2] === "--import") {
 } else if (process.argv[2] === "--delete") {
   deleteData();
 }
-
-//node scraping/quizBowlDBScrape.js --import
 
 /*
 {
@@ -102,7 +95,7 @@ if (process.argv[2] === "--import") {
     "questionNumber": 4,
     "createdAt": "2023-01-09T05:30:26.927Z",
     "updatedAt": "2023-04-09T06:00:05.528Z",
-    "difficulty": 8, ---> difficulty
+    "difficulty": 8,
     "setYear": 2014,
     "packetName": "05 - Ostentatious Hydromancy",
     "set_id": "63bba672874e0ef7dd7b2218",

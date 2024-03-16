@@ -1,0 +1,49 @@
+[
+  { "question": "In the following geometric sequence, what is the product of a and b? 4, a, b, 36", "answer": 144 },
+  { "question": "What is the fifth triangular number?", "answer": 15 },
+  { "question": "The measures of the angles of a triangle are in the ratio 2 : 3 : 4. What is the degree measure of the smallest angle in the triangle?", "answer": 40 },
+  { "question": "Simplify: −1 + 2 − 3 + 4 − 5 + 6 + · · · + 2012.", "answer": 1006 },
+  {
+    "question": "An isosceles right triangle has legs of length 5. What would the area of the circle circumscribing this triangle be? Express your answer as a common fraction in terms of π",
+    "answer": "25pi/2"
+  },
+  {
+    "question": "Melinda places 11 coins into a stack, where each coin is equally likely to face up or down. What is the expected number of pairs of touching faces that show the same side (heads or tails)?",
+    "answer": 5
+  },
+  { "question": "A fair 6-sided die is rolled three times. Find the probability that the values of the rolls are strictly increasing. Express your answer as a common fraction.", "answer": "5/54" },
+  {
+    "question": "Niah is volunteering at a summer camp that has 40 students. The students can choose to rest or either play dodgeball or knockout (but not both). There are 2 more students who choose dodgeball than knockout. If 16 students choose to play knockout, how many students choose to rest?",
+    "answer": 6
+  },
+  { "question": "What is the area of the quadrilateral with vertices at (3, 5), (8, 3), (6, −2), and (1, 0)?", "answer": 29 },
+  { "question": "What is the greatest common divisor of 198 and 165?", "answer": 33 },
+  { "question": "If x, y, and z are positive integers such that xyz = 120, what is the least possible value of x + y + z?", "answer": 15 },
+  {
+    "question": "A train travels 50 miles per hour for the first 40 miles, then slows down to 40 miles per hour for the next 50 miles. What is the average speed of the train in miles per hour? Round your answer to the nearest whole number.",
+    "answer": 44
+  },
+  { "question": "When a whole number is divided by 23, the beginning of the decimal expansion of the result is 0.478 . . .. What is the value of this whole number?", "answer": 11 },
+  { "question": "A fair six-sided die is rolled 6 times. What is the expected value of the sum of the 6 rolls?", "answer": 21 },
+  { "question": "How many 2-digit integers are relatively prime to 98?", "answer": 39 },
+  { "question": "Let x be a positive integer. Given that x = 13y and x − y = 564, what is x?", "answer": 611 },
+  { "question": "Evaluate: 3 + 6 + 9 + · · · + 33.", "answer": 198 },
+  {
+    "question": "Euler’s theorem states that any convex three-dimensional polyhedron satisfies the equation V−E+F = 2, where V, E, and F are the numbers of vertices, edges, and faces of the polyhedron, respectively. An dodecahedron has 20 vertices and 12 faces. How many edges does it have?",
+    "answer": 30
+  },
+  { "question": "Find the 11th term in the arithmetic sequence: 9, −3, −15, . . .", "answer": -111 },
+  {
+    "question": "Two positive integers have a GCD of 2 and LCM of 240. When one number is divided by the other, the result is less than 1. What is the greatest possible value of the result? Express your answer as a common fraction.",
+    "answer": "8/15"
+  },
+  { "question": "If a random integer between 1 and 100, inclusive, is chosen, what is the probability that it is composite? Express your answer as a common fraction.", "answer": "37/50" },
+  { "question": "For what value of k is there no solution to the equations 4x + 5y = 20 and −16x + ky = 60?", "answer": -20 },
+  { "question": "Three of the faces of a rectangular prism have areas 20, 24, and 30. What is half of its volume?", "answer": 60 },
+  { "question": "Three mechanics can fix two cars in five days. Assuming all mechanics work at the same rate, how many cars can five mechanics fix in six days?", "answer": 4 },
+  { "question": "Find the area of a triangle with side lengths 10, 12, and 14. Express your answer in simplest radical form.", "answer": "25sqrt(6)" },
+  {
+    "question": "Elaine chooses 10 distinct positive integers from {1, 2, . . . , 19}. Surprisingly, she does not choose any two numbers that differ by exactly one. How many possible values are there for the sum of the 10 numbers chosen?",
+    "answer": 1
+  }
+]
