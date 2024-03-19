@@ -1,11 +1,11 @@
-import { socket } from "../../global/socket";
 import { useEffect, useRef, useState } from "react";
 import Message from "./message/Message";
 import { FiSend } from "react-icons/fi";
-import MinimizeArrow from "../ui/MinimizeArrow";
-import removeObscenity from "../../global/chatfilter";
+import MinimizeArrow from "../../ui/MinimizeArrow";
+import removeObscenity from "../../../global/chatfilter";
+import { socket } from "../../../global/socket";
 
-export default function Chat({ height, socketRoom }) {
+export default function Chat({ height, socketRoomId }) {
   const userInput = useRef();
   const [Messages, setMessages] = useState([]);
   const [minimized, setMinimized] = useState(false);
@@ -21,7 +21,7 @@ export default function Chat({ height, socketRoom }) {
       username: socket.auth.username,
       date: new Date(),
       type: "user",
-      room: socketRoom,
+      room: socketRoomId,
     };
     socket.emit("chat:message", data);
     userInput.current.value = "";
@@ -33,6 +33,7 @@ export default function Chat({ height, socketRoom }) {
     });
 
     socket.on("connect", function () {
+      //lobby
       setMessages((Messages) => [...Messages, { message: "You have connected!", date: new Date() }]);
     });
 
@@ -61,7 +62,7 @@ export default function Chat({ height, socketRoom }) {
       <div className="flex items-center justify-between px-3 pt-3">
         <div className="flex items-center justify-center gap-1">
           <div className="w-[5px] h-[5px] rounded-lg bg-green-500"></div>
-          <h3 className="italic text-gray-600 text-sm font-light">Chatroom</h3>
+          <h3 className="italic text-gray-600 text-sm font-light">Chatroom {`(${socketRoomId.substring(0, 5)})`}</h3>
         </div>
         <MinimizeArrow minimized={minimized} setMinimized={setMinimized} />
       </div>

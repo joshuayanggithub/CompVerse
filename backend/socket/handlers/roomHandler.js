@@ -2,60 +2,81 @@ const mongoose = require("mongoose");
 const { Room, roomUserSchema } = require("../../models/roomsModel");
 const { User } = require("../../models/usersModel");
 const { Question } = require("../../models/questionsModel");
+const AppError = require("../../utils/AppError");
 
 module.exports = async (socket, io) => {
   const createRoom = async ({ competition, gameLength, roomName, userID }) => {
     try {
-      //1. Find User Who Created
+      //1. Find and validate the user who created the room
       const userCreator = await User.findOne({ userID: userID });
-      //1.b Double Check User is Not in  New Room Seems to be Automatic
-      //2. Create Room in db
-      console.log(userID);
+
+      //2. Double check that user is not in the new room
+      if (userCreator.room != null) {
+        socket.emit("error", new AppError("User is already in another room", "socket"));
+        return;
+      }
+
+      //3A. Create Room in database with updated information
       let users = new Map();
       let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };
       users.set(userID, userData);
       const room = await Room.create({ competition, gameLength, roomName, users, roomLeader: userID, questions: [] });
       room.roomLeader = userID;
       await room.save();
-      //2.b User attribute reflects room
+
+      //3B. Update user attributes to reflect user's room
       userCreator.room = room._id;
-      userCreator.save();
-      //3. Update Socket Connection / Events
+      await userCreator.save();
+
+      //4. Update Socket Connection / Events
       socket.leave("lobby");
       socket.join(room._id.toString());
-      socket.emit("room:created", room.toJSON()); //mongoose document -> plain JS object conversion
-      console.log(io.sockets.adapter.rooms);
-      io.to(room._id.toString()).emit("room:countChanged", io.sockets.adapter.rooms.get(room._id.toString().size));
+      socket.emit("room:transport", room._id.toString()); //room.toJSON() mongoose document -> plain JS object conversion
+      io.to(room._id.toString()).emit("room:update");
+      io.to("lobby").emit("rooms:update");
 
-      //EXTRA: POPULATE QUESTIONS
-      const randQuestions = await Question.aggregate([{ $match: { competition: `${competition}` } }, { $sample: { size: 10 } }]);
-      room.questions = randQuestions;
-      room.save();
+      //5. Populate questions in Room
+      if (competition == "Math Countdown") {
+        const randQuestions = await Question.aggregate([{ $match: { $or: [{ competition: "Mathleague" }, { competition: "Mathcounts" }] } }, { $sample: { size: gameLength } }]);
+        room.questions = randQuestions;
+        await room.save();
+      } else {
+        const randQuestions = await Question.aggregate([{ $match: { competition: `${competition}` } }, { $sample: { size: gameLength } }]);
+        room.questions = randQuestions;
+        await room.save();
+      }
     } catch (error) {
       console.log(error);
-      socket.emit("error", error.toString());
+      socket.emit("error", new AppError(error.toString(), "socket"));
     }
   };
 
   const joinRoom = async (_id) => {
     const userID = socket.handshake.auth.userID;
     try {
-      socket.leave("lobby");
       //1. Find User and Add him to Room
-      // console.log(_id);
       const roomJoining = await Room.findOne({ _id: _id });
       const userJoining = await User.findOne({ userID: userID });
-      // console.log(roomJoining, userJoining);
       roomJoining.users.set(userID, { username: userJoining.username, score: 0, buzzed: false, join: new Date() });
       userJoining.room = roomJoining._id;
       await roomJoining.save();
-      await userJoining.save();
-      //2. transport user to room
-      socket.emit("room:transport", roomJoining);
+      const user = await userJoining.save();
+
+      //2A. transport user to new room on client-side
+      socket.emit("room:transport", roomJoining._id.toString());
+      //2B. Leave lobby and join room _id
+      socket.leave("lobby");
       socket.join(roomJoining._id.toString());
-      //3. Update Socket
-      socket.emit("room:joined");
-      io.emit("room:countChanged", io.sockets.adapter.rooms.get(roomJoining._id.toString()).size);
+      //2C. Chat status to users in room and for user himself/herself
+      socket.emit("chat:status", { message: `You have joined`, date: new Date() });
+      socket.broadcast.to(roomJoining._id.toString()).emit("chat:status", { message: `${userJoining.username} has joined the Room!`, date: new Date() });
+
+      //3. Update sockets
+      io.to(roomJoining._id.toString()).emit("room:update");
+      io.to("lobby").emit("rooms:update");
+
+      //3. Emit user data to reload data
+      socket.emit("user:data", user);
     } catch (error) {
       console.log(error);
       socket.emit("error", error);
@@ -67,47 +88,78 @@ module.exports = async (socket, io) => {
     try {
       //1. Find UserLeaving
       const userLeaving = await User.findOne({ userID: userID });
-      if (!userLeaving.room) return; //user is not in ANY room
-      //2. Delete User from Room's Map
-      const roomLeaving = await Room.findOne({ _id: userLeaving.room });
-      // if (roomLeaving.roomLeader == userID) {
-      //   roomLeaving.roomLeader = roomLeaving.users.
-      // }
-      roomLeaving.users.delete(userLeaving.userID);
-      if (roomLeaving.users.size == 0) {
-        roomLeaving.ongoing = false; //DELETE ROOM IF NO MORE USERS
-        if (roomLeaving.questionsStartTime.length != roomLeaving.questions.length) {
-          //this means game was not completed
-          roomLeaving.deleteOne();
-          return;
-        }
+      // if (!userLeaving.room) return; //user is not in ANY room
+      let roomLeaving = await Room.findOne({ _id: userLeaving.room.toString() });
+
+      //2. Reassign roomLeader if the userLeaving is the roomLeader
+      if (roomLeaving.roomLeader.toString() == userID) {
+        let users = Array.from(roomLeaving.users.keys());
+        users.forEach((user) => {
+          if (user != userID) {
+            roomLeaving.roomLeader = user; //newuser
+            io.to(roomLeaving._id.toString()).emit("room:leader", user);
+            return;
+          }
+        });
       }
-      await roomLeaving.save();
-      socket.leave(userLeaving.room._id.toString());
-      //3. Delete Room from User Attribute
-      io.to(userLeaving.room._id.toString()).emit("room:countChanged", io.sockets.adapter.rooms.get(userLeaving.room._id.toString().size));
+
+      //5. Update User in Database
       userLeaving.room = undefined;
       await userLeaving.save();
+
+      //3A. Delete User from Room's Map
+      roomLeaving.users.delete(userLeaving.userID);
+      roomLeaving = await roomLeaving.save();
+
+      //3B. Set room to finished if no more users
+      if (roomLeaving.users.size == 0) {
+        roomLeaving.ongoing = false;
+        roomLeaving = await roomLeaving.save();
+        //3C. Delete the Room from database if not all questions were ever played!
+        if (roomLeaving.questionsStartTime.length != roomLeaving.questions.length) {
+          await roomLeaving.deleteOne();
+        }
+      }
+
+      //4. Update socket
+      socket.leave(roomLeaving._id.toString());
+      socket.join("lobby");
+      io.to(roomLeaving._id.toString()).emit("room:update");
+      io.to("lobby").emit("rooms:update");
     } catch (error) {
-      socket.emit("error", error);
+      console.error(error);
+      console.error(error.message);
+      socket.emit("error", new AppError(error.toString(), "socket"));
     }
   };
 
   const startRoom = async ({ _id }) => {
     const userID = socket.handshake.auth.userID;
     try {
-      //1. Find UserLeaving
+      //1. Find & Validate User And Room
       const userStarting = await User.findOne({ userID: userID });
       if (!userStarting.room) return; //user is not in ANY room
-      //2. Find the room
       const roomStarting = await Room.findOne({ _id: userStarting.room });
-      roomStarting.started = true;
-      roomStarting.questionsStartTime.push(new Date()); //start officially now
-      await roomStarting.save();
+
+      //1B. Make sure this user is the leader!
+      if (roomStarting.roomLeader != userID) {
+        socket.emit("error", new AppError("You are not the room leader", "socket"));
+        return;
+      }
+
+      //2. Update Room Setitngs
+      if (roomStarting) roomStarting.started = true;
+      const roomStarted = await roomStarting.save();
+
+      //4. Update socket
       io.to(userStarting.room.toString()).emit("room:started");
-      io.to(userStarting.room.toString()).emit("game:question", roomStarting.questions[0].question);
+
+      //5. Start new question for users
+      io.to(userStarting.room.toString()).emit("game:newQuestion", roomStarting.questions[0].question);
+      roomStarted.questionsStartTime.push(new Date());
+      await roomStarted.save();
     } catch (error) {
-      socket.emit("error", error);
+      socket.emit("error", new AppError(error.toString(), "socket"));
     }
   };
 

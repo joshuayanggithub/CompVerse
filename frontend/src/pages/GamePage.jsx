@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import ChatAndGameUserList from "../components/games/ChatAndGameUserList";
 import Game from "../components/games/Game";
-import Header from "../components/page/Header";
-import { useLoaderData, useNavigate, Link } from "react-router-dom";
+import Header from "../components/nav/Header";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { socket } from "../global/socket";
+import Sidebar from "../components/sidebar/Sidebar";
 
 export default function GamePage() {
   const roomData = useLoaderData().room;
@@ -16,14 +16,14 @@ export default function GamePage() {
   useEffect(() => {
     socket.emit("room:join", roomData._id);
 
-    socket.on("user:data", function (user) {
-      localStorage.setItem("userID", user.userIDString);
-      socket.auth.userID = user.userIDString;
-      socket.auth.username = user.username;
-    });
+    // socket.on("user:data", function (user) {
+    //   localStorage.setItem("userID", user.userIDString);
+    //   socket.auth.userID = user.userIDString;
+    //   socket.auth.username = user.username;
+    // });
 
     return () => {
-      socket.off("user:data");
+      // socket.off("user:data");
     };
   }, []);
 
@@ -39,7 +39,7 @@ export default function GamePage() {
           <Game roomData={roomData} />
         </div>
         <div className="h-full w-[23%]">
-          <ChatAndGameUserList _id={roomData._id.toString()} />
+          <Sidebar socketRoomId={roomData._id.toString()} chatHeight={"h-1/2"} userListHeight={"h-1/2"} />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
+import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 
 export default function CreateRoomButton({ setModalOpen, modalOpen }) {
   return (

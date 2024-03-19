@@ -1,9 +1,9 @@
-import Header from "../components/page/Header";
+import Header from "../components/nav/Header";
 import Lobby from "../components/lobby/Lobby";
 
-import ChatAndUserList from "../components/lobby/ChatAndUserList";
+import Sidebar from "../components/sidebar/Sidebar";
 
-export default function PlayPage() {
+export default function LobbyPage() {
   return (
     <>
       <div className="flex flex-col w-full h-full box-border py-5">
@@ -17,7 +17,7 @@ export default function PlayPage() {
             <Lobby />
           </div>
           <div className="h-full w-[23%]">
-            <ChatAndUserList />
+            <Sidebar socketRoomId="lobby" chatHeight={"h-2/3"} userListHeight={"h-1/3"} />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { socket } from "../../global/socket";
 import { useEffect, useState } from "react";
-import GameStartScreen from "./start/GameStartScreen";
-import GameProblem from "./question/GameProblem";
+import GameStartScreen from "./states/GameStartScreen";
+import GameProblem from "./states/GameProblem";
 import GameHeader from "./GameHeader";
 
 export default function Game({ roomData }) {
@@ -20,7 +20,7 @@ export default function Game({ roomData }) {
   return (
     <div className="flex flex-col h-full px-7 pb-7 pt-3 w-full relative  outline outline-1 outline-gray-400 rounded-lg ">
       <GameHeader roomName={roomData.roomName} competition={roomData.competition} />
-      {!gameStarted && <GameStartScreen room={roomData} />}
+      {!gameStarted && <GameStartScreen roomData={roomData} />}
       {gameStarted && <GameProblem />}
     </div>
   );

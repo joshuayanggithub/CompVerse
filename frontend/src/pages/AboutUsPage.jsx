@@ -1,4 +1,4 @@
-import Header from "../components/page/Header";
+import Header from "../components/nav/Header";
 
 export default function AboutUsPage() {
   return (

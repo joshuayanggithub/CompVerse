@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import MinimizeArrow from "../../ui/MinimizeArrow";
-import User from "../../users/User";
-import GameOnlineStatus from "./GameOnlineStatus";
+import User from "./User";
 import { socket } from "../../../global/socket";
+import OnlineStatus from "./OnlineStatus";
 
-export default function GameUserList({ height, _id }) {
+export default function Scoreboard({ height, _id }) {
   const [minimized, setMinimized] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -30,20 +30,20 @@ export default function GameUserList({ height, _id }) {
       }
     };
 
-    socket.on("room:joined", function () {
+    socket.on("room:update", function () {
       fetchAllUsersInRoom();
     });
 
     return () => {
       controller.abort();
-      socket.off("room:joined");
+      socket.off("room:update");
     };
   }, []);
 
   return (
     <div className={`w-full ${minimized ? "h-10" : height} outline outline-gray-400 outline-1 rounded-t-md rounded-b-none  px-3 py-3 overflow-hidden`}>
       <div className="flex items-center">
-        <GameOnlineStatus />
+        <OnlineStatus />
         <MinimizeArrow minimized={minimized} setMinimized={setMinimized} />
       </div>
       <div className={`overflow-scroll ${minimized && "hidden"}`}>

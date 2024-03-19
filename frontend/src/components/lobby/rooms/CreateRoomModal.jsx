@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { socket } from "../../global/socket";
+import { socket } from "../../../global/socket";
 import { GrFormClose } from "react-icons/gr";
-import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
+import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import ErrorWrapper from "../ui/wrappers/ErrorWrapper";
+import ErrorWrapper from "../../ui/wrappers/ErrorWrapper";
 
 export default function CreateRoomModal({ setModalOpen }) {
   const competitionRef = useRef();
@@ -36,7 +36,6 @@ export default function CreateRoomModal({ setModalOpen }) {
       roomName: gameNameRef.current.value,
       userID: socket.auth.userID,
     };
-    console.log(roomData);
     socket.emit("room:create", roomData);
     setModalOpen(false);
   }
@@ -54,8 +53,8 @@ export default function CreateRoomModal({ setModalOpen }) {
           Choose Competition
         </option>
         <option value="Science Bowl">Science Bowl</option>
-        <option value="Knowledge Bowl">Knowledge Bowl</option>
-        <option value="Math">Math</option>
+        <option value="Quiz Bowl">Quiz Bowl</option>
+        <option value="Math Countdown">Mathleague & Mathcounts Countdown</option>
       </select>
       <select name="problems" id="problems" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" defaultValue={"notchosen"} ref={gameLengthRef} required>
         <option value="notchosen" disabled>

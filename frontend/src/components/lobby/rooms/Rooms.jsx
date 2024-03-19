@@ -1,9 +1,9 @@
 import Room from "./Room";
-import { socket } from "../../global/socket";
+import { socket } from "../../../global/socket";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function Rooms({ createRoom }) {
+export default function Rooms({ createRoom, setError }) {
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
@@ -21,22 +21,25 @@ export default function Rooms({ createRoom }) {
         const result = await response.json();
         setRooms(result.data.rooms);
       } catch (error) {
-        // console.error(error);
+        // setError(error.toString());
       }
     };
 
     fetchAllRooms();
 
-    socket.on("room:created", function (room) {
-      setRooms((rooms) => [...rooms, room]);
-      navigate(`/game/${room._id}`);
+    socket.on("rooms:update", function () {
+      console.log("Joindsf");
+      fetchAllRooms();
     });
 
-    // socket.on("room:joined", function (room) {});
+    socket.on("room:transport", function (_id) {
+      navigate(`/game/${_id}`);
+      fetchAllRooms();
+    });
 
     return () => {
-      // socket.off("room:create");
-      socket.off("room:created");
+      socket.off("room:transport");
+      socket.off("rooms:update");
       controller.abort();
     };
   }, []);

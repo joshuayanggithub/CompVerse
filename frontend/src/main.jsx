@@ -8,13 +8,13 @@ import GamePage from "./pages/GamePage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import HowToPage from "./pages/HowToPage.jsx";
 import LeaderBoardsPage from "./pages/LeaderboardsPage.jsx";
-import PlayPage from "./pages/PlayPage.jsx";
 import AboutUsPage from "./pages/AboutUsPage.jsx";
+import LobbyPage from "./pages/LobbyPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PlayPage />,
+    element: <LobbyPage />,
     errorElement: <ErrorPage />,
   },
   {
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
     loader: async ({ params }) => {
       const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}api/room/${params.gameID}`);
       const responseJSON = await response.json();
+      console.log(responseJSON);
       return responseJSON.data;
     },
     errorElement: <ErrorPage />,

@@ -4,7 +4,7 @@ module.exports = (socket, io) => {
     io.to(messageData.room).emit("chat:message", messageData); //send to everyone
   });
 
-  socket.broadcast.emit("chat:status", {
+  socket.broadcast.to("lobby").emit("chat:status", {
     //everyone except the guy
     message: `${socket.handshake.auth.username} has connected`,
     date: new Date(),
@@ -12,7 +12,7 @@ module.exports = (socket, io) => {
 
   //on disconnect set session to inactive and broadcast status message
   socket.on("disconnect", () => {
-    socket.broadcast.emit("chat:status", {
+    socket.broadcast.to("lobby").emit("chat:status", {
       message: `${socket.handshake.auth.username} has disconnected`,
       date: new Date(),
     });

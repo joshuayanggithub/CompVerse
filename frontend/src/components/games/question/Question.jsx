@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import GameTimer from "./GameTimer";
 
 export default function Question({ questionNumber, questionText }) {
   const [questionStaggered, setQuestionStaggered] = useState("");

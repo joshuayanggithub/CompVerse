@@ -12,14 +12,14 @@ exports.registerUserHandler = async (socket, io) => {
   const user = await User.findOne({ userID: socket.handshake.auth.userID });
   user.online = true;
   await user.save();
-  io.emit("user:countChanged", socket.adapter.sids.size);
+  io.emit("users:update");
 
   //on disconnect, set session to inactive and broadcast status message
   socket.on("disconnect", async () => {
     const user = await User.findOne({ userID: socket.handshake.auth.userID });
     user.online = false;
     await user.save();
-    io.emit("user:countChanged", socket.adapter.sids.size);
+    io.emit("users:update");
   });
 
   const updateUsername = async (newUsername) => {
@@ -31,7 +31,7 @@ exports.registerUserHandler = async (socket, io) => {
       socket.handshake.auth.username = newUsername;
       data.username = newUsername;
       socket.emit("user:update", data);
-      io.emit("user:refresh");
+      io.emit("users:update");
     } catch (error) {
       console.log(error);
       data.error = error.toString();
@@ -66,7 +66,7 @@ exports.authorizeUser = async (socket, next) => {
   try {
     //1. Attempt to find user with userID
     let user = await User.findOne({ userID: userID });
-    // console.log(user);
+
     if (user) {
       //2. send user data if found
       updateSocket(socket, user);
@@ -79,7 +79,6 @@ exports.authorizeUser = async (socket, next) => {
     //4. userID is just some randomvalue instead of valid UUID
     const user = await createNewUser(socket); //remember userID is in buffer format! use userIDString instead!
     socket.emit("user:data", user);
-    // console.log(user);
   }
   next();
 };

@@ -1,27 +1,15 @@
-import { useEffect, useState } from "react";
-import ButtonWrapper from "../ui/wrappers/ButtonWrapper";
-import RoomHeadCount from "../ui/RoomHeadCount";
-import { socket } from "../../global/socket";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
+import RoomHeadCount from "../../ui/RoomHeadCount";
+import { socket } from "../../../global/socket";
 
 export default function Room({ room }) {
   const [hover, setHover] = useState(false);
-  const navigate = useNavigate();
 
   const joinRoom = () => {
-    socket.emit("room:join", { _id: room._id });
+    socket.emit("room:join", room._id);
   };
 
-  useEffect(() => {
-    socket.on("room:transport", function (roomJoining) {
-      console.log(roomJoining);
-      navigate(`/game/${roomJoining._id}`);
-    });
-
-    return () => {
-      socket.off("room:transport");
-    };
-  }, []);
   //roomName={room.roomName} roomGame={room.competition} joined={room.users.length} started={room.started}
   return (
     <div
