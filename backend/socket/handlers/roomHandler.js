@@ -105,7 +105,7 @@ module.exports = async (socket, io) => {
 
       //5. Update User in Database
       userLeaving.room = undefined;
-      await userLeaving.save();
+      const user = await userLeaving.save();
 
       //3A. Delete User from Room's Map
       roomLeaving.users.delete(userLeaving.userID);
@@ -122,43 +122,17 @@ module.exports = async (socket, io) => {
       }
 
       //4. Update socket
+
       socket.leave(roomLeaving._id.toString());
+      socket.broadcast.to(roomLeaving._id.toString()).emit("chat:status", { message: `${userLeaving.username} has left the room!`, date: new Date() });
       socket.join("lobby");
+      socket.broadcast.to("lobby").emit("chat:status", { message: `${userLeaving.username} has joined the lobby!`, date: new Date() });
       io.to(roomLeaving._id.toString()).emit("room:update");
       io.to("lobby").emit("rooms:update");
+      socket.emit("user:data", user);
     } catch (error) {
       console.error(error);
       console.error(error.message);
-      socket.emit("error", new AppError(error.toString(), "socket"));
-    }
-  };
-
-  const startRoom = async ({ _id }) => {
-    const userID = socket.handshake.auth.userID;
-    try {
-      //1. Find & Validate User And Room
-      const userStarting = await User.findOne({ userID: userID });
-      if (!userStarting.room) return; //user is not in ANY room
-      const roomStarting = await Room.findOne({ _id: userStarting.room });
-
-      //1B. Make sure this user is the leader!
-      if (roomStarting.roomLeader != userID) {
-        socket.emit("error", new AppError("You are not the room leader", "socket"));
-        return;
-      }
-
-      //2. Update Room Setitngs
-      if (roomStarting) roomStarting.started = true;
-      const roomStarted = await roomStarting.save();
-
-      //4. Update socket
-      io.to(userStarting.room.toString()).emit("room:started");
-
-      //5. Start new question for users
-      io.to(userStarting.room.toString()).emit("game:newQuestion", roomStarting.questions[0].question);
-      roomStarted.questionsStartTime.push(new Date());
-      await roomStarted.save();
-    } catch (error) {
       socket.emit("error", new AppError(error.toString(), "socket"));
     }
   };
@@ -167,5 +141,4 @@ module.exports = async (socket, io) => {
   socket.on("room:create", createRoom);
   socket.on("room:join", joinRoom);
   socket.on("room:leave", leaveRoom);
-  socket.on("room:start", startRoom);
 };

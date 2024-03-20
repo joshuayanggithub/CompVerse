@@ -31,6 +31,7 @@ export default function Scoreboard({ height, _id }) {
     };
 
     socket.on("room:update", function () {
+      //new users
       fetchAllUsersInRoom();
     });
 

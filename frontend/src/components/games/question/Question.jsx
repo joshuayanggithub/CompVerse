@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 export default function Question({ questionNumber, questionText }) {
   const [questionStaggered, setQuestionStaggered] = useState("");
 
+  console.log(questionText);
+
   useEffect(() => {
     const arr = questionText.split(" "); //regex for edgecases of multiple spaces
     let ind = 0;

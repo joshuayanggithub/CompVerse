@@ -1,6 +1,6 @@
 export default function UserMessage({ data, date }) {
   return (
-    <div className="flex w-full justify-between items-center text-sm font-light leading-5">
+    <div className="flex w-full justify-between items-center text-sm font-light leading-4">
       <p className="w-full ">
         <span className="font-semibold break-all">{`${data.username}: `}</span>
         <span className="break-all">{`${data.message} `}</span>

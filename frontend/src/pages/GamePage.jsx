@@ -16,14 +16,14 @@ export default function GamePage() {
   useEffect(() => {
     socket.emit("room:join", roomData._id);
 
-    // socket.on("user:data", function (user) {
-    //   localStorage.setItem("userID", user.userIDString);
-    //   socket.auth.userID = user.userIDString;
-    //   socket.auth.username = user.username;
-    // });
+    socket.on("user:data", function (user) {
+      localStorage.setItem("userID", user.userIDString);
+      socket.auth.userID = user.userIDString;
+      socket.auth.username = user.username;
+    });
 
     return () => {
-      // socket.off("user:data");
+      socket.off("user:data");
     };
   }, []);
 

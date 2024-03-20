@@ -13,7 +13,7 @@ export default function GameStartScreen({ roomData }) {
   }
 
   function startGame() {
-    socket.emit("room:start", socket.auth.userID);
+    socket.emit("game:start", socket.auth.userID);
   }
 
   useEffect(() => {
