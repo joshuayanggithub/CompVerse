@@ -38,11 +38,13 @@ const importData = async () => {
     formattedQuestion["question"] = question.question;
     formattedQuestion["difficulty"] = question.difficulty;
 
-    if (question.answer.includes("[")) {
-      formattedQuestion["answers"] = [question.answer.substring(0, question.answer.indexOf("[") - 1), question.answer.substring(question.answer.indexOf("[") + 1, question.answer.length - 1)];
-    } else {
-      formattedQuestion["answers"] = [question.answer];
-    }
+    // if (question.answer.includes("[")) {
+    //   formattedQuestion["answers"] = [question.answer.substring(0, question.answer.indexOf("[") - 1), question.answer.substring(question.answer.indexOf("[") + 1, question.answer.length - 1)];
+    // } else {
+    //   formattedQuestion["answers"] = [question.answer];
+    // }
+
+    formattedQuestion["answers"] = [question.answer]; //lets format later
 
     formattedQuestions.push(formattedQuestion);
   }

@@ -8,8 +8,11 @@ export default function LiveAnswerFeed() {
   const [actualAnswers, setActualAnswers] = useState([]);
 
   const updateMap = (k, v) => {
-    let tempMap = new Map(userAnswers);
-    setUserAnswers(tempMap.set(k, v));
+    setUserAnswers((userAnswers) => {
+      let tempMap = new Map(userAnswers);
+      tempMap.set(k, v);
+      return tempMap;
+    });
   };
 
   function compare(a, b) {
@@ -26,6 +29,7 @@ export default function LiveAnswerFeed() {
     return { username, ...value };
   });
   let sorted = arr.sort(compare);
+  console.log(userAnswers);
 
   useEffect(() => {
     socket.on("game:answering", function ({ username, answer, state, date }) {
@@ -48,11 +52,11 @@ export default function LiveAnswerFeed() {
       updateMap(username, { answer, state, date });
     });
 
-    // socket.on("game:resetBuzz", function () {
-    //   //reset everything!
-    //   setUserAnswers(new Map());
-    //   setActualAnswers([]);
-    // });
+    socket.on("game:newQuestion", function () {
+      //reset everything!
+      setUserAnswers(new Map());
+      setActualAnswers([]);
+    });
 
     return () => {
       socket.off("game:answering");
@@ -60,6 +64,7 @@ export default function LiveAnswerFeed() {
       socket.off("game:buzzed");
       socket.off("game:wrong");
       socket.off("game:correct");
+      socket.off("game:newQuestion");
     };
   }, []);
 

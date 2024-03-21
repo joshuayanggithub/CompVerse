@@ -17,7 +17,6 @@ export default function GameQuestionScreen({ roomData }) {
   const [buzzedIn, setBuzzedIn] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [turn, setTurn] = useState(true);
-
   //answer
   const [answer, setAnswer] = useState("");
 
