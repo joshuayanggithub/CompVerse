@@ -8,9 +8,8 @@ module.exports = async (socket, io) => {
   const gameBuzz = async (_id) => {
     const userID = socket.handshake.auth.userID;
     try {
-      //0. No validation for now, to minimize time
-      //1. Update buzz state immediately
-      socket.broadcast.to(_id).emit("game:buzzed", socket.handshake.auth.username);
+      //1. Broadcast buzz state to everyone else
+      socket.broadcast.to(_id).emit("game:buzzed", { state: "buzz", answer: "", username: socket.handshake.auth.username, date: new Date() });
       //2. update room data
       const roomBuzzing = await Room.findById(_id);
       const temp = roomBuzzing.users.get(userID);
@@ -19,21 +18,24 @@ module.exports = async (socket, io) => {
       await roomBuzzing.save();
     } catch (error) {
       console.error(error);
+      socket.emit("error", new AppError(error.toString(), "socket"));
     }
   };
+
   const gameAnswering = async ({ currentAnswer, _id }) => {
-    //0. It's really tedious to have to do error checking, so we aren't going to check valid userID and gameRoom
-    const userID = socket.handshake.auth.userID;
-    //1. Emit User Input Live to Everyone Else!
-    socket.broadcast.to(_id).emit("game:answering", currentAnswer);
+    try {
+      //1. Emit User Input Live to Everyone Else!
+      const userID = socket.handshake.auth.userID;
+      socket.broadcast.to(_id).emit("game:answering", { state: "buzz", answer: currentAnswer, username: socket.handshake.auth.username, date: new Date() });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const checkAnswer = async (userAnswer, correctAnswers) => {
     //Try and be as accurate as possible
-    console.log(userAnswer);
     correctAnswers.forEach((correctAnswer) => {
-      if (correctAnswer.toLowerCase() == userAnswer) {
-        console.log("coffd", correctAnswer);
+      if (correctAnswer.toLowerCase() == userAnswer.toLowerCase()) {
         return true;
       }
     });
@@ -47,37 +49,46 @@ module.exports = async (socket, io) => {
     const room = await Room.findOne({ _id: userAnswering.room });
     //2. Check Answer
     const currentQuestionIndex = room.questionsStartTime.length - 1;
-    const correct = checkAnswer(answer.toLowerCase(), room.questions[currentQuestionIndex].answers);
+    const correct = checkAnswer(answer, room.questions[currentQuestionIndex].answers);
     //3. Continue based on correctness
     if (correct == true) {
       //A. emit user answer and then acceptable, correct answers
-      socket.emit("game:correct", answer);
+      // socket.emit("game:correct", answer);
+      io.to(room._id.toString()).emit("game:correct", { state: "correct", answer: answer, username: socket.handshake.auth.username, date: new Date() });
       io.to(room._id.toString()).emit("game:actualAnswer", room.questions[currentQuestionIndex].answers);
       //B. update scoreboard
-      let temp = room.users.get(userID);
-      temp.score = room.users.get(userID).score + 1;
-      console.log(temp);
-      room.users.set(userID, temp);
+      let updatedUsersMap = room.users.get(userID);
+      updatedUsersMap.score = room.users.get(userID).score + 1;
+      room.users.set(userID, updatedUsersMap);
       const updatedRoom = await room.save();
       io.to(updatedRoom._id.toString()).emit("room:update", updatedRoom.users);
       //C. emit new quesiton
       await newQuestion(updatedRoom); //this is mongoose document object
     } else {
-      //A. Emit correct answer
-      socket.emit("game:wrong", answer);
-      io.to(room._id.toString()).emit("game:actualAnswer", room.questions[currentQuestionIndex].answers);
-      //Check if Eveyrone has buzzed or not
+      // socket.emit("game:wrong", answer);
+      io.to(room._id.toString()).emit("game:wrong", { state: "wrong", answer: answer, username: socket.handshake.auth.username, date: new Date() });
+      //Check if everyone has buzzed or not
       let allAnswered = true;
-      room.users.forEach((user) => {
-        if (!user.buzzed) {
+      room.users.forEach((value, key) => {
+        console.log(value);
+        if (!value.buzzed) {
           allAnswered = false;
           return;
         }
       });
 
-      //B. if All Buzzed, then start emitting new question, otherwise do nothing
+      //A. Emit correct answer
       if (allAnswered) {
+        io.to(room._id.toString()).emit("game:actualAnswer", room.questions[currentQuestionIndex].answers);
+        await setTimeout(async function () {}, 2000);
         await newQuestion(room);
+      } else {
+        //only reset buzz for those who have not buzzed this round yet!
+        // for (let [userID, userState] of room.users) {
+        //   if (userState.buzzed = false) {
+        //   }
+        // }
+        socket.broadcast.to(room._id.toString()).emit("game:resetBuzz");
       }
     }
   };
@@ -90,8 +101,15 @@ module.exports = async (socket, io) => {
       await gameEnd(room);
       return;
     }
+    //1. Reset all buzz states
+    for (let [userID, userState] of room.users) {
+      let newUserState = userState;
+      newUserState.buzzed = false;
+      room.users.set(userID, newUserState);
+    }
+    await room.save();
+    io.to(room._id.toString()).emit("game:resetBuzz");
     //1. Send new question data! In the future, do this in small chunks, for now just do chunks on client-side
-    console.log(room._id.toString());
     io.to(room._id.toString()).emit("game:newQuestion", { questionText: room.questions[currentQuestionIndex + 1].question, questionNumber: currentQuestionIndex + 1 + 1 });
 
     //2. start question timer immediately

@@ -28,7 +28,6 @@ export default function Rooms({ createRoom, setError }) {
     fetchAllRooms();
 
     socket.on("rooms:update", function () {
-      console.log("Joindsf");
       fetchAllRooms();
     });
 
@@ -44,32 +43,27 @@ export default function Rooms({ createRoom, setError }) {
     };
   }, []);
 
-  if (rooms.length == 0) {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <h1 className="text-xl text-gray-500 font-light">
-          <i>Create a Room or Invite A Friend Or Two!</i>
-        </h1>
+  return (
+    <>
+      <div className="flex w-full justify-between pb-3 relative">
+        <div className="flex items-center gap-1 ">
+          <div className="w-[5px] h-[5px] rounded-lg bg-blue-300"></div>
+          <h3 className="italic text-gray-600 text-sm font-light">{`${rooms.length} Game Rooms In Progress...`}</h3>
+        </div>
+        <div className="flex items-center gap-1">
+          <h3 className="italic text-gray-600 text-sm font-light">Join or Create Room to Get Started!</h3>
+        </div>
       </div>
-    );
-  } else {
-    return (
-      <>
-        <div className="flex w-full justify-between pb-3">
-          <div className="flex items-center gap-1 ">
-            <div className="w-[5px] h-[5px] rounded-lg bg-blue-300"></div>
-            <h3 className="italic text-gray-600 text-sm font-light">{`${rooms.length} Game Rooms In Progress...`}</h3>
-          </div>
-          <div className="flex items-center gap-1">
-            <h3 className="italic text-gray-600 text-sm font-light">Join or Create Room to Get Started!</h3>
-          </div>
-        </div>
-        <div className={`grid grid-cols-3 content-start w-full gap-10 h-[80%] overflow-scroll p-1 ${createRoom && "blur-[1px]"}`}>
-          {rooms.map((room, index) => {
-            return <Room room={room} key={index} />;
-          })}
-        </div>
-      </>
-    );
-  }
+      {rooms.length == 0 && (
+        <h1 className="text-xl text-gray-500 font-light absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <i>Invite Your Friends!</i>
+        </h1>
+      )}
+      <div className={`grid grid-cols-3 content-start w-full gap-10 h-[80%] overflow-scroll p-1 ${createRoom && "blur-[1px]"}`}>
+        {rooms.map((room, index) => {
+          return <Room room={room} key={index} />;
+        })}
+      </div>
+    </>
+  );
 }

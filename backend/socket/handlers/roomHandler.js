@@ -54,6 +54,10 @@ module.exports = async (socket, io) => {
   const joinRoom = async (_id) => {
     const userID = socket.handshake.auth.userID;
     try {
+      if (_id == "lobby") {
+        await leaveRoom();
+        return;
+      }
       //1. Find User and Add him to Room
       const roomJoining = await Room.findOne({ _id: _id });
       const userJoining = await User.findOne({ userID: userID });
@@ -88,7 +92,7 @@ module.exports = async (socket, io) => {
     try {
       //1. Find UserLeaving
       const userLeaving = await User.findOne({ userID: userID });
-      // if (!userLeaving.room) return; //user is not in ANY room
+      if (!userLeaving.room) return; //user is not in ANY room
       let roomLeaving = await Room.findOne({ _id: userLeaving.room.toString() });
 
       //2. Reassign roomLeader if the userLeaving is the roomLeader

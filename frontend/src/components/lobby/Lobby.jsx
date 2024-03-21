@@ -18,10 +18,12 @@ export default function Lobby({ username, setUsername }) {
       setError(error.message);
     });
 
+    socket.emit("room:join", "lobby");
+
     return () => {
       socket.off("error");
     };
-  });
+  }, []);
 
   return (
     <div className="flex flex-col h-full px-7 pb-7 pt-3 w-full relative justify-between outline outline-1 outline-gray-400 rounded-lg ">
