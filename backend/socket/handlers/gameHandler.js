@@ -4,13 +4,17 @@ const { User } = require("../../models/usersModel");
 const { Question } = require("../../models/questionsModel");
 const AppError = require("../../utils/AppError");
 
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 module.exports = async (socket, io) => {
   const gameBuzz = async (_id) => {
     const userID = socket.handshake.auth.userID;
     try {
       //1. Broadcast buzz state to everyone else, and stop question stagger for everybody!
       socket.broadcast.to(_id).emit("game:buzzed", { state: "buzz", answer: "", username: socket.handshake.auth.username, date: new Date() });
-      io.to(_id).emit("game:stopQuestion");
+      io.to(_id).emit("game:pauseQuestion");
       //2. Update room data of users to reflect updated buzz state
       const roomBuzzing = await Room.findById(_id);
       const temp = roomBuzzing.users.get(userID);
@@ -33,14 +37,16 @@ module.exports = async (socket, io) => {
     }
   };
 
-  const checkAnswer = async (userAnswer, correctAnswers) => {
+  const checkAnswer = (userAnswer, correctAnswers) => {
     //Simple check algorithm
+    let correctness = false;
     correctAnswers.forEach((correctAnswer) => {
-      if (correctAnswer.toLowerCase() == userAnswer.toLowerCase()) {
+      if (correctAnswer.toLowerCase().replaceAll(" ", "") == userAnswer.toLowerCase().replaceAll(" ", "")) {
+        correctness = true;
         return true;
       }
     });
-    return false;
+    return correctness;
   };
 
   const gameAnswer = async (answer) => {
@@ -64,7 +70,7 @@ module.exports = async (socket, io) => {
       //3. emit updated scoreboard
       io.to(updatedRoom._id.toString()).emit("room:update", updatedRoom.users);
       //4. emit new quesiton after a slight delay
-      await setTimeout(async function () {}, 2000);
+      await timeout(1000);
       await newQuestion(updatedRoom); //this is mongoose document object
     } else {
       //1. emit that user answer is wrong
@@ -72,7 +78,6 @@ module.exports = async (socket, io) => {
       //2. Check if everyone has buzzed or not
       let allAnswered = true;
       room.users.forEach((value, key) => {
-        console.log(value);
         if (!value.buzzed) {
           allAnswered = false;
           return;
@@ -82,8 +87,8 @@ module.exports = async (socket, io) => {
       if (allAnswered) {
         //1. emit all accepted answers
         io.to(room._id.toString()).emit("game:actualAnswer", room.questions[currentQuestionIndex].answers);
-        await setTimeout(async function () {}, 2000);
         //2. emit new question data
+        await timeout(1000);
         await newQuestion(room);
       } else {
         //only reset buzz for those who have not buzzed this round yet!
@@ -91,33 +96,41 @@ module.exports = async (socket, io) => {
         //   if (userState.buzzed = false) {
         //   }
         // }
+        io.to(room._id.toString()).emit("game:resumeQuestion");
         socket.broadcast.to(room._id.toString()).emit("game:resetBuzz");
       }
     }
   };
 
   const newQuestion = async (room) => {
-    //0. Pre-conditions to check if room is done
-    const currentQuestionIndex = room.questionsStartTime.length - 1;
-    if (currentQuestionIndex > -1 && currentQuestionIndex == room.questions.length - 1) {
-      //make sure room has not started yet either...
-      await gameEnd(room);
-      return;
+    try {
+      //0. Pre-conditions to check if room is done
+      const currentQuestionIndex = room.questionsStartTime.length;
+      if (currentQuestionIndex > 0 && currentQuestionIndex == room.questions.length) {
+        //make sure room has not started yet either...
+        await gameEnd(room);
+        return;
+      }
+      await timeout(500);
+      //1. Reset all buzz states
+      for (let [userID, userState] of room.users) {
+        let newUserState = userState;
+        newUserState.buzzed = false;
+        room.users.set(userID, newUserState);
+      }
+      //1. Send new question data! In the future, no need to emit in chunks, it will be so annoying to do so
+      io.to(room._id.toString()).emit("game:newQuestion", {
+        questionText: room.questions[currentQuestionIndex].question,
+        questionNumber: currentQuestionIndex + 1,
+        questionCategories: room.questions[currentQuestionIndex].questionCategory,
+        questionType: room.questions[currentQuestionIndex].questionType,
+      });
+      //2. start question timer immediately
+      room.questionsStartTime.push(new Date()); //start officially now;
+      await room.save();
+    } catch (error) {
+      console.error(error);
     }
-    //1. Reset all buzz states
-    for (let [userID, userState] of room.users) {
-      let newUserState = userState;
-      newUserState.buzzed = false;
-      room.users.set(userID, newUserState);
-    }
-    await room.save();
-    io.to(room._id.toString()).emit("game:resetBuzz");
-    //1. Send new question data! In the future, no need to emit in chunks, it will be so annoying to do so
-    io.to(room._id.toString()).emit("game:newQuestion", { questionText: room.questions[currentQuestionIndex + 1].question, questionNumber: currentQuestionIndex + 1 + 1 });
-
-    //2. start question timer immediately
-    room.questionsStartTime.push(new Date()); //start officially now;
-    await room.save();
   };
 
   const currentQuestion = async (room) => {

@@ -29,7 +29,6 @@ export default function LiveAnswerFeed() {
     return { username, ...value };
   });
   let sorted = arr.sort(compare);
-  console.log(userAnswers);
 
   useEffect(() => {
     socket.on("game:answering", function ({ username, answer, state, date }) {
@@ -37,7 +36,8 @@ export default function LiveAnswerFeed() {
     });
 
     socket.on("game:actualAnswer", function (answers) {
-      setActualAnswers(answers);
+      console.log(actualAnswers, "actual answer", answers);
+      setActualAnswers((prev) => answers);
     });
 
     socket.on("game:buzzed", function ({ username, answer, state, date }) {
@@ -45,6 +45,7 @@ export default function LiveAnswerFeed() {
     });
 
     socket.on("game:correct", function ({ username, answer, state, date }) {
+      console.log("correct");
       updateMap(username, { answer, state, date });
     });
 
@@ -54,8 +55,10 @@ export default function LiveAnswerFeed() {
 
     socket.on("game:newQuestion", function () {
       //reset everything!
+      console.log("reset User Input After New Question");
       setUserAnswers(new Map());
-      setActualAnswers([]);
+      console.log(actualAnswers, "new quesiton");
+      setActualAnswers((prev) => []);
     });
 
     return () => {
@@ -68,12 +71,14 @@ export default function LiveAnswerFeed() {
     };
   }, []);
 
+  console.log(userAnswers);
+
   return (
     <div className="flex flex-col items-start justify-center gap-1 h-1/4">
-      {sorted.map((userAnswer, index) => {
+      {sorted.map((userAnswer) => {
         return <UserAnswer key={userAnswer.date} answer={userAnswer.answer} username={userAnswer.username} state={userAnswer.state} date={userAnswer.date} />;
       })}
-      {actualAnswers.length > 0 && <ActualAnswer answers={actualAnswers} />}
+      <ActualAnswer answers={actualAnswers} />
     </div>
   );
 }

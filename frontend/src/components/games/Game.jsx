@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import GameStartScreen from "./states/GameStartScreen";
 import GameQuestionScreen from "./states/GameQuestionScreen";
 import ErrorModal from "../ui/ErrorModal";
+import { useNavigate } from "react-router-dom";
 import GameEndScreen from "./states/GameEndScreen";
 
 export default function Game({ roomData }) {
   const [gameStarted, setGameStarted] = useState(false);
-  const [gameEnded, setGameEnded] = useState(false);
   const [gameError, setGameError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on("game:started", function () {
@@ -17,7 +18,7 @@ export default function Game({ roomData }) {
     });
 
     socket.on("game:end", function () {
-      setGameEnded(true);
+      navigate("/");
     });
 
     socket.on("error", function () {
@@ -33,8 +34,7 @@ export default function Game({ roomData }) {
   return (
     <div className="flex flex-col h-full px-7 pb-7 pt-3 w-full relative  outline outline-1 outline-gray-400 rounded-lg ">
       {!gameStarted && <GameStartScreen roomData={roomData} />}
-      {gameStarted && !gameEnded && <GameQuestionScreen roomData={roomData} />}
-      {gameEnded && <GameEndScreen />}
+      {gameStarted && <GameQuestionScreen roomData={roomData} />}
       {gameError && <ErrorModal error={gameError} setError={setGameError} />}
     </div>
   );
