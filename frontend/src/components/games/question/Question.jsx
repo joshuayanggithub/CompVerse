@@ -11,7 +11,6 @@ export default function Question() {
 
   useEffect(() => {
     socket.on("game:newQuestion", function ({ questionText, questionNumber, questionCategories, questionType }) {
-      console.log("new Question", questionText, questionNumber);
       setQuestionText(questionText);
       setQuestionNumber(questionNumber);
       setQuestionCategory(questionCategories[0].charAt(0).toUpperCase() + questionCategories[0].toLowerCase().slice(1));

@@ -68,7 +68,7 @@ module.exports = async (socket, io) => {
       room.users.set(userID, updatedUser);
       const updatedRoom = await room.save();
       //3. emit updated scoreboard
-      io.to(updatedRoom._id.toString()).emit("room:update", updatedRoom.users);
+      io.to(room._id.toString()).emit("room:update");
       //4. emit new quesiton after a slight delay
       await timeout(1000);
       await newQuestion(updatedRoom); //this is mongoose document object
@@ -93,8 +93,10 @@ module.exports = async (socket, io) => {
       } else {
         //only reset buzz for those who have not buzzed this round yet!
         for (let [userID, userState] of room.users) {
-          if ((userState.buzzed = false)) {
-            io.to(userID).emit("game:resetBuzz");
+          if (!userState.buzzed) {
+            console.log(userID, userState, userState.buzzed);
+            console.log(io.sockets.adapter.rooms);
+            io.to(userID.toString()).emit("game:resetBuzz");
           }
         }
         io.to(room._id.toString()).emit("game:resumeQuestion");
@@ -114,6 +116,8 @@ module.exports = async (socket, io) => {
       }
       await timeout(500);
       //1. Reset all buzz states
+      io.to(room._id.toString()).emit("room:update");
+
       for (let [userID, userState] of room.users) {
         let newUserState = userState;
         newUserState.buzzed = false;

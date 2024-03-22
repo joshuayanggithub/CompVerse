@@ -32,12 +32,13 @@ export default function Scoreboard({ height, _id }) {
 
     socket.on("room:update", function () {
       //new users
+      console.log("updated room");
       fetchAllUsersInRoom();
     });
 
     return () => {
       controller.abort();
-      socket.off("room:update");
+      // socket.off("room:update");
     };
   }, []);
 

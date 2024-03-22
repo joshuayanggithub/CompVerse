@@ -45,7 +45,7 @@ export default function UserList({ height, socketRoomId }) {
 
     return () => {
       controller.abort();
-      socket.off("room:update");
+      // socket.off("room:update");
       socket.off("users:update");
     };
   }, []);

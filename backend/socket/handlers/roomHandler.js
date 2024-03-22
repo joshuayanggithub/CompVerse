@@ -98,13 +98,13 @@ module.exports = async (socket, io) => {
       //2. Reassign roomLeader if the userLeaving is the roomLeader
       if (roomLeaving.roomLeader.toString() == userID) {
         let users = Array.from(roomLeaving.users.keys());
-        users.forEach((user) => {
+        for (const user of users) {
           if (user != userID) {
             roomLeaving.roomLeader = user; //emit to this user's room (which is his userID) that he is the new leader
             io.to(user).emit("room:leader", user);
-            return;
+            break;
           }
-        });
+        }
       }
 
       //5. Update User in Database

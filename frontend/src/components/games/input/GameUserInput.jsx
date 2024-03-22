@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { socket } from "../../../global/socket";
 import ButtonWrapper from "../../ui/wrappers/ButtonWrapper";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
+import BuzzTimer from "./BuzzTimer";
 
 export default function GameUserInput({ roomIDString }) {
   //game logic specific
@@ -12,6 +13,7 @@ export default function GameUserInput({ roomIDString }) {
   const [answer, setAnswer] = useState("");
 
   function submitAnswer() {
+    console.log("submitted");
     socket.emit("game:answer", answer);
     setSubmitted(true);
   }
@@ -58,6 +60,8 @@ export default function GameUserInput({ roomIDString }) {
 
   return (
     <div className="w-full">
+      {buzzedIn && !submitted && <BuzzTimer submitAnswer={submitAnswer} />}
+
       {turn && !buzzedIn && (
         <ButtonWrapper color="bg-red-500" width="w-28" onClick={buzzIn} className="flex gap-1 items-center justify-center">
           Buzz In
