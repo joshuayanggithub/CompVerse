@@ -100,8 +100,8 @@ module.exports = async (socket, io) => {
         let users = Array.from(roomLeaving.users.keys());
         users.forEach((user) => {
           if (user != userID) {
-            roomLeaving.roomLeader = user; //newuser
-            io.to(roomLeaving._id.toString()).emit("room:leader", user);
+            roomLeaving.roomLeader = user; //emit to this user's room (which is his userID) that he is the new leader
+            io.to(user).emit("room:leader", user);
             return;
           }
         });

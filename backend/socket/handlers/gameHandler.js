@@ -92,12 +92,13 @@ module.exports = async (socket, io) => {
         await newQuestion(room);
       } else {
         //only reset buzz for those who have not buzzed this round yet!
-        // for (let [userID, userState] of room.users) {
-        //   if (userState.buzzed = false) {
-        //   }
-        // }
+        for (let [userID, userState] of room.users) {
+          if ((userState.buzzed = false)) {
+            io.to(userID).emit("game:resetBuzz");
+          }
+        }
         io.to(room._id.toString()).emit("game:resumeQuestion");
-        socket.broadcast.to(room._id.toString()).emit("game:resetBuzz");
+        // socket.broadcast.to(room._id.toString()).emit("game:resetBuzz");
       }
     }
   };

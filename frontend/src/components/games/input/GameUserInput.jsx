@@ -39,7 +39,9 @@ export default function GameUserInput({ roomIDString }) {
     });
 
     socket.on("game:resetBuzz", function () {
+      // if (!submitted) {
       setTurn(true);
+      // }
     });
 
     return () => {
@@ -70,7 +72,19 @@ export default function GameUserInput({ roomIDString }) {
       )}
       {turn && buzzedIn && !submitted && (
         <div className="flex w-full gap-2">
-          <input type="text" placeholder="Enter Answer" className="h-10 w-1/4 outline outline-1 outline-gray-400 rounded-lg p-5" value={answer} onChange={changeAnswer}></input>
+          <input
+            autoFocus
+            type="text"
+            placeholder="Enter Answer"
+            className="h-10 w-1/4 outline outline-1 outline-gray-400 rounded-lg p-5"
+            value={answer}
+            onChange={changeAnswer}
+            onKeyDown={(event) => {
+              if (event.key == "Enter") {
+                submitAnswer();
+              }
+            }}
+          ></input>
           <ButtonWrapper color={"bg-status"} onClick={submitAnswer}>
             Submit Answer
           </ButtonWrapper>

@@ -16,12 +16,17 @@ exports.initSocketServer = function (server) {
   //1. A middleware function is a function that gets executed for every incoming connection.
   io.use(authorizeUser); //MIDDLEWARE IS EXTREMELY IMPORTANT
 
+  const joinDefaultRooms = (socket) => {
+    socket.join("lobby");
+    socket.join(socket.handshake.auth.userID);
+  };
+
   //2. connection handler bundled
   const onConnection = (socket) => {
     //register all event handlers
     console.log("New socket.io Connection: ", socket.id, socket.handshake.auth.username, socket.handshake.auth.userID, new Date());
-    socket.join("lobby");
     console.log(io.sockets.adapter.rooms);
+    joinDefaultRooms(socket);
     registerUserHandler(socket, io);
     registerChatHandler(socket, io);
     registerRoomHandler(socket, io);
