@@ -4,10 +4,11 @@ import CreateRoomButton from "./rooms/CreateRoomButton";
 import CreateRoomModal from "./rooms/CreateRoomModal";
 import UsernameSelect from "./UsernameSelect";
 import { SlSettings } from "react-icons/sl";
-import ErrorModal from "../ui/ErrorModal";
+import ErrorModal from "../ui/modals/ErrorModal";
 import { socket } from "../../global/socket";
+import UserProfileModal from "../ui/modals/UserProfileModal";
 
-export default function Lobby({ username, setUsername }) {
+export default function Lobby({ username, setUsername, profile, toggleProfile }) {
   const [createRoom, setCreateRoom] = useState(false);
   const [error, setError] = useState("");
 
@@ -35,6 +36,7 @@ export default function Lobby({ username, setUsername }) {
       </div>
       {createRoom && <CreateRoomModal modalOpen={createRoom} setModalOpen={setCreateRoom} />}
       {error && <ErrorModal error={error} setError={setError} />}
+      {profile != "" && <UserProfileModal profile={profile} toggleProfile={toggleProfile} />}
     </div>
   );
 }

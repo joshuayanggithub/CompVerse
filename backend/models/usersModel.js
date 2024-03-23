@@ -16,7 +16,7 @@ const userSchema = new Schema(
     email: String,
     problemsSolved: { type: Number, default: 0 },
     gamesWon: { type: Number, default: 0 },
-    matchesPlayer: { type: Number, default: 0 },
+    matchesPlayed: { type: Number, default: 0 },
     online: { type: Boolean, default: false },
     room: { type: Schema.Types.ObjectId },
     rating: { type: Map, of: Number }, //map of different competitions
@@ -30,6 +30,21 @@ const userSchema = new Schema(
 
 userSchema.virtual("userIDString").get(function () {
   return this.userID.toString();
+});
+
+userSchema.virtual("starRating").get(function () {
+  let score = this.problemsSolved + this.gamesWon * 5;
+  if (score >= 200) {
+    return 5;
+  } else if (score >= 100) {
+    return 4;
+  } else if (score >= 50) {
+    return 3;
+  } else if (score >= 20) {
+    return 2;
+  } else {
+    return 1;
+  }
 });
 
 const User = mongoose.model("User", userSchema);

@@ -2,7 +2,7 @@ import { socket } from "../../global/socket";
 import { useEffect, useState } from "react";
 import GameStartScreen from "./states/GameStartScreen";
 import GameQuestionScreen from "./states/GameQuestionScreen";
-import ErrorModal from "../ui/ErrorModal";
+import ErrorModal from "../ui/modals/ErrorModal";
 import { useNavigate } from "react-router-dom";
 import GameEndScreen from "./states/GameEndScreen";
 

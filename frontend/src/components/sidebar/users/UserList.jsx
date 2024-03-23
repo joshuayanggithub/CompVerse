@@ -4,7 +4,7 @@ import MinimizeArrow from "../../ui/MinimizeArrow";
 import User from "./User";
 import { socket } from "../../../global/socket";
 
-export default function UserList({ height, socketRoomId }) {
+export default function UserList({ height, socketRoomId, toggleProfile }) {
   const [minimized, setMinimized] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -51,14 +51,14 @@ export default function UserList({ height, socketRoomId }) {
   }, []);
 
   return (
-    <div className={`w-full ${minimized ? "h-10" : height} outline outline-gray-400 outline-1 rounded-t-md rounded-b-none  px-3 py-3 overflow-hidden`}>
-      <div className="flex items-center">
+    <div className={`w-full ${minimized ? "h-10" : height} outline outline-gray-400 outline-1 rounded-t-md rounded-b-none py-3 overflow-hidden`}>
+      <div className="flex items-center px-3">
         <OnlineStatus playersOnline={users.length} socketRoomId={socketRoomId} />
         <MinimizeArrow minimized={minimized} setMinimized={setMinimized} />
       </div>
       <div className={`overflow-scroll ${minimized && "hidden"}`}>
         {users.map((user, index) => {
-          return <User username={user.username} score={user.gamesWon} key={index} userID={user.userIDString} />;
+          return <User username={user.username} score={user.gamesWon} key={index} userID={user.userIDString} toggleProfile={toggleProfile} />;
         })}
       </div>
     </div>

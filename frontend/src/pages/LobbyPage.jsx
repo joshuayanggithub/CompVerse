@@ -2,8 +2,11 @@ import Header from "../components/nav/Header";
 import Lobby from "../components/lobby/Lobby";
 
 import Sidebar from "../components/sidebar/Sidebar";
+import { useState } from "react";
 
 export default function LobbyPage() {
+  const [profile, toggleProfile] = useState("");
+
   return (
     <>
       <div className="flex flex-col w-full h-full box-border py-5">
@@ -14,10 +17,10 @@ export default function LobbyPage() {
         </div>
         <div className="flex h-[90%] w-full justify-evenly items-center">
           <div className="h-full w-[73%]">
-            <Lobby />
+            <Lobby profile={profile} toggleProfile={toggleProfile} />
           </div>
           <div className="h-full w-[23%]">
-            <Sidebar socketRoomId="lobby" chatHeight={"h-2/3"} userListHeight={"h-1/3"} />
+            <Sidebar socketRoomId="lobby" toggleProfile={toggleProfile} chatHeight={"h-2/3"} userListHeight={"h-1/3"} />
           </div>
         </div>
       </div>
