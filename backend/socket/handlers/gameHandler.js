@@ -69,6 +69,9 @@ module.exports = async (socket, io) => {
       const updatedRoom = await room.save();
       //3. emit updated scoreboard
       io.to(room._id.toString()).emit("room:update");
+      //5. Update User Stats for problems solved correctly
+      userAnswering.problemsSolved = userAnswering.problemsSolved + 1;
+      await userAnswering.save();
       //4. emit new quesiton after a slight delay
       await timeout(1000);
       await newQuestion(updatedRoom); //this is mongoose document object
@@ -150,6 +153,24 @@ module.exports = async (socket, io) => {
     await room.save();
     //2. Update socket events
     io.to(room._id.toString()).emit("game:end");
+    //3. Update User Stats - No issue with race events, since stats wont interfere with anything
+    let userWon = { userID: "", score: -1 };
+    for (let [userID, userState] of room.users) {
+      //update matches played for all users
+      const userToUpdate = await User.findOne({ userID });
+      userToUpdate.matchesPlayed = userToUpdate.matchesPlayed + 1;
+      await userToUpdate.save();
+      //find the user who won with max score
+      if (userState.score > userWon.score) {
+        userWon = { userID: userID, score: userState.score };
+      }
+    }
+    //update user who won only when there are multiple users by the end of the game
+    if (room.users?.size > 1 && userWon.score != -1 && userWon.userID != "") {
+      const userToUpdate = await User.findOne({ userID: userWon.userID });
+      userToUpdate.gamesWon = userToUpdate.gamesWon + 1;
+      await userToUpdate.save();
+    }
   };
 
   const startGame = async ({ _id }) => {

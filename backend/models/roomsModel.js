@@ -25,6 +25,7 @@ const roomSchema = new Schema(
     }, //userIDString -> {username, score, buzzed}
     roomLeader: { type: Schema.Types.UUID, required: true },
     gameLength: { type: Number, required: true },
+    timePerQuestion: { type: Number, required: true },
     questions: { type: [questionSchema], required: false }, //separate request should fill in questions
     questionsStartTime: { type: [Date], required: false }, //
     competition: { type: String, required: true },

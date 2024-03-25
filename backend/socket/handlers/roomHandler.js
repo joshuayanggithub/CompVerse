@@ -5,7 +5,7 @@ const { Question } = require("../../models/questionsModel");
 const AppError = require("../../utils/AppError");
 
 module.exports = async (socket, io) => {
-  const createRoom = async ({ competition, gameLength, roomName, userID }) => {
+  const createRoom = async ({ competition, gameLength, roomName, userID, timePerQuestion }) => {
     try {
       //1. Find and validate the user who created the room
       const userCreator = await User.findOne({ userID: userID });
@@ -20,7 +20,7 @@ module.exports = async (socket, io) => {
       let users = new Map();
       let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };
       users.set(userID, userData);
-      const room = await Room.create({ competition, gameLength, roomName, users, roomLeader: userID, questions: [] });
+      const room = await Room.create({ competition, gameLength, roomName, users, timePerQuestion, roomLeader: userID, questions: [] });
       room.roomLeader = userID;
       await room.save();
 

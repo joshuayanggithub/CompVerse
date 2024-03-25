@@ -100,7 +100,7 @@ exports.getUserStats = async (req, res, next) => {
         $group: {
           _id: 0,
           problemsSolved: { $sum: "$problemsSolved" },
-          gamesPlayed: { $sum: "$gamesPlayed" },
+          matchesPlayed: { $sum: "$matchesPlayed" },
         },
       },
     ]);

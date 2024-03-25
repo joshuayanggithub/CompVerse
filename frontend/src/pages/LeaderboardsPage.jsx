@@ -1,3 +1,4 @@
+import Leaderboard from "../components/leaderboard/leaderboard";
 import Header from "../components/nav/Header";
 
 export default function LeaderBoardsPage() {
@@ -8,7 +9,7 @@ export default function LeaderBoardsPage() {
           <Header />
         </div>
       </div>
-      <div className="flex h-[90%] w-full justify-evenly items-center"></div>
+      <Leaderboard />
     </div>
   );
 }

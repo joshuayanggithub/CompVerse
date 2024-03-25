@@ -8,6 +8,7 @@ import ErrorWrapper from "../../ui/wrappers/ErrorWrapper";
 export default function CreateRoomModal({ setModalOpen }) {
   const competitionRef = useRef();
   const gameLengthRef = useRef();
+  const timePerQuestionRef = useRef();
   const gameNameRef = useRef();
   const [error, setError] = useState("");
 
@@ -24,6 +25,10 @@ export default function CreateRoomModal({ setModalOpen }) {
       setError("Please Choose A Room Name!");
       return true;
     }
+    if (timePerQuestionRef.current.value == "") {
+      setError("Please input time per question!");
+      return true;
+    }
     setError("");
     return false;
   }
@@ -34,6 +39,7 @@ export default function CreateRoomModal({ setModalOpen }) {
       competition: competitionRef.current.value,
       gameLength: Number(gameLengthRef.current.value),
       roomName: gameNameRef.current.value,
+      timePerQuestion: timePerQuestionRef.current.value,
       userID: socket.auth.userID,
     };
     socket.emit("room:create", roomData);
@@ -65,7 +71,8 @@ export default function CreateRoomModal({ setModalOpen }) {
         <option value="20">20 Problems</option>
         {/* <option value="freeplay">Free Play</option> */}
       </select>
-      <input type="text" placeholder="Room Name" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" ref={gameNameRef}></input>
+      <input type="number" placeholder="30" name="quantity" min="10" max="60" step="5" ref={timePerQuestionRef} />
+      <input type="text" placeholder="Room Name" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" ref={gameNameRef} />
       {error != "" && <ErrorWrapper>{error}</ErrorWrapper>}
       <ButtonWrapper onClick={createRoom} width={"w-1/3"}>
         Create Game
