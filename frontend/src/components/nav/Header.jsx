@@ -9,7 +9,7 @@ export default function Header() {
           How to Play
         </Link>
         <Link to="/home" className="text-xl hover:underline">
-          Community
+          Home
         </Link>
         <Link to="/" className="flex items-center hover:underline">
           <h1 className="text-2xl m-1 text-trophygold font-outline-1">CompVerse</h1>

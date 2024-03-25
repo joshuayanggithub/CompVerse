@@ -51,7 +51,7 @@ export default function UserProfileModal({ profile, toggleProfile }) {
           <div className="font-jost italic text-xl">
             <div className="w-full flex items-center justify-start">
               <span>Rating:</span>
-              <StarRating rating={userDetails.starRating} />
+              <StarRating rating={userDetails.starRating} size={20} />
             </div>
             <h2>{`Games Won: ${userDetails.gamesWon}`}</h2>
             <h2>{`Matches Played: ${userDetails.matchesPlayed}`}</h2>

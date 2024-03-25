@@ -6,6 +6,7 @@ const router = new express.Router(); //use current route
 router.route("").post(userController.createUser).get(userController.getAllUsers);
 
 router.route("/username").get(userController.checkUsername);
+router.route("/top").get(userController.getTopUsers);
 
 router.route("/user-stats").get(userController.getUserStats);
 

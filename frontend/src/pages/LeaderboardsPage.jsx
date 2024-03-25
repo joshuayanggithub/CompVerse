@@ -9,7 +9,9 @@ export default function LeaderBoardsPage() {
           <Header />
         </div>
       </div>
-      <Leaderboard />
+      <div className="flex items-center justify-center w-full px-16 py-8">
+        <Leaderboard />
+      </div>
     </div>
   );
 }

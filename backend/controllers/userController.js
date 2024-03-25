@@ -55,6 +55,25 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
+exports.getTopUsers = async (req, res, next) => {
+  try {
+    let users = await User.find({}).sort({ problemsSolved: -1 }).limit(20);
+    res.status(200).json({
+      status: "success",
+      data: {
+        users,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      data: {
+        error,
+      },
+    });
+  }
+};
+
 exports.getAllUsers = async (req, res, next) => {
   try {
     let users = await User.find(req.query);
