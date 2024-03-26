@@ -43,7 +43,6 @@ const router = createBrowserRouter([
     loader: async ({ params }) => {
       const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}api/room/${params.gameID}`);
       const responseJSON = await response.json();
-      console.log(responseJSON);
       return responseJSON.data;
     },
     errorElement: <ErrorPage />,

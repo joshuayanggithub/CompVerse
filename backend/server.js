@@ -8,11 +8,8 @@ const mongoose = require("mongoose");
 //configure environment variables
 dotenv.config({ path: "./config.env" });
 
-//connect to mongoose
-let DB_Connection_String = process.env.DATABASE_STRING.replace(
-  "<PASSWORD>",
-  process.env.DATABASE_PASSWORD
-);
+//connect to Atlas Server Database
+let DB_Connection_String = process.env.DATABASE_STRING.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);
 DB_Connection_String = DB_Connection_String.replace("<DATABASE_NAME>", "db");
 mongoose.connect(DB_Connection_String).then(() => {
   console.log("MongoDB connection succesful!");

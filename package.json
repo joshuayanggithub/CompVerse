@@ -1,0 +1,28 @@
+{
+  "name": "quizbowl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "server": "nodemon server.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuayanggithub/QuizBowl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshuayanggithub/QuizBowl/issues"
+  },
+  "homepage": "https://github.com/joshuayanggithub/QuizBowl#readme",
+  "engines": {
+    "node": "19.x"
+  }
+}

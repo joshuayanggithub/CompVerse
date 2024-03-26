@@ -13,7 +13,7 @@ export default function GameQuestionScreen({ roomData }) {
     <div className="h-full w-full flex flex-col items-center">
       <div className="flex w-full justify-between">
         <GameHeader roomName={roomData.roomName} competition={roomData.competition} gameLength={roomData.gameLength} />
-        <GameTimer competition={roomData.competition} />
+        <GameTimer time={roomData.timePerQuestion} />
       </div>
 
       <div className="flex flex-col h-3/4 w-[90%] justify-center">

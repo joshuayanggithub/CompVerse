@@ -10,6 +10,7 @@ const roomUserSchema = new Schema({
   username: { type: String, required: true },
   score: { type: Number, required: true },
   buzzed: { type: Boolean, required: true },
+  answered: { type: Boolean, required: true },
   join: { type: Date, required: true },
 });
 
@@ -22,7 +23,7 @@ const roomSchema = new Schema(
       of: roomUserSchema,
       //    of: { username: { type: String, required: true }, score: { type: Number, required: true }, buzzed: { type: Boolean, required: true }, join: { type: Date, required: true } },
       required: true,
-    }, //userIDString -> {username, score, buzzed}
+    }, //userIDString -> {username, score, buzzed, answered}
     roomLeader: { type: Schema.Types.UUID, required: true },
     gameLength: { type: Number, required: true },
     timePerQuestion: { type: Number, required: true },

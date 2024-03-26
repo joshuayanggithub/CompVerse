@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { socket } from "../../../global/socket";
 
-export default function GameTimer({ competition }) {
-  const [timeLeft, setTimeLeft] = useState(300);
+export default function GameTimer({ time }) {
+  const [timeLeft, setTimeLeft] = useState(time * 10); //deciseconds!
 
   useEffect(() => {
     socket.on("game:newQuestion", function () {
-      setTimeLeft(300);
+      setTimeLeft(time * 10);
     });
 
     const timeout = setTimeout(() => {

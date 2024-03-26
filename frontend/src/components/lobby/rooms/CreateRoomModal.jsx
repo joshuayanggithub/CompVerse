@@ -17,16 +17,16 @@ export default function CreateRoomModal({ setModalOpen }) {
       setError("Please Choose A Game!");
       return true;
     }
-    if (gameLengthRef.current.value == "notchosen") {
-      setError("Please Choose A Game Length!");
+    if (!(Number(gameLengthRef.current.value) >= 5 && Number(gameLengthRef.current.value) <= 20)) {
+      setError("Please Choose A Valid Game Length! (5-20 Questions)");
       return true;
     }
     if (gameNameRef.current.value == "") {
       setError("Please Choose A Room Name!");
       return true;
     }
-    if (timePerQuestionRef.current.value == "") {
-      setError("Please input time per question!");
+    if (!(Number(timePerQuestionRef.current.value) >= 5 && Number(timePerQuestionRef.current.value) <= 60)) {
+      setError("Please input a valid time per question! (5 - 60 seconds)");
       return true;
     }
     setError("");
@@ -50,7 +50,7 @@ export default function CreateRoomModal({ setModalOpen }) {
   }
 
   return (
-    <div className="blur-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-4/5 rounded-xl flex flex-col bg-white outline outline-gray-400 outline-1 p-5 items-center justify-center gap-5 ">
+    <div className="blur-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-3/5 rounded-xl flex flex-col bg-white outline outline-gray-400 outline-1 p-5 items-center justify-center gap-5 ">
       <button onClick={closeRoom}>
         <GrFormClose size={30} className="absolute top-2 left-2" />
       </button>
@@ -62,16 +62,30 @@ export default function CreateRoomModal({ setModalOpen }) {
         <option value="Quiz Bowl">Quiz Bowl</option>
         <option value="Math Countdown">Mathleague & Mathcounts Countdown</option>
       </select>
-      <select name="problems" id="problems" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" defaultValue={"notchosen"} ref={gameLengthRef} required>
-        <option value="notchosen" disabled>
-          Choose Game Length
-        </option>
-        <option value="5">5 Problems</option>
-        <option value="10">10 Problems</option>
-        <option value="20">20 Problems</option>
-        {/* <option value="freeplay">Free Play</option> */}
-      </select>
-      <input type="number" placeholder="30" name="quantity" min="10" max="60" step="5" ref={timePerQuestionRef} />
+      <div className="w-2/3 flex items-center justify-between gap-5">
+        <input
+          required
+          type="number"
+          placeholder="# of Questions"
+          name="quantity"
+          min="5"
+          max="20"
+          step="5"
+          ref={gameLengthRef}
+          className="w-1/2 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
+        />
+        <input
+          required
+          type="number"
+          placeholder="Time per Question"
+          name="quantity"
+          min="5"
+          max="60"
+          step="5"
+          ref={timePerQuestionRef}
+          className="w-1/2 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center"
+        />
+      </div>
       <input type="text" placeholder="Room Name" className="w-2/3 h-10 rounded-lg bg-white outline outline-gray-400 outline-1 text-center" ref={gameNameRef} />
       {error != "" && <ErrorWrapper>{error}</ErrorWrapper>}
       <ButtonWrapper onClick={createRoom} width={"w-1/3"}>

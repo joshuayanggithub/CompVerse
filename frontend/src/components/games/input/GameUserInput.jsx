@@ -14,7 +14,7 @@ export default function GameUserInput({ roomIDString }) {
 
   function submitAnswer() {
     console.log("submitted");
-    socket.emit("game:answer", answer);
+    socket.emit("game:answer", answer, new Date());
     setSubmitted(true);
   }
 
@@ -36,6 +36,15 @@ export default function GameUserInput({ roomIDString }) {
       resetInput();
     });
 
+    socket.on("game:doneQuestion", function () {
+      console.log("ended input");
+      if (!buzzedIn) {
+        //ONLY IF YOU HAVE NOT BUZZED IN ALREADY
+        setTurn(false);
+        socket.emit("game:noAnswer"); //no asnwer
+      }
+    });
+
     socket.on("game:buzzed", function () {
       setTurn(false);
     });
@@ -50,6 +59,7 @@ export default function GameUserInput({ roomIDString }) {
       // socket.off("game:newQuestion");
       socket.off("game:buzzed");
       socket.off("game:resetBuzz");
+      socket.off("game:doneQuestion");
     };
   }, []);
 

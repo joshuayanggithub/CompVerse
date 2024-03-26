@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Room, roomUserSchema } = require("../../models/roomsModel");
+const { RoomsStores, rooms } = require("../../store/RoomStore");
 const { User } = require("../../models/usersModel");
 const { Question } = require("../../models/questionsModel");
 const AppError = require("../../utils/AppError");
@@ -18,7 +19,7 @@ module.exports = async (socket, io) => {
 
       //3A. Create Room in database with updated information
       let users = new Map();
-      let userData = { username: userCreator.username, score: 0, buzzed: false, join: new Date() };
+      let userData = { username: userCreator.username, score: 0, buzzed: false, answered: false, join: new Date() };
       users.set(userID, userData);
       const room = await Room.create({ competition, gameLength, roomName, users, timePerQuestion, roomLeader: userID, questions: [] });
       room.roomLeader = userID;
@@ -61,7 +62,7 @@ module.exports = async (socket, io) => {
       //1. Find User and Add him to Room
       const roomJoining = await Room.findOne({ _id: _id });
       const userJoining = await User.findOne({ userID: userID });
-      roomJoining.users.set(userID, { username: userJoining.username, score: 0, buzzed: false, join: new Date() });
+      roomJoining.users.set(userID, { username: userJoining.username, score: 0, buzzed: false, answered: false, join: new Date() });
       userJoining.room = roomJoining._id;
       await roomJoining.save();
       const user = await userJoining.save();
