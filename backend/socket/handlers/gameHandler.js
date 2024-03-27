@@ -64,14 +64,17 @@ module.exports = async (socket, io) => {
   const gameAnswer = async (answer, answerStartTime) => {
     try {
       //Fetch user and room object from database
+      console.log(answer, answerStartTime);
       const userID = socket.handshake.auth.userID;
       const userAnswering = await User.findOne({ userID: userID });
       const room = await Room.findOne({ _id: userAnswering.room });
       //Check User Answer with correct answer stored in room object's questions list
       const currentQuestionIndex = room.questionsStartTime.length - 1;
+      console.log(answerStartTime, room.questionsStartTime[room.questionsStartTime.length - 1]);
       if (answerStartTime < room.questionsStartTime[room.questionsStartTime.length - 1]) return;
-      const correct = checkAnswer(answer, room.questions[answeredIndex].answers);
+      const correct = checkAnswer(answer, room.questions[currentQuestionIndex].answers);
       //2A. If Correct
+      console.log(correct);
       if (correct == true) {
         //1. emit that user answer is correct, followed by all accepted answers
         io.to(room._id.toString()).emit("game:correct", { state: "correct", answer: answer, username: socket.handshake.auth.username, date: new Date() });
@@ -123,7 +126,9 @@ module.exports = async (socket, io) => {
           // socket.broadcast.to(room._id.toString()).emit("game:resetBuzz");
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const doneQuestion = async (room, originalIndex) => {

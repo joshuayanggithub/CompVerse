@@ -4,7 +4,13 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
 // //configure environment variables
-dotenv.config();
+const result = dotenv.config();
+
+if (result.error) {
+  throw result.error;
+}
+
+console.log(result.parsed);
 
 //connect to Atlas Server Database
 let DB_Connection_String = process.env.DATABASE_STRING.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);

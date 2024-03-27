@@ -18,7 +18,7 @@ export default function UserList({ height, socketRoomId, toggleProfile }) {
           new URLSearchParams({
             online: true,
           })
-        : `${import.meta.env.VITE_API_URL_DEV}api/user?` +
+        : `${import.meta.env.VITE_API_URL_DEV}api/room?` +
           new URLSearchParams({
             online: true,
             room: socketRoomId,

@@ -57,7 +57,7 @@ exports.getUser = async (req, res, next) => {
 
 exports.getTopUsers = async (req, res, next) => {
   try {
-    let users = await User.find({}).sort({ problemsSolved: -1 }).limit(20);
+    let users = await User.find({}).sort({ gamesWon: -1 }).limit(20);
     res.status(200).json({
       status: "success",
       data: {

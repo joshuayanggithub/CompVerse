@@ -38,14 +38,14 @@ export default function Scoreboard({ height, _id }) {
 
     return () => {
       controller.abort();
-      // socket.off("room:update");
+      socket.off("room:update");
     };
   }, []);
 
   return (
     <div className={`w-full ${minimized ? "h-10" : height} outline outline-gray-400 outline-1 rounded-t-md rounded-b-none  px-3 py-3 overflow-hidden`}>
       <div className="flex items-center">
-        <OnlineStatus />
+        <OnlineStatus playersOnline={users.length} socketRoomId={_id} />
         <MinimizeArrow minimized={minimized} setMinimized={setMinimized} />
       </div>
       <div className={`overflow-scroll ${minimized && "hidden"}`}>
