@@ -1,27 +1,16 @@
 {
-  "name": "quizbowl",
+  "name": "compverse",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd frontend && npm run build",
-    "install-client": "cd frontend && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
-    "server": "cd backend && nodemon server.js",
-    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joshuayanggithub/QuizBowl.git"
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/joshuayanggithub/QuizBowl/issues"
-  },
-  "homepage": "https://github.com/joshuayanggithub/QuizBowl#readme",
   "engines": {
     "node": "19.x"
   }
