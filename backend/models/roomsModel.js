@@ -17,13 +17,11 @@ const roomUserSchema = new Schema({
 const roomSchema = new Schema(
   {
     roomName: { type: String, required: true },
-    // roomSettings: { type: Schema.Types.ObjectId, ref: "User" },
     users: {
-      type: Map, //MAP HAS TO HAVE KEY STRING
+      type: Map,
       of: roomUserSchema,
-      //    of: { username: { type: String, required: true }, score: { type: Number, required: true }, buzzed: { type: Boolean, required: true }, join: { type: Date, required: true } },
       required: true,
-    }, //userIDString -> {username, score, buzzed, answered}
+    },
     roomLeader: { type: Schema.Types.UUID, required: true },
     gameLength: { type: Number, required: true },
     timePerQuestion: { type: Number, required: true },

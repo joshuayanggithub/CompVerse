@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const { Question } = require("../models/questionsModel");
 
-dotenv.config({ path: "./config.env" });
+dotenv.config();
 
 let DB_Connection_String = process.env.DATABASE_STRING;
 DB_Connection_String = DB_Connection_String.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);
@@ -16,7 +16,7 @@ try {
   console.log("MongoDB Connection Failed...");
 }
 
-const questions = JSON.parse(fs.readFileSync("scraping/math.json", "utf8"));
+const questions = JSON.parse(fs.readFileSync("./backend/scraping/2023_MathCount_Chapter.json", "utf8"));
 
 for (k in questions) {
   let question = questions[k];
@@ -24,8 +24,8 @@ for (k in questions) {
   formatted.question = question.question;
   formatted.questionType = "Short Answer";
   formatted.answers = [question.answer];
-  formatted.questionSource = "Round 12210";
-  formatted.competition = "Mathleague";
+  formatted.questionSource = "2023 Chapter";
+  formatted.competition = "Mathcounts";
   formatted.questionCategory = ["Countdown"];
   Question.create(formatted);
 }

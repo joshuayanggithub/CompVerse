@@ -1,0 +1,277 @@
+[
+  { "question": "What is the value of 1/2 + 1/3 + 1/4 + 1/5 ? Express your answer as a common fraction.", "answer": "77/60" },
+  { "question": "Raj made $200 doing odd jobs last month. He spent 49% of the money on video game accessories. How many dollars did Raj spend?", "answer": 98 },
+  { "question": "What percentage of positive integers less than or equal to a hundred are greater than or equal to 50?", "answer": 51 },
+  {
+    "question": "Kwame is cutting isosceles right triangles with 6-inch legs from a 30-inch by 30-inch square sheet of plywood. What is the greatest number of triangles of this size he can cut?",
+    "answer": 50
+  },
+  {
+    "question": "What is the value of the expression 1^1 + 2^2 + 3^3 + 4^4?",
+    "answer": 288
+  },
+  {
+    "question": "What is the value of sqrt(x^8 + x^4 + x^2) when x = 1/2 ? Express your answer as a common fraction",
+    "answer": "9/16"
+  },
+  { "question": "The arithmetic mean of 5, 8, 11, a and b is 9. What is the value of a + b?", "answer": "21" },
+  {
+    "question": "If the sum of the number of roses and violets in a bouquet is 22, and roses outnumber violets by 2, what is the number of violets in the bouquet?",
+    "answer": 10
+  },
+  {
+    "question": "Tucker owns a tuk-tuk, a motorized three-wheeled vehicle, which he uses to run a taxi tour. He charges $5 for every mile traveled on a tour, and the tuk-tuk can travel a maximum of 16 miles per hour. What is the minimum number of minutes that it would take Tucker’s tuk-tuk taxi tour to tally $200 in total earnings?",
+    "answer": 150
+  },
+  {
+    "question": "In scientific notation to 8 significant figures, the value of 17^2022 is equal to 9.2836557x10^2487. When written out as an integer, how many digits does 17^2022 have?",
+    "answer": 2488
+  },
+  { "question": "The total amount Raven paid for a book was $9.45, which included a 5% sales tax. What was the pre-tax price of the book, in dollars?", "answer": 9 },
+  {
+    "question": "What percentage of positive integer divisors of 120 are even?",
+    "answer": 75
+  },
+  {
+    "question": "You have 6 blue shirts, 5 red shirts, 2 white shirts, 9 black shirts, 12 green shirts and 4 yellow shirts. If you randomly select one shirt, what is the probability you select a blue, black, or white shirt? Express your answer as a common fraction.",
+    "answer": "17/38"
+  },
+  {
+    "question": "A palindrome is a word or number that is the same when the letters or numbers are arranged in reverse order. For example, the word “racecar” and the number 1221 are palindromes. What is the largest palindrome smaller than 1,000,000 in which no digit occurs more than 2 times?",
+    "answer": 987789
+  },
+  { "question": "Two integers have a sum of 100 and a product of 2400. What is their absolute difference?", "answer": 20 },
+  {
+    "question": "Manny is thinking of a number. If Manny’s number is divided by 13, then multiplied by 11, then decreased by 12, and then added to 73, the result is 94. What is Manny’s original number?",
+    "answer": 39
+  },
+  {
+    "question": "If a 1/2 -cup serving of oatmeal contains 150 calories, how many cups of oatmeal are needed for a portion of 200 calories? Express your answer as a common fraction.",
+    "answer": "2/3"
+  },
+  {
+    "question": "If A, B and C are distinct positive integers, what is the least possible value of the expression (A+B)-(A-B)+(B+C)-(B-C)",
+    "answer": 6
+  },
+  { "question": "The sum of three distinct primes is 14. What is the product of these primes?", "answer": 70 },
+  {
+    "question": "Avery buys a pair of shoes for $34.00, not including sales tax. If this price is discounted by 15% from the original price, what was the original price in dollars? Express your answer to the nearest dollar.",
+    "answer": 40
+  },
+  { "question": "A paper bill of any US denomination has a mass of 1 gram. What is the mass of $1,000,000 worth of 100 dollar bills, in kilograms?", "answer": "10" },
+  { "question": "What is the units digit of 3^75?", "answer": 7 },
+  { "question": "Jeremy has been wearing a hat for n years. If he wears it for six more years, he will have worn the hat for n2 years. How many years has Jeremy been wearing his hat?", "answer": 3 },
+  { "question": "The quantity 60 is 320% of what number? Express your answer as a decimal to the nearest hundredth.", "answer": 18.75 },
+  {
+    "question": "Consider the set of all positive integers less than 50 that are divisible by 3. What is the mean of the set? Express your answer as a decimal to the nearest tenth.",
+    "answer": 25.5
+  },
+  {
+    "question": "The two legs of a right triangle are 8 meters and 15 meters. What is the perimeter of the triangle in meters?",
+    "answer": 40
+  },
+  {
+    "question": "It takes Yoki 35 minutes to complete 5/6 of her homework. Assuming she works at a constant rate, how many minutes does it take her to complete all of her homework?",
+    "answer": 42
+  },
+  {
+    "question": "What is the absolute difference of the sum of the first 2023 even positive integers and the first 2023 odd positive integers",
+    "answer": 2023
+  },
+  {
+    "question": "How many positive factors of 300 are not divisible by any perfect square greater than 1?",
+    "answer": 8
+  },
+  {
+    "question": "A recipe for applesauce calls for 6 apples to make 8 servings. How many whole servings can be made if one uses 10 apples?",
+    "answer": 13
+  },
+  {
+    "question": "Suppose that m + n = 20 and m - 3n = 23. What is the value of m - n? Express your answer as a common fraction.",
+    "answer": "43/2"
+  },
+  {
+    "question": "Lilyanna is making an ice cream sundae that must have ice cream in one of three different flavors, one of three difference sauces, and one of two different toppings. How many different sundaes could Lilyanna make?",
+    "answer": 18
+  },
+  {
+    "question": "The ratio of Aaron’s monthly wage to Jacy’s monthly wage is 5 to 3. If Aaron’s monthly wage is $3500, what is Jacy’s monthly wage, in dollars?",
+    "answer": 2100
+  },
+  {
+    "question": "Chris is painting a wall at a constant rate. At 2:00 p.m., he has painted 3/4 of the wall. Thirty minutes later, he has painted 4/5 of the wall. How many more minutes will it take Chris to finish painting the wall? ",
+    "answer": 120
+  },
+  {
+    "question": "What is the remainder when 123,000,000,000,321 is divided by 300?",
+    "answer": 21
+  },
+  {
+    "question": "If Paula spent 12% of the money in the cookie jar and Evangeline spent 10% of what Paula spent, what percent of the money originally in the cookie jar did Evangeline spend? Express your answer to the nearest tenth of a percent.",
+    "answer": 1.2
+  },
+  {
+    "question": "What is the degree measure of the acute angle between the hour and the minute hands of a standard 12-hour clock showing the time 3:30?",
+    "answer": 75
+  },
+  {
+    "question": "Dan has a recipe for pancakes. Making 8 pancakes requires 1 1/2 cups of flour. How many cups of flour are needed so that Dan can make 50 pancakes? Express your answer as a mixed number",
+    "answer": "9 3/8"
+  },
+  {
+    "question": "If a = 16 and b = 9, what is the value of 2(sqrt(a)+sqrt(b)+a-b)/21",
+    "answer": 1
+  },
+  {
+    "question": "What is the sum of all positive integers n <=30 for which n^3-1 is odd?",
+    "answer": 240
+  },
+  {
+    "question": "How much less is 1/4 of 2/3 than 3/4 of 1/3 ? Express your answer as a common fraction.",
+    "answer": "1/12"
+  },
+  {
+    "question": "Bijan bought a bag of gumdrops. He sorted the gumdrops and found that 11 were green, 12 were yellow, 8 were red, and 14 were orange. The remaining 5 gumdrops were black. What percent of the gumdrops were black?",
+    "answer": 10
+  },
+  {
+    "question": "Kathy is given 30 doses of medicine and is told to take a single dose on days 1 through 14. Beginning on day 15, Kathy is told to take twice the daily dose each day until she has taken all the medicine. On what day will Kathy take her last dose?",
+    "answer": 22
+  },
+  {
+    "question": "If 2/x is the reciprocal of 2/3 , what is the value of x? Express your answer as a common fraction.",
+    "answer": "4/3"
+  },
+  {
+    "question": "How many positive integers less than 100 are divisible by 11?",
+    "answer": "9"
+  },
+  {
+    "question": "Consider the sequence 1, 11, 111, 1111, ..., where the nth term is the n-digit number whose digits are all 1s. What is the arithmetic mean of the first ten entries in this sequence?",
+    "answer": "123456790"
+  },
+  {
+    "question": "A cat eats 2/3 of a can of tuna a day. What is the minimum number of whole cans needed to feed 4 cats for a week?",
+    "answer": "19"
+  },
+  {
+    "question": "Fred and Frank are playing one-on-one basketball. Fred scores twice as many points as Frank and together they score a total of 60 points. How many points does Fred score?",
+    "answer": "40"
+  },
+  {
+    "question": "What is the greatest prime factor of 2^2027 - 2^2023?",
+    "answer": "5"
+  },
+  {
+    "question": "Mr. L's name has exactly 55% as many letters as his last name. What is the shortest possible length, in letters, for Mr. L's first name",
+    "answer": "11"
+  },
+  {
+    "question": "If A = 2x - x and B = 2x + x, and x is positive, what is the ratio of A to B? Express your answer as a common fraction.",
+    "answer": "1/3"
+  },
+  {
+    "question": "At Del’s Deli, three sandwiches and two drinks cost $18, while four sandwiches and one drink cost $23. What is the absolute difference in dollars, between the price of one sandwich and the price of one drink at Del’s Deli?",
+    "answer": "5"
+  },
+  {
+    "question": "Emma starts receiving an allowance of $5 per week at age 8. If her allowance is increased by $2 per week each year, how old will Emma be when her age equals the number of dollars received for her allowance each week?",
+    "answer": "11"
+  },
+  {
+    "question": "At exactly 4 o’clock, what is the degree measure of the angle formed by the hour hand and minute hand of a standard 12-hour clock?",
+    "answer": "120"
+  },
+  {
+    "question": "What is the sum of all positive integer factors of 150?",
+    "answer": "372"
+  },
+  {
+    "question": "Martin began reading a 450 page book. After reading for one hour, he had read 75 pages. How many more hours will it take for Martin to finish the book if he continues to read at the same rate?",
+    "answer": "5"
+  },
+  {
+    "question": "What is the absolute difference between 75% of 900 and 900% of 75",
+    "answer": "0"
+  },
+  {
+    "question": "What is the least value of z that is a solution to the equation 3(z – 1)^2 = 75?",
+    "answer": "-4"
+  },
+  {
+    "question": "Three friends went to a baseball game and spent a total of $98. Ursula spent $6 more than Fred, and Nate spent $4 less than Fred. How many dollars did Nate spend?",
+    "answer": "28"
+  },
+  {
+    "question": "Oliver has twelve pets, which are all cats or dogs. If the ratio of cats to dogs is 1:2, how many of his pets are dogs?",
+    "answer": "8"
+  },
+  {
+    "question": "A cylinder has radius 2 cm and height 5 cm. If the radius and height are each increased by 1 cm, by what percent is the cylinder’s volume increased? Express your answer to the nearest whole percent.",
+    "answer": "170"
+  },
+  {
+    "question": "How many even positive integers are factors of 354?",
+    "answer": "4"
+  },
+  {
+    "question": "How many minutes does it take Danica to drive 10 miles at 150 mi/h?",
+    "answer": "4"
+  },
+  {
+    "question": "How many positive integers n < 10,000 have an odd number of positive factors and also have exactly two odd positive factors?",
+    "answer": "0"
+  },
+  {
+    "question": "An elevator starts at the first floor and goes up to the twelfth floor. Then, it goes down five floors, then down another three floors and finally up nine floors. At that floor did the elevator stop?",
+    "answer": "13"
+  },
+  {
+    "question": "At a farmer’s market, Yaling pays $2 for 8 apples and $3 for 5 pears. How many dollars in total will she expect to pay for 12 apples and 10 pears?",
+    "answer": "9"
+  },
+  {
+    "question": "How many positive factors does 100,000 have that are not divisible by 10?",
+    "answer": "11"
+  },
+  {
+    "question": "Julia lists all the possible four-digit numbers that use only the digits 2, 3, 5 and 7, where each digit is used exactly once. She chooses one of the numbers at random. What is the probability that the number Julia chooses is even? Express your answer to the nearest percent.",
+    "answer": "25%"
+  },
+  {
+    "question": "Ping walked for 20 minutes at 3 mi/h, and then jogged for 30 minutes at 4 mi/h. How many miles did Ping travel in total?",
+    "answer": "3"
+  },
+  {
+    "question": "The number 102,100 ends with 2 zeros. How many zeros are at the end of 100!?",
+    "answer": "24"
+  },
+  {
+    "question": "Gretchen has 10 indistinguishable rocks to be grouped into three diffferent piles. All of the piles must have at least one rock, and the order of the piles does not matter. In how many different ways can Gretchen group her rocks",
+    "answer": "8"
+  },
+  {
+    "question": "On Monday, Ashley washed her hair, used a clean towel, and put clean sheets on her bed. Ashley washes her hair every 2 days, gets a clean towel every 5 days, and gets clean sheets every 14 days. On what day of the week will she next have clean hair and a clean towel and fresh sheets?",
+    "answer": "Monday"
+  },
+  {
+    "question": "Flowers can be purchased in bundles of either 6 or 13. What is the greatest number of flowers that cannot be purchased",
+    "answer": "59"
+  },
+  {
+    "question": "What is the greatest three-digit number whose digits have a product of 24?",
+    "answer": "831"
+  },
+  {
+    "question": "Talako buys a replica of Van Gogh’s famous painting “The Starry Night”. The original painting measures 2.5 feet by 3 feet, and Talako’s replica has 40% the area of the original. In square feet, what is the total area of Talako’s replica?",
+    "answer": "3"
+  },
+  {
+    "question": "Every day at his restaurant, Jack makes 10 pizzas, cut into 8 slices each. On Tuesday, he had 20 customers who each ate an average of 1.5 slices. What is the maximum number of whole pizzas left uneaten on Tuesday?",
+    "answer": "6"
+  },
+  {
+    "question": "Fifteen years from now, George will be three times as old as he was 5 years ago. How old is George now?",
+    "answer": "15"
+  }
+]

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { socket } from "../../../global/socket";
 
 export default function BuzzTimer({ submitAnswer }) {
   const [width, setWidth] = useState(0);
@@ -12,6 +13,10 @@ export default function BuzzTimer({ submitAnswer }) {
       } else if (width == 100) {
         submitAnswer();
       }
+
+      socket.on("game:doneQuestion", function () {
+        clearInterval(interval);
+      });
 
       setWidth((width) => width + 1);
     }, 33);

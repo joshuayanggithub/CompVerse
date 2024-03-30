@@ -13,9 +13,11 @@ export default function GameUserInput({ roomIDString }) {
   const [answer, setAnswer] = useState("");
 
   function submitAnswer() {
-    console.log("submitted");
-    socket.emit("game:answer", answer, new Date());
-    setSubmitted(true);
+    if (buzzedIn) {
+      console.log("submitted");
+      socket.emit("game:answer", answer, new Date());
+      setSubmitted(true);
+    }
   }
 
   function buzzIn() {
@@ -59,7 +61,7 @@ export default function GameUserInput({ roomIDString }) {
       // socket.off("game:newQuestion");
       socket.off("game:buzzed");
       socket.off("game:resetBuzz");
-      socket.off("game:doneQuestion");
+      // socket.off("game:doneQuestion");
     };
   }, []);
 
