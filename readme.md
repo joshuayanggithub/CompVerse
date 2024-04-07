@@ -1,4 +1,4 @@
-# Link
+# Play
 
-tinyurl.com/compverse
-https://compverse-9da95ccab769.herokuapp.com/
+Play the app at
+www.compverse.org/home
